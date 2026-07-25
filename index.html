@@ -410,6 +410,31 @@ h1 .strike svg path{
 .safe-card p{color:var(--mute);font-size:14.5px;line-height:1.6}
 @media (max-width:860px){.safety-grid{grid-template-columns:1fr}}
 
+/* ---------- app showcase ---------- */
+.showcase{padding:100px 0}
+.showcase-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;margin-top:52px}
+.showcase-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .4s ease,box-shadow .4s ease;
+}
+.showcase-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.showcase-card .ph{overflow:hidden;background:#f1eefb;aspect-ratio:4/3.1}
+.showcase-card img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .6s ease}
+.showcase-card:hover img{transform:scale(1.035)}
+.showcase-card .cap{padding:22px 26px 26px}
+.showcase-card .cap h3{font-size:18.5px;letter-spacing:-.02em;margin-bottom:7px}
+.showcase-card .cap p{color:var(--mute);font-size:14px;line-height:1.6}
+.showcase-card.big{grid-column:1;grid-row:1/3}
+.showcase-card.big .ph{flex:1;aspect-ratio:auto}
+.showcase-card:not(.big){grid-column:2}
+@media (max-width:900px){
+  .showcase-grid{grid-template-columns:1fr}
+  .showcase-card.big{grid-column:1;grid-row:auto}
+  .showcase-card.big .ph{aspect-ratio:4/3.1}
+  .showcase-card:not(.big){grid-column:1}
+}
+
 /* ---------- cta ---------- */
 .cta{padding:60px 0 110px}
 .cta-card{
@@ -482,6 +507,7 @@ footer.site{
       <a href="#how">How it works</a>
       <a href="#personality">Personality</a>
       <a href="#safety">Safety</a>
+      <a href="#showcase">Inside the app</a>
     </div>
     <a class="btn grad" href="#waitlist">Join the waitlist</a>
   </div>
@@ -580,7 +606,7 @@ footer.site{
           <h3>Answer honestly. It can't be gamed.</h3>
           <p>A psychology-based questionnaire built on the Big Five reverse-scored, so playing it cool doesn't work. Your trait scores stay private, always.</p>
         </div>
-        <div class="shot"><img src="assets/app-personality-radar.jpg" alt="Pearmo personality radar screen" loading="lazy"></div>
+        <div class="shot"><img src="assets/app-personality-radar.webp" alt="Pearmo personality radar screen" loading="lazy"></div>
       </div>
       <div class="step rv d1">
         <div>
@@ -588,7 +614,7 @@ footer.site{
           <h3>Get a few curated matches a day.</h3>
           <p>No swiping, no endless grid. Compatibility does the heavy lifting and brings you a handful of people actually worth your time.</p>
         </div>
-        <div class="shot"><img src="assets/app-trait-scores.jpg" alt="Pearmo trait scores screen" loading="lazy"></div>
+        <div class="shot"><img src="assets/app-trait-scores.webp" alt="Pearmo trait scores screen" loading="lazy"></div>
       </div>
       <div class="step rv">
         <div>
@@ -596,7 +622,7 @@ footer.site{
           <h3>Break the ice before the chat.</h3>
           <p>Chat doesn't just open. Both people consent, then you unlock it by playing icebreaker games together, shared music taste included.</p>
         </div>
-        <div class="shot"><img src="assets/app-music-match.jpg" alt="Pearmo music match screen" loading="lazy"></div>
+        <div class="shot"><img src="assets/app-music-match.webp" alt="Pearmo music match screen" loading="lazy"></div>
       </div>
       <div class="step rv d1">
         <div>
@@ -604,7 +630,7 @@ footer.site{
           <h3>Say what you're actually here for.</h3>
           <p>Something serious? Say it up front. Pearmo profiles lead with intent and values & ambition, emotional depth and not gym selfies.</p>
         </div>
-        <div class="shot"><img src="assets/app-about-looking-for.jpg" alt="Pearmo about screen with intent" loading="lazy"></div>
+        <div class="shot"><img src="assets/app-about-looking-for.webp" alt="Pearmo about screen with intent" loading="lazy"></div>
       </div>
     </div>
   </div>
@@ -680,6 +706,40 @@ footer.site{
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V7a5 5 0 0 1 10 0v4"/><rect x="4" y="11" width="16" height="10" rx="2"/></svg></span>
         <h3>Consent gates everything</h3>
         <p>Chat, photo reveals, contact details and nothing moves forward unless both people opt in. Slowing down is the feature.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= APP SHOWCASE ================= -->
+<section class="showcase" id="showcase">
+  <div class="wrap">
+    <div class="how-head">
+      <span class="kicker rv">See it in action</span>
+      <h2 class="rv d1">Every claim, a <span class="serif">real</span> screen.</h2>
+      <p class="lead rv d2">Nothing on this page is a promise on faith. Here's what profiles, matches and consent actually look like once you're in the app.</p>
+    </div>
+    <div class="showcase-grid">
+      <div class="showcase-card big rv">
+        <div class="ph"><img src="assets/app-profile-showcase.webp" alt="Pearmo profile screen showing an avatar, and an about tab with intent, age range and values" loading="lazy"></div>
+        <div class="cap">
+          <h3>Profiles that lead with substance</h3>
+          <p>Your avatar up top, then who you actually are: what you're looking for, the ages you're open to, and what you value in a partner, before anyone gets to your photos.</p>
+        </div>
+      </div>
+      <div class="showcase-card rv d1">
+        <div class="ph"><img src="assets/app-showcase-overview.webp" alt="Pearmo music match, connection and personality radar screens shown together" loading="lazy"></div>
+        <div class="cap">
+          <h3>Matches, music and traits in one place</h3>
+          <p>Shared genres, your private personality radar, and the connection you've made, all a tab away.</p>
+        </div>
+      </div>
+      <div class="showcase-card rv d2">
+        <div class="ph"><img src="assets/app-shared-unlocks.webp" alt="Pearmo shared unlocks screen listing chat, photos, calls, location and gift delivery, each requiring mutual consent" loading="lazy"></div>
+        <div class="cap">
+          <h3>Consent, unlocked one step at a time</h3>
+          <p>Chat, photos, calls, location, even a gift address, each stays locked until you both agree. Plus a date safety check-in with an emergency contact for when you meet up.</p>
+        </div>
       </div>
     </div>
   </div>
