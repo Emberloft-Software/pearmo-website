@@ -13,12 +13,12 @@ import { Safety } from "@/components/sections/Safety";
 import { Showcase } from "@/components/sections/Showcase";
 import { WaitlistCta } from "@/components/sections/WaitlistCta";
 import { FaqSchema, MobileApplicationSchema } from "@/components/seo/JsonLd";
-import { site } from "@/lib/site";
+import { buildAlternates, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   // The homepage keeps the default title from the layout rather than the
   // "%s · Pearmo" template — no reason to say Pearmo twice.
-  alternates: { canonical: "/" },
+  alternates: buildAlternates("/"),
   description: site.metaDescription,
 };
 

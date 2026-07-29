@@ -4,6 +4,7 @@ import { LegalDocument } from "@/components/LegalDocument";
 import { Footer } from "@/components/sections/Footer";
 import { BreadcrumbSchema, WebPageSchema } from "@/components/seo/JsonLd";
 import { LEGAL_LAST_UPDATED, privacyPolicy } from "@/content/legal";
+import { buildAlternates } from "@/lib/site";
 
 const title = "Privacy policy";
 const description =
@@ -12,7 +13,7 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: "/privacy" },
+  alternates: buildAlternates("/privacy"),
   openGraph: {
     title: `${title} · Pearmo`,
     description,

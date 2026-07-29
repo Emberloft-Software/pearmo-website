@@ -77,3 +77,25 @@ export const socialProfiles: readonly string[] = [
 export function absoluteUrl(path = "/"): string {
   return new URL(path, `${siteUrl}/`).toString();
 }
+
+/**
+ * Canonical + hreflang for a page.
+ *
+ * Next merges `metadata` one top-level field at a time, so a page that exports
+ * its own `alternates` replaces the layout's wholesale — including `languages`.
+ * Every page therefore builds its alternates through this helper, which keeps
+ * the hreflang set attached to the canonical.
+ *
+ * Today there is one locale, so this self-references. It's the seam for adding
+ * `/si` (Sinhala): a second entry here and the pages get correctly paired.
+ */
+export function buildAlternates(path = "/") {
+  return {
+    canonical: path,
+    languages: {
+      [site.lang]: path,
+      // Served to anyone whose language matches no other entry.
+      "x-default": path,
+    },
+  };
+}
