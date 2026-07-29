@@ -65,6 +65,9 @@ export const hero = {
   note: "Your face stays yours. Show up as your avatar.",
   /** Avatars in the small stacked row under the CTAs. */
   noteAvatars: ["fox-f", "wolf-m", "owl-m", "cat-f"],
+  image: "/assets/hero-scene.jpg",
+  imageWidth: 1376,
+  imageHeight: 768,
   imageAlt:
     "Illustrated fox and wolf avatars sitting across from each other on a cafe date",
   imageTag: "Matched on personality",
@@ -120,6 +123,9 @@ export const how = {
   titleLead: "Slow by",
   titleEmphasis: "design.",
   lead: "Real screens from the Pearmo app — no mockups. The MVP already works.",
+  /** Every step screenshot is a 720×1600 phone capture. */
+  shotWidth: 720,
+  shotHeight: 1600,
   steps: [
     {
       num: "STEP 01",
@@ -154,6 +160,8 @@ export const how = {
 
 export const scene = {
   image: "/assets/icebreaker-scene.jpg",
+  imageWidth: 1376,
+  imageHeight: 768,
   alt: "Illustrated fox and wolf avatars playing an icebreaker game together",
   titleLead: "Games first.",
   titleEmphasis: "Chat second.",
@@ -253,6 +261,8 @@ export const showcase = {
     {
       featured: true,
       image: "/assets/app-profile-showcase.webp",
+      width: 1600,
+      height: 1200,
       alt: "Pearmo profile screen showing an animal avatar above an about tab with intent, age range and values",
       title: "Profiles that lead with substance",
       body: "Your avatar up top, then who you actually are: what you're looking for, the ages you're open to, and what you value in a partner — before anyone gets to your photos.",
