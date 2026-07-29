@@ -6,6 +6,11 @@ Next.js 16 (App Router) + TypeScript + Tailwind v4. Deployed to Vercel at
 Rebuilt from a single-file static `index.html`, which is archived at
 [`legacy/index.html`](legacy/index.html) for reference. Nothing imports it.
 
+> **See [`PROJECT-STATUS.md`](PROJECT-STATUS.md)** for the full picture: measured
+> Lighthouse scores, everything that's done, every known gap (SEO, Search
+> Console, analytics, ASO, off-page), and the six decisions still needed.
+> **It also documents a canonical-host defect that must be fixed at merge.**
+
 ## Run it
 
 ```bash
@@ -187,6 +192,13 @@ module is structured so this is contained work when one is available.
   `avatars/wolf-m.png` as character references. Job IDs:
   - hero: `333fd2f9-324a-4ea6-b864-b038eee2f7de`
   - icebreaker: `1dfaa890-acc4-4a71-8385-1be2dc8e3b7a`
-- `public/assets/avatars/*.png` — 16 of the 48 app avatars, copied from
-  `E:\Chanka\Pearmo documents\Animals -avatars\3d-individual`.
+- `public/assets/avatars/*.png` — 16 avatars shown in the marquee, hero chips
+  and CTA corners.
+
+  The full character set lives **outside this repo** at `D:\pearmo\3d-individual`
+  (40 files — 20 animals × female/male). It is deliberately not committed: it's
+  11.3 MB of source art the marketing site has no use for, and shipping all of
+  it would bloat the repo and the deploy for no benefit. Only add a file here if
+  a section actually renders it.
+
 - `public/assets/design-concept-panels.jpg` — 3-panel design concept, unused.

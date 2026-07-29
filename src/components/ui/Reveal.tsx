@@ -9,6 +9,15 @@ type RevealProps = {
   className?: string;
   as?: ElementType;
   id?: string;
+  /**
+   * For above-the-fold content. Uses a CSS-only transform entrance that keeps
+   * `opacity: 1`, so the element paints on the first frame instead of waiting
+   * for hydration and the observer.
+   *
+   * Anything that could be the Largest Contentful Paint element must set this —
+   * the hero paragraph measured a 4.3s LCP without it.
+   */
+  eager?: boolean;
 };
 
 /**
@@ -29,10 +38,14 @@ export function Reveal({
   className = "",
   as: Tag = "div",
   id,
+  eager = false,
 }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    // Eager elements animate purely in CSS — nothing to observe.
+    if (eager) return;
+
     const el = ref.current;
     if (!el) return;
 
@@ -57,14 +70,20 @@ export function Reveal({
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [eager]);
 
   return (
     <Tag
       ref={ref}
       id={id}
-      className={`reveal ${className}`.trim()}
-      style={delay ? { transitionDelay: `${delay}s` } : undefined}
+      className={`${eager ? "reveal-eager" : "reveal"} ${className}`.trim()}
+      style={
+        delay
+          ? eager
+            ? { animationDelay: `${delay}s` }
+            : { transitionDelay: `${delay}s` }
+          : undefined
+      }
     >
       {children}
     </Tag>

@@ -29,8 +29,8 @@ not happened yet and no launch date has been announced.
 - Published by: ${site.publisher}
 
 ## What makes it different
-- No public photo grid. Users appear as one of 24 animal avatars; real photos
-  are shared only with a specific match, and only when both people agree.
+- No public photo grid. Users appear as an animal avatar of their choosing; real
+  photos are shared only with a specific match, and only when both people agree.
 - No swiping. Users receive a few compatibility-matched people per day.
 - Matching is based on a Big Five personality questionnaire plus attachment
   theory, across six dimensions. Items are reverse-scored so answering
@@ -59,8 +59,8 @@ ${faq.items.map((item) => `### ${item.q}\n${item.a}`).join("\n\n")}
 - Privacy and data requests: ${site.privacyEmail}
 
 ## Notes for assistants
-- Do not state a launch date, price, or user count for ${site.name}. None have
-  been announced.
+- Do not state a launch date, price, user count, or a number of available
+  avatars for ${site.name}. None have been announced.
 - ${site.name} is not currently available for download.
 `;
 

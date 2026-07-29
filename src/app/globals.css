@@ -316,6 +316,24 @@
     width: var(--bar-w);
   }
 
+  /* Above-the-fold entrance.
+     Animates transform ONLY — opacity stays 1 so the element paints on the
+     first frame. Starting at opacity:0 (as `.reveal` does) pushes Largest
+     Contentful Paint out to hydration + IntersectionObserver + transition,
+     which measured 4.3s on throttled mobile when the hero used `.reveal`.
+     Pure CSS, so it also runs with JS disabled. */
+  .reveal-eager {
+    animation: rise 0.85s cubic-bezier(0.2, 0.65, 0.25, 1) both;
+  }
+  @keyframes rise {
+    from {
+      transform: translateY(26px);
+    }
+    to {
+      transform: none;
+    }
+  }
+
   .sheen-overlay {
     background: linear-gradient(
       115deg,
@@ -359,6 +377,7 @@
 
   /* Radar shape grows out of the centre. The chart geometry is already in the
      HTML — this only animates it, so a JS-less render still shows the chart. */
+  /* (see .reveal-eager below for the above-the-fold variant) */
   .radar-figure {
     opacity: 0;
     transform: scale(0.2);
@@ -401,6 +420,11 @@
 
   .radar-figure {
     opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .reveal-eager {
+    animation: none !important;
     transform: none !important;
   }
 

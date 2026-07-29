@@ -3,6 +3,17 @@
  * structured-data node is derived from here — nothing hardcodes the domain.
  */
 
+/**
+ * The canonical origin, `www` included.
+ *
+ * This must match the host that actually serves a 200. `pearmo.com` 308-redirects
+ * to `www.pearmo.com`, so pointing canonicals, hreflang, og:url, sitemap entries
+ * and JSON-LD @ids at the bare apex aimed every one of them at a redirect —
+ * which wastes crawl budget and lets Google discard the canonical and choose its
+ * own. If the apex ever becomes primary in Vercel, change this line too.
+ */
+const PRODUCTION_ORIGIN = "https://www.pearmo.com";
+
 function resolveSiteUrl(): string {
   // Explicit override wins (set this in Vercel project settings).
   if (process.env.NEXT_PUBLIC_SITE_URL) {
@@ -13,13 +24,13 @@ function resolveSiteUrl(): string {
   if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
-  return "https://pearmo.com";
+  return PRODUCTION_ORIGIN;
 }
 
 export const siteUrl = resolveSiteUrl();
 
 /** True only for the real production domain — gates indexing. */
-export const isProductionSite = siteUrl === "https://pearmo.com";
+export const isProductionSite = siteUrl === PRODUCTION_ORIGIN;
 
 export const site = {
   url: siteUrl,

@@ -24,12 +24,15 @@ export function Hero() {
 
       <div className="relative z-1 mx-auto grid w-[min(1160px,92vw)] items-center gap-14 md:grid-cols-[1.05fr_0.95fr] md:gap-14">
         <div>
-          <Reveal as="span" className="border-line text-ink-2 inline-flex items-center gap-2.5 rounded-full border bg-white px-4 py-2 font-mono text-[11px] tracking-[0.16em] uppercase shadow-[0_6px_18px_-10px_rgb(76_59_214/0.35)]">
+          {/* Every Reveal in the hero is `eager`: above-the-fold content must
+              paint on the first frame, or whichever element is largest becomes
+              the LCP and inherits the animation's delay. */}
+          <Reveal eager as="span" className="border-line text-ink-2 inline-flex items-center gap-2.5 rounded-full border bg-white px-4 py-2 font-mono text-[11px] tracking-[0.16em] uppercase shadow-[0_6px_18px_-10px_rgb(76_59_214/0.35)]">
             <i className="bg-magenta h-2 w-2 animate-pulse-ring rounded-full" aria-hidden="true" />
             {hero.badge}
           </Reveal>
 
-          <Reveal as="h1" delay={0.08} className="mt-[22px] mb-5 text-[clamp(42px,6.4vw,82px)] leading-[0.98] font-extrabold tracking-[-0.035em]">
+          <Reveal eager as="h1" delay={0.08} className="mt-[22px] mb-5 text-[clamp(42px,6.4vw,82px)] leading-[0.98] font-extrabold tracking-[-0.035em]">
             {hero.titleLead}{" "}
             <span className="serif-accent text-gradient">{hero.titleEmphasis}</span>
             ,
@@ -52,11 +55,11 @@ export function Hero() {
             .
           </Reveal>
 
-          <Reveal as="p" delay={0.16} className="text-mute mb-[30px] max-w-[56ch] text-[clamp(16px,1.6vw,19px)] leading-[1.6]">
+          <Reveal eager as="p" delay={0.16} className="text-mute mb-[30px] max-w-[56ch] text-[clamp(16px,1.6vw,19px)] leading-[1.6]">
             {hero.lead}
           </Reveal>
 
-          <Reveal delay={0.24} className="flex flex-wrap items-center gap-3.5">
+          <Reveal eager delay={0.24} className="flex flex-wrap items-center gap-3.5">
             <a
               href={hero.primaryCta.href}
               className="brand-gradient inline-flex items-center rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5"
@@ -71,7 +74,10 @@ export function Hero() {
             </a>
           </Reveal>
 
-          <Reveal delay={0.32} className="text-mute mt-[18px] flex items-center gap-2 text-[13px]">
+          {/* text-ink-2, not text-mute: this 13px line sits over the pink
+              decorative blob, where #6f6a80 measured only 3.79:1 against the
+              blob's #f4d3ec. WCAG AA needs 4.5:1 at this size. */}
+          <Reveal eager delay={0.32} className="text-ink-2 mt-[18px] flex items-center gap-2 text-[13px]">
             <span className="flex" aria-hidden="true">
               {hero.noteAvatars.map((slug, i) => (
                 <Image
@@ -89,7 +95,7 @@ export function Hero() {
           </Reveal>
         </div>
 
-        <Reveal delay={0.16} className="relative">
+        <Reveal eager delay={0.16} className="relative">
           <div className="shadow-chip absolute -top-[26px] right-[8%] z-2 flex animate-bob items-center gap-2.5 rounded-[18px] bg-white px-4 py-3">
             <Image
               src={`/assets/avatars/${hero.chipTop.avatar}.png`}
@@ -110,8 +116,10 @@ export function Hero() {
           <div className="shadow-glow relative rotate-2 overflow-hidden rounded-card transition-transform duration-500 hover:rotate-0 hover:scale-[1.01]">
             <div className="aspect-16/10 overflow-hidden">
               {/*
-                The LCP element. `priority` preloads it; `sizes` stops Next
-                serving a 1920px-wide file into a ~560px slot on mobile.
+                `priority` preloads this; `sizes` stops Next serving a
+                1920px-wide file into a ~550px slot on mobile. On narrow
+                viewports this image is the LCP candidate, on wide ones the
+                hero paragraph is — both are handled.
               */}
               <Image
                 src={hero.image}

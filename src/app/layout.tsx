@@ -13,14 +13,28 @@ import "./globals.css";
  * `display: swap` with automatic fallback metrics removes the layout shift
  * that came with them.
  */
+/**
+ * Body font. Preloaded, since it renders the headline and every paragraph.
+ * All five weights are in use (400 body, 500 nav, 600 buttons, 700 h3, 800
+ * h1/h2). Italic is deliberately NOT requested — the only italic on the site
+ * is `.serif-accent`, which is Fraunces, so an Archivo italic face would be
+ * pure dead weight.
+ */
 const archivo = Archivo({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
-  style: ["normal", "italic"],
   variable: "--font-archivo",
   display: "swap",
 });
 
+/**
+ * Display accent for the italic words inside headings and the pull quote.
+ *
+ * Preloaded, and measured: `preload: false` here saved ~0.1s of LCP but cost
+ * 0.5s of First Contentful Paint and introduced CLS as the h1 accent swapped
+ * in. Both this and Azeret render above the fold, so they need to arrive with
+ * the first paint, not after it.
+ */
 const fraunces = Fraunces({
   subsets: ["latin"],
   weight: ["400", "500"],
@@ -29,6 +43,7 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
+/** Kickers and small uppercase labels — including the hero badge, above the fold. */
 const azeret = Azeret_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],

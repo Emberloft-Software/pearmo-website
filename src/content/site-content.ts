@@ -85,7 +85,10 @@ export const hero = {
 } as const;
 
 export const marquee = {
-  label: "Pick who you show up as — 24 animals, endless personality",
+  // No count on purpose. The site said "24", an older note said "48", and the
+  // character folder holds 20 — so any number here risks being wrong, and it
+  // would also land in the FAQ schema and llms.txt as a factual claim.
+  label: "Pick who you show up as — an animal avatar, endless personality",
 } as const;
 
 export const problem = {
@@ -301,7 +304,7 @@ export const faq = {
   items: [
     {
       q: "What is Pearmo?",
-      a: "Pearmo is an anonymous, psychology-matched dating app launching first in Sri Lanka. Instead of swiping through photos, you complete a Big Five personality questionnaire, show up as one of 24 animal avatars, and receive a few curated, compatibility-matched people each day. Chat unlocks only when both people consent.",
+      a: "Pearmo is an anonymous, psychology-matched dating app launching first in Sri Lanka. Instead of swiping through photos, you complete a Big Five personality questionnaire, choose an animal avatar to appear as, and receive a few curated, compatibility-matched people each day. Chat unlocks only when both people consent.",
     },
     {
       q: "When does Pearmo launch?",

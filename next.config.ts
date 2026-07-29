@@ -61,6 +61,26 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
   },
 
+  async redirects() {
+    return [
+      {
+        // The old static site was served as index.html, and that URL returns 200
+        // in production today. Without this it starts 404ing the moment the
+        // Next.js app ships, breaking any existing link to it.
+        source: "/index.html",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        // Modern browsers use the <link> tags Next emits for icon.svg, but some
+        // crawlers and older clients request /favicon.ico blindly.
+        source: "/favicon.ico",
+        destination: "/icon.svg",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       { source: "/(.*)", headers: securityHeaders },
