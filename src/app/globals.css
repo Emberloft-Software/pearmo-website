@@ -1,0 +1,404 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens — ported from the original inline :root block.
+   Colours, radii and shadows are unchanged; they now generate Tailwind
+   utilities (bg-violet, text-mute, rounded-card, shadow-glow, …).
+   ========================================================================== */
+
+@theme {
+  --color-bg: #f6f4fb;
+  --color-card: #ffffff;
+  --color-ink: #17131f;
+  --color-ink-2: #3c3550;
+  --color-mute: #6f6a80;
+  --color-violet: #6c5ce7;
+  --color-violet-deep: #4b3bd6;
+  --color-magenta: #c2258f;
+  --color-pink: #e84393;
+  --color-lime: #c8f135;
+  --color-lime-ink: #2c3803;
+  --color-line: #e6e2f2;
+
+  /* Tinted surfaces used behind icons and notes. */
+  --color-violet-wash: #f1eefb;
+  --color-magenta-wash: #fdeef7;
+  --color-lime-wash: #f4fadf;
+
+  /* Font stacks are wired to the next/font CSS variables set in layout.tsx,
+     so the families are self-hosted — no render-blocking Google Fonts link. */
+  --font-sans: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-mono: var(--font-azeret), ui-monospace, monospace;
+
+  --radius-card: 28px;
+  --radius-panel: 20px;
+
+  --shadow-glow: 0 20px 60px -20px rgb(76 59 214 / 0.25);
+  --shadow-pill: 0 8px 30px -12px rgb(23 19 31 / 0.18);
+  --shadow-chip: 0 16px 40px -14px rgb(23 19 31 / 0.28);
+
+  /* Animations. Keyframes live inside @theme so Tailwind emits them only
+     when the corresponding utility is actually used. */
+  --animate-drift: drift 16s ease-in-out infinite;
+  --animate-drift-slow: drift 22s ease-in-out infinite;
+  --animate-bob: bob 5s ease-in-out infinite;
+  --animate-bob-slow: bob 6s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 2s infinite;
+  --animate-grad-shift: grad-shift 6s ease infinite;
+  --animate-kenburns: kenburns 18s ease-in-out infinite alternate;
+  --animate-sheen: sheen 7s ease-in-out infinite;
+  --animate-twinkle: twinkle 4s ease-in-out infinite;
+  --animate-glow-pulse: glow-pulse 7s ease-in-out infinite;
+  --animate-strike: strike 1s 0.9s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(40px, -30px) scale(1.08);
+    }
+    66% {
+      transform: translate(-30px, 26px) scale(0.95);
+    }
+  }
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 rgb(194 37 143 / 0.45);
+    }
+    70% {
+      box-shadow: 0 0 0 11px rgb(194 37 143 / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgb(194 37 143 / 0);
+    }
+  }
+  @keyframes grad-shift {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  @keyframes kenburns {
+    0% {
+      transform: scale(1) translate(0, 0);
+    }
+    100% {
+      transform: scale(1.12) translate(-2.5%, 1.5%);
+    }
+  }
+  @keyframes sheen {
+    0%,
+    15% {
+      background-position: 120% 0;
+    }
+    55%,
+    100% {
+      background-position: -140% 0;
+    }
+  }
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 0.1;
+      transform: scale(0.7);
+    }
+    50% {
+      opacity: 0.85;
+      transform: scale(1.15);
+    }
+  }
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      opacity: 0.42;
+    }
+    50% {
+      opacity: 0.62;
+    }
+  }
+  @keyframes strike {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes marquee-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Anchor links must not land under the fixed nav pill. */
+    scroll-padding-top: 96px;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-lime);
+    color: var(--color-lime-ink);
+  }
+
+  /* Visible, on-brand focus ring for keyboard users. The original site had
+     none, which made the nav and form unusable without a mouse. */
+  :focus-visible {
+    outline: 2px solid var(--color-violet);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* ==========================================================================
+   Components
+   Reserved for the pieces that genuinely need real CSS: pseudo-elements,
+   gradient masks, SVG stroke animation and the phone-frame image crop.
+   Everything else is Tailwind utilities in the JSX.
+   ========================================================================== */
+
+@layer components {
+  .brand-gradient {
+    background: linear-gradient(120deg, #6c5ce7 0%, #8f4fe0 45%, #c2258f 100%);
+  }
+
+  /* Gradient-filled text. Falls back to solid violet where
+     background-clip:text is unsupported. */
+  .text-gradient {
+    color: var(--color-violet);
+    background: linear-gradient(120deg, #6c5ce7 0%, #8f4fe0 45%, #c2258f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .text-gradient {
+      color: transparent;
+    }
+  }
+
+  .text-gradient-lime {
+    color: var(--color-lime);
+    background: linear-gradient(120deg, #c8f135, #7ee787);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .text-gradient-lime {
+      color: transparent;
+    }
+  }
+
+  /* Italic Fraunces accent used inside headings. */
+  .serif-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* Small uppercase mono label with a gradient rule before it. */
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-violet);
+  }
+  .kicker::before {
+    content: "";
+    width: 26px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(120deg, #6c5ce7 0%, #8f4fe0 45%, #c2258f 100%);
+    flex: 0 0 auto;
+  }
+  .kicker-centered {
+    justify-content: center;
+  }
+
+  /* Hand-drawn strike-through over the word "picture". */
+  .strike-path {
+    stroke: var(--color-magenta);
+    stroke-width: 7;
+    fill: none;
+    stroke-linecap: round;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: var(--animate-strike);
+  }
+
+  /* Marquee: track is duplicated in the markup, so translating -50% loops
+     seamlessly. Edges fade out via a mask rather than a gradient overlay so
+     the page background stays visible behind it. */
+  .marquee-mask {
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 12%,
+      #000 88%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 12%,
+      #000 88%,
+      transparent
+    );
+  }
+  .marquee-track {
+    animation: marquee-scroll 46s linear infinite;
+  }
+  .marquee-mask:hover .marquee-track,
+  .marquee-mask:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* Phone frame. The source screenshots include the Android status and nav
+     bars, cropped off with negative margins rather than re-exporting. */
+  .phone-frame {
+    border: 6px solid var(--color-ink);
+    border-bottom: none;
+    border-radius: 26px 26px 0 0;
+    overflow: hidden;
+    box-shadow: 0 -14px 40px -18px rgb(76 59 214 / 0.4);
+  }
+  .phone-frame-full {
+    border-bottom: 6px solid var(--color-ink);
+    border-radius: 26px;
+  }
+  .phone-frame img {
+    width: 100%;
+    height: auto;
+    margin-top: -7.5%;
+    margin-bottom: -9%;
+  }
+
+  /* Trait meters fill once their section scrolls into view. */
+  .trait-bar > i {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: 6px;
+    background: linear-gradient(120deg, #6c5ce7 0%, #8f4fe0 45%, #c2258f 100%);
+    transition: width 1.2s cubic-bezier(0.2, 0.65, 0.25, 1);
+  }
+  .is-revealed .trait-bar > i {
+    width: var(--bar-w);
+  }
+
+  .sheen-overlay {
+    background: linear-gradient(
+      115deg,
+      transparent 30%,
+      rgb(255 255 255 / 0.14) 46%,
+      rgb(255 255 255 / 0.02) 54%,
+      transparent 70%
+    );
+    background-size: 260% 100%;
+    mix-blend-mode: screen;
+    animation: var(--animate-sheen);
+  }
+
+  .spark {
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff 0%, rgb(255 255 255 / 0) 70%);
+    animation: var(--animate-twinkle);
+  }
+}
+
+/* ==========================================================================
+   Reveal-on-scroll
+   Gated behind `scripting: enabled` so the pre-reveal hidden state is never
+   applied when JavaScript is unavailable. Without this gate, a crawler or
+   reader with JS off would see a page of invisible content — the original
+   site's `.rv { opacity: 0 }` had exactly that flaw.
+   ========================================================================== */
+
+@media (scripting: enabled) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(34px);
+    transition:
+      opacity 0.8s cubic-bezier(0.2, 0.65, 0.25, 1),
+      transform 0.8s cubic-bezier(0.2, 0.65, 0.25, 1);
+  }
+  .reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion
+   The original had 10+ infinite animations and no reduced-motion handling at
+   all. Everything decorative stops; reveals resolve to their final state so
+   no content is lost.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal,
+  .reveal.is-revealed {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Meters would otherwise animate from 0 and land on 0. */
+  .trait-bar > i {
+    width: var(--bar-w) !important;
+  }
+
+  /* Continuous transforms must be reset, not just frozen mid-frame. */
+  .marquee-track,
+  .sheen-overlay,
+  .spark {
+    animation: none !important;
+  }
+  .spark {
+    opacity: 0.5;
+  }
+  .strike-path {
+    stroke-dashoffset: 0 !important;
+  }
+}
