@@ -270,6 +270,8 @@ export const showcase = {
     {
       featured: false,
       image: "/assets/app-showcase-overview.webp",
+      width: 2560,
+      height: 1920,
       alt: "Pearmo music match, connection and personality radar screens shown side by side",
       title: "Matches, music and traits in one place",
       body: "Shared genres, your private personality radar, and the connections you've made — all a tab away.",
@@ -277,6 +279,8 @@ export const showcase = {
     {
       featured: false,
       image: "/assets/app-shared-unlocks.webp",
+      width: 1500,
+      height: 1125,
       alt: "Pearmo shared unlocks screen listing chat, photos, calls, location and gift delivery, each requiring mutual consent",
       title: "Consent, unlocked one step at a time",
       body: "Chat, photos, calls, location, even a gift address — each stays locked until you both agree. Plus a date safety check-in with an emergency contact for when you meet up.",
