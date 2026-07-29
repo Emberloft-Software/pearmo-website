@@ -35,7 +35,9 @@ export function WaitlistCta() {
             ))}
           </div>
 
-          <Reveal as="p" className="kicker kicker-centered !text-lime [&::before]:!bg-lime">
+          {/* relative z-1 keeps the kicker above the blurred glow — without it
+              the glow paints over the lime text and destroys its contrast. */}
+          <Reveal as="p" className="kicker kicker-centered relative z-1 !text-lime [&::before]:!bg-lime">
             {cta.kicker}
           </Reveal>
           <Reveal

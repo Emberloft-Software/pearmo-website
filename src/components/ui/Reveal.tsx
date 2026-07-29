@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
+import { useEffect, useRef, type ElementType, type ReactNode } from "react";
 
 type RevealProps = {
   children: ReactNode;
@@ -8,12 +8,16 @@ type RevealProps = {
   delay?: number;
   className?: string;
   as?: ElementType;
-  /** Extra class applied once revealed, e.g. to trigger child animations. */
   id?: string;
 };
 
 /**
  * Fades content up as it scrolls into view, then stops observing.
+ *
+ * The revealed class is toggled on the element directly rather than held in
+ * state: this is a one-way DOM effect with no bearing on React's output, so
+ * driving it through state would only cost an extra render per element (and
+ * there are ~50 of them on the page).
  *
  * The hidden pre-reveal state lives in CSS behind `@media (scripting: enabled)`
  * so content is never invisible when JS doesn't run. Elements also reveal
@@ -27,28 +31,27 @@ export function Reveal({
   id,
 }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
-  const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
     if (typeof IntersectionObserver === "undefined") {
-      setRevealed(true);
+      el.classList.add("is-revealed");
       return;
     }
 
-    // Already in view on mount (above the fold) — reveal without waiting for
-    // a scroll event, otherwise the hero sits blank until the user moves.
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            setRevealed(true);
+            entry.target.classList.add("is-revealed");
             observer.unobserve(entry.target);
           }
         }
       },
+      // rootMargin nudges the trigger slightly early so content isn't still
+      // fading in by the time it's fully on screen.
       { threshold: 0.18, rootMargin: "0px 0px -40px 0px" },
     );
 
@@ -60,7 +63,7 @@ export function Reveal({
     <Tag
       ref={ref}
       id={id}
-      className={`reveal ${revealed ? "is-revealed" : ""} ${className}`.trim()}
+      className={`reveal ${className}`.trim()}
       style={delay ? { transitionDelay: `${delay}s` } : undefined}
     >
       {children}

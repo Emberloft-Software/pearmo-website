@@ -1,15 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * Counts up to `value` once scrolled into view.
  *
- * Renders `value` as the initial text rather than 0, so the correct number is
- * in the server HTML — a crawler or a JS-less reader sees "93", not "0". The
- * animation resets to 0 only at the moment it starts.
+ * `value` is what React renders, so the real number is in the server HTML — a
+ * crawler or a JS-less reader sees "93", not "0". The animation then drives
+ * `textContent` directly: React never re-renders this node, so mutating it is
+ * safe, and it avoids ~40 state updates per counter.
  *
- * Respects prefers-reduced-motion by skipping the animation entirely.
+ * Skipped entirely under prefers-reduced-motion, which leaves the final value
+ * on screen.
  */
 export function CountUp({
   value,
@@ -19,7 +21,6 @@ export function CountUp({
   durationMs?: number;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [display, setDisplay] = useState(value);
 
   useEffect(() => {
     const el = ref.current;
@@ -31,9 +32,7 @@ export function CountUp({
 
     if (prefersReduced || typeof IntersectionObserver === "undefined") return;
 
-    // Drop to 0 as soon as we know the animation will run. Doing this here
-    // rather than in initial state keeps the real number in the server HTML.
-    setDisplay(0);
+    el.textContent = "0";
 
     let frame = 0;
     const observer = new IntersectionObserver(
@@ -46,7 +45,9 @@ export function CountUp({
           const tick = (now: number) => {
             const p = Math.min((now - start) / durationMs, 1);
             // Ease-out cubic — fast then settling, same curve as the original.
-            setDisplay(Math.round(value * (1 - Math.pow(1 - p, 3))));
+            el.textContent = String(
+              Math.round(value * (1 - Math.pow(1 - p, 3))),
+            );
             if (p < 1) frame = requestAnimationFrame(tick);
           };
           frame = requestAnimationFrame(tick);
@@ -59,8 +60,10 @@ export function CountUp({
     return () => {
       observer.disconnect();
       if (frame) cancelAnimationFrame(frame);
+      // Restore the true value if this unmounts mid-animation.
+      el.textContent = String(value);
     };
   }, [value, durationMs]);
 
-  return <span ref={ref}>{display}</span>;
+  return <span ref={ref}>{value}</span>;
 }
