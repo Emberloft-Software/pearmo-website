@@ -29,5 +29,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    {
+      url: absoluteUrl("/beta-terms"),
+      lastModified: legalModified,
+      changeFrequency: "monthly",
+      priority: 0.3,
+    },
+    {
+      url: absoluteUrl("/data-deletion"),
+      lastModified: legalModified,
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
   ];
 }

@@ -300,7 +300,7 @@ export const faq = {
   kicker: "Questions, answered",
   titleLead: "Everything you're",
   titleEmphasis: "wondering.",
-  lead: "Still curious about something? Reach us at hello@pearmo.com.",
+  lead: "Still curious about something? Reach us at pearmo.app@gmail.com.",
   items: [
     {
       q: "What is Pearmo?",
@@ -367,6 +367,9 @@ export const footer = {
   links: [
     { href: "/privacy", label: "Privacy" },
     { href: "/terms", label: "Terms" },
-    { href: "mailto:hello@pearmo.com", label: "Contact" },
+    // Google Play requires a deletion URL reachable without the app, so it
+    // needs a real link somewhere crawlable — the footer is that somewhere.
+    { href: "/data-deletion", label: "Delete my data" },
+    { href: "mailto:pearmo.app@gmail.com", label: "Contact" },
   ],
 } as const;

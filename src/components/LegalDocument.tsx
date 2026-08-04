@@ -8,19 +8,28 @@ import {
 } from "@/content/legal";
 
 /**
- * Shared shell for /privacy and /terms.
+ * Shared shell for /privacy, /terms, /beta-terms and /data-deletion.
  *
  * Includes a table of contents built from the section list — genuinely useful
  * on a long document, and it gives search engines in-page anchors to surface.
+ *
+ * `notice` defaults to the pre-launch draft banner. Pass a different string to
+ * change it, or `null` to drop the banner entirely — /data-deletion is a set of
+ * instructions rather than an agreement, so a "not legally reviewed" warning
+ * above it would only obscure the one thing the reader came for.
  */
 export function LegalDocument({
   title,
   intro,
   sections,
+  notice = DRAFT_NOTICE,
+  noticeLabel = "Draft — pre-launch.",
 }: {
   title: string;
   intro: string;
   sections: readonly LegalSection[];
+  notice?: string | null;
+  noticeLabel?: string;
 }) {
   return (
     <>
@@ -52,20 +61,21 @@ export function LegalDocument({
         </p>
 
         {/* Unmissable, because it's a draft and readers deserve to know. */}
-        <aside
-          role="note"
-          className="border-magenta/25 bg-magenta-wash mt-8 rounded-panel border px-6 py-5"
-        >
-          <p className="text-ink flex items-start gap-2.5 text-[14.5px] leading-[1.6]">
-            <span aria-hidden="true" className="text-base leading-none">
-              ⚠️
-            </span>
-            <span>
-              <b className="font-semibold">Draft — under legal review.</b>{" "}
-              {DRAFT_NOTICE}
-            </span>
-          </p>
-        </aside>
+        {notice && (
+          <aside
+            role="note"
+            className="border-magenta/25 bg-magenta-wash mt-8 rounded-panel border px-6 py-5"
+          >
+            <p className="text-ink flex items-start gap-2.5 text-[14.5px] leading-[1.6]">
+              <span aria-hidden="true" className="text-base leading-none">
+                ⚠️
+              </span>
+              <span>
+                <b className="font-semibold">{noticeLabel}</b> {notice}
+              </span>
+            </p>
+          </aside>
+        )}
 
         <p className="text-mute mt-8 text-[17px] leading-[1.7]">{intro}</p>
 

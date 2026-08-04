@@ -36,7 +36,13 @@ export const site = {
   url: siteUrl,
   name: "Pearmo",
   legalName: "Pearmo",
-  publisher: "Emberloft Software",
+  /**
+   * Feeds `authors`/`creator`/`publisher` metadata and the JSON-LD
+   * `Organization`. Deliberately "Pearmo", not a studio name: no company is
+   * registered, and naming an unregistered entity as the publisher is a claim
+   * we cannot back up. Change this only once something is actually registered.
+   */
+  publisher: "Pearmo",
   /** Used as the <title> template suffix and og:site_name. */
   shortTitle: "Pearmo",
   tagline: "Meet the person, not the picture",
@@ -51,8 +57,16 @@ export const site = {
   countryCode: "LK",
   country: "Sri Lanka",
   city: "Colombo",
-  contactEmail: "hello@pearmo.com",
-  privacyEmail: "privacy@pearmo.com",
+  /**
+   * The one address that actually receives mail (confirmed 4 Aug 2026).
+   * hello@ and privacy@pearmo.com were aspirational and do not exist — a
+   * privacy policy that routes data-subject requests into a black hole is a
+   * real PDPA problem, so both point here until the domain mailboxes are set
+   * up. When they are, change these two lines and `legalFacts.contactEmail`
+   * in `src/content/legal.ts` together.
+   */
+  contactEmail: "pearmo.app@gmail.com",
+  privacyEmail: "pearmo.app@gmail.com",
   themeColor: "#6c5ce7",
   backgroundColor: "#f6f4fb",
   /** Minimum age — a dating service, so this is a hard gate, not a rating. */

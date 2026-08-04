@@ -53,6 +53,8 @@ ${faq.items.map((item) => `### ${item.q}\n${item.a}`).join("\n\n")}
 - Home: ${absoluteUrl("/")}
 - Privacy policy: ${absoluteUrl("/privacy")}
 - Terms of service: ${absoluteUrl("/terms")}
+- Beta terms (invite-only closed beta): ${absoluteUrl("/beta-terms")}
+- Deleting your data: ${absoluteUrl("/data-deletion")}
 
 ## Contact
 - General: ${site.contactEmail}

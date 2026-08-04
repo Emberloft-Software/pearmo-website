@@ -121,23 +121,61 @@ event are all already in place. Making it real means replacing the body of
 `submitEmail` with a POST to a route handler. This is a deliberate temporary
 state, not an oversight — but it should not survive the merge for long.
 
-### 2.5 Legal pages are unreviewed drafts
+### 2.5 ~~Legal pages are unreviewed drafts~~ — mostly RESOLVED 4 August 2026
 
-`/privacy` and `/terms` carry a visible draft banner. Gaps a lawyer or the team
-must close are listed at the top of `src/content/legal.ts`:
+Rewritten against what the app **actually does**, verified line by line against
+the Flutter source, the Supabase schema/RLS notes in `pearmo-flutter/CLAUDE.md`
+and the edge functions. Two new documents added:
 
-- registered legal entity name and business address
-- the identity of the ID/liveness verification vendor (a processor handling
-  sensitive biometric data — it must be named)
-- biometric data retention period
-- whether personal data leaves Sri Lanka, and on what transfer basis
-- whether a Data Protection Officer is appointed under the PDPA
-- confirmation of pricing terms before any are described
+| Route | Purpose |
+| ----- | ------- |
+| `/privacy` | Rewritten. Several claims in the old draft were factually wrong |
+| `/terms` | Corrected — removed consent gates that no longer exist |
+| `/beta-terms` | **New.** The closed beta signup form links to this |
+| `/data-deletion` | **New.** Required by Google Play, must work without the app |
+
+Gaps closed:
+
+- **Legal entity** — there isn't one. Neither Pearmo nor any studio name is
+  registered, so the documents name the two founders personally as controllers
+  rather than implying a company. Naming an unregistered entity as the operator
+  would misrepresent who the user's agreement is with.
+- **Verification vendor** — there is none. Liveness runs on-device via ML Kit
+  and is never uploaded; selfies are reviewed by hand. The old draft's
+  "specialist verification provider" was simply untrue.
+- **Biometric retention** — until review, then deleted by the
+  `cleanup-verification-media` scheduled job. Outcome kept, image not.
+- **Cross-border transfer** — yes, data leaves Sri Lanka. Supabase project is
+  in **Singapore (AWS ap-southeast-1)**, disclosed explicitly.
+- **DPO** — none appointed, and the policy says so and explains why.
+- **Pricing** — nothing costs money; no pricing terms are described.
+
+Controllers named as **Sanuth Mandepa and Chanka Dewmina Herath** — everyday
+names, not full legal names, deliberately: these documents are read by testers
+who need to know who holds their data, and a recognisable name does that job.
+Worth revisiting only if Pearmo is incorporated, or if the terms ever need to
+be enforced against a named individual.
+
+SMS provider confirmed as **Text.lk** — the only sub-processor in the chain
+that is physically inside Sri Lanka, which is worth saying out loud in the
+policy rather than burying.
+
+**No studio or publisher name appears anywhere on the site**, by explicit
+instruction (4 Aug 2026). `site.publisher` is `"Pearmo"`; it feeds
+`authors`/`creator`/`publisher` metadata and the JSON-LD `Organization`. Do not
+reintroduce one until something is actually registered.
+
+`legalFacts` at the top of `src/content/legal.ts` now has no open `TODO`s.
 
 Written against Sri Lanka's **Personal Data Protection Act No. 9 of 2022**,
 which treats the liveness biometric and national ID data as sensitive personal
-data. A live privacy policy URL is also **required** by Google Play and the App
-Store before you can submit.
+data. Still not lawyer-reviewed, and the draft banner stays until it is. A live
+privacy policy URL is also **required** by Google Play and the App Store before
+you can submit.
+
+⚠️ **These four pages 404 in production until this branch is merged and
+deployed** (§2.2). The beta signup form's consent checkboxes link to all of
+them, so the deploy has to happen before that form goes out to anyone.
 
 ---
 
@@ -402,7 +440,8 @@ because it surfaced during this check.
 
 | # | Decision | Blocks |
 | - | -------- | ------ |
-| 1 | **Legal facts** — registered entity name, ID-verification vendor, biometric retention period, data-transfer basis, DPO | §2.5, and app-store submission |
+| 1 | ~~**Legal facts**~~ — resolved 4 Aug 2026, see §2.5. One `TODO` left in `src/content/legal.ts`: the SMS provider name | Nothing structural; edit and redeploy |
+| 1b | **Domain mailboxes.** `hello@` and `privacy@pearmo.com` never existed, so every reference now points at `pearmo.app@gmail.com` — including the JSON-LD `Organization.email` and the footer. Set up real mailboxes and change `site.contactEmail` / `site.privacyEmail` / `legalFacts.contactEmail` together | Brand credibility, not function |
 | 2 | **Waitlist backend**, when you're ready to stop losing signups | §2.4 |
 | 3 | **Launch date and pricing** — when decided, the FAQ and `llms.txt` must be updated together | §4.5 |
 | 4 | **Social handles**, once accounts exist → `socialProfiles` in `src/lib/site.ts` | §4.4 |

@@ -71,13 +71,20 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
-      {
-        // Modern browsers use the <link> tags Next emits for icon.svg, but some
-        // crawlers and older clients request /favicon.ico blindly.
-        source: "/favicon.ico",
-        destination: "/icon.svg",
-        permanent: true,
-      },
+      // NOTE: there is deliberately no /favicon.ico redirect here.
+      //
+      // There used to be one pointing at /icon.svg, and it was wrong twice over.
+      // Its stated purpose was to serve "older clients that request /favicon.ico
+      // blindly" — but those are precisely the clients that cannot render SVG,
+      // so they got a payload they could do nothing with. And because it was a
+      // 308, browsers cache the mapping indefinitely, which would have made it
+      // very hard to ever ship a real icon.
+      //
+      // src/app/favicon.ico now serves a genuine multi-resolution ICO at that
+      // URL. Next emits <link> tags for both it and icon.svg, so modern browsers
+      // still prefer the vector. Do not reintroduce a redirect here: redirects
+      // are evaluated before filesystem routes, so one would shadow the real
+      // file completely.
     ];
   },
 

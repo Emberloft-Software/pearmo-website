@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { absoluteUrl, isProductionSite } from "@/lib/site";
+import { absoluteUrl, isProductionSite, siteUrl } from "@/lib/site";
 
 /**
  * robots.txt
@@ -49,6 +49,10 @@ export default function robots(): MetadataRoute.Robots {
       ...AI_CRAWLERS.map((userAgent) => ({ userAgent, allow: "/" })),
     ],
     sitemap: absoluteUrl("/sitemap.xml"),
-    host: absoluteUrl("/"),
+    // `Host` takes a bare hostname — it was emitting a full URL with scheme and
+    // trailing slash ("https://www.pearmo.com/"), which is not a value the
+    // directive accepts. Google ignores Host entirely, so nothing was broken by
+    // it, but a malformed directive is worth not shipping.
+    host: new URL(siteUrl).host,
   };
 }
