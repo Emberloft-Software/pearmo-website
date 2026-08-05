@@ -17,8 +17,8 @@ export default function NotFound() {
       className="relative flex min-h-screen flex-col items-center justify-center overflow-clip px-6 text-center"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-1">
-        <div className="absolute -top-[120px] -left-[120px] h-[420px] w-[420px] animate-drift rounded-full bg-[#b9aef7] opacity-40 blur-[90px]" />
-        <div className="absolute -right-[140px] bottom-[10%] h-[380px] w-[380px] animate-drift-slow rounded-full bg-[#f2b2dd] opacity-40 blur-[90px]" />
+        <div className="absolute -top-30 -left-30 h-105 w-105 animate-drift rounded-full bg-[#b9aef7] opacity-40 blur-[90px]" />
+        <div className="absolute -right-35 bottom-[10%] h-95 w-95 animate-drift-slow rounded-full bg-[#f2b2dd] opacity-40 blur-[90px]" />
       </div>
 
       <Link
@@ -36,7 +36,7 @@ export default function NotFound() {
         height={186}
         priority
         sizes="140px"
-        className="mb-6 h-auto w-[110px] object-contain drop-shadow-[0_14px_24px_rgb(23_19_31/0.18)]"
+        className="mb-6 h-auto w-27.5 object-contain drop-shadow-[0_14px_24px_rgb(23_19_31/0.18)]"
       />
 
       <p className="text-gradient font-mono text-sm tracking-[0.2em] uppercase">
