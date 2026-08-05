@@ -23,7 +23,7 @@ export function LegalDocument({
   intro,
   sections,
   notice = DRAFT_NOTICE,
-  noticeLabel = "Draft — pre-launch.",
+  noticeLabel = "Pre-launch draft.",
 }: {
   title: string;
   intro: string;

@@ -38,7 +38,7 @@ export function AvatarMarquee() {
                 >
                   <Image
                     src={`/assets/avatars/${avatar.slug}.png`}
-                    alt={isDuplicate ? "" : `${avatar.name} — Pearmo avatar`}
+                    alt={isDuplicate ? "" : `${avatar.name} avatar for Pearmo`}
                     width={84}
                     height={84}
                     loading="lazy"

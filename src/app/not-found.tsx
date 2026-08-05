@@ -48,7 +48,7 @@ export default function NotFound() {
       </h1>
       <p className="text-mute mt-4 max-w-[46ch] text-[17px] leading-[1.6]">
         We couldn&apos;t find what you were looking for. It may have moved, or it
-        may never have existed — Pearmo is still pre-launch, after all.
+        may never have existed. Pearmo is still pre-launch, after all.
       </p>
 
       <div className="mt-9 flex flex-wrap justify-center gap-3">

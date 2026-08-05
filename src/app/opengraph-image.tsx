@@ -11,7 +11,7 @@ import { site } from "@/lib/site";
  * plain divs and inline styles — Satori (the renderer behind next/og) supports
  * only a subset of CSS, and no Tailwind.
  */
-export const alt = `${site.name} — ${site.tagline}`;
+export const alt = `${site.name} · ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const dynamic = "force-static";

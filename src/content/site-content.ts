@@ -37,7 +37,7 @@ export const avatars: readonly Avatar[] = [
 ];
 
 export const nav = {
-  logoLabel: "Pearmo — home",
+  logoLabel: "Pearmo home",
   links: [
     { href: "#why", label: "Why" },
     { href: "#how", label: "How it works" },
@@ -59,7 +59,7 @@ export const hero = {
   titleMid: "not the",
   /** Gets the hand-drawn strike-through. */
   titleStruck: "picture",
-  lead: "Pearmo is an anonymous, psychology-matched dating app. No swiping, no public photos — just a few real, verified matches a day, and conversations that open only when you both say yes.",
+  lead: "Pearmo is an anonymous, psychology-matched dating app. There's no swiping and no public photos, just a few real, verified matches a day, and conversations that open only when you both say yes.",
   primaryCta: { href: "#waitlist", label: "Join the waitlist" },
   secondaryCta: { href: "#how", label: "See how it works" },
   note: "Your face stays yours. Show up as your avatar.",
@@ -88,7 +88,7 @@ export const marquee = {
   // No count on purpose. The site said "24", an older note said "48", and the
   // character folder holds 20 — so any number here risks being wrong, and it
   // would also land in the FAQ schema and llms.txt as a factual claim.
-  label: "Pick who you show up as — an animal avatar, endless personality",
+  label: "Choose your avatar from endless animal personalities",
 } as const;
 
 export const problem = {
@@ -96,7 +96,7 @@ export const problem = {
   titleLead: "Dating apps have a",
   titleEmphasis: "trust",
   titleTrail: "problem.",
-  lead: "We surveyed 93 people before writing a line of code. Women told us the same two things, over and over: they don't trust that other users are real, and they don't want their photos out there. Every app felt built around hookups — so we built the opposite.",
+  lead: "We surveyed 93 people before writing a line of code. Women told us the same two things again and again. They don't trust that other users are real, and they don't want their photos out there. Every app felt built around hookups, so we built the opposite.",
   stats: [
     {
       value: 93,
@@ -108,24 +108,24 @@ export const problem = {
       value: 2,
       countUp: true,
       label:
-        "answers we heard on repeat: “are they real?” and “not my photos”",
+        "answers we heard again and again: “are they real?” and “not my photos”",
     },
     {
       value: 0,
       countUp: false,
-      label: "swipes in Pearmo — curated matches instead",
+      label: "swipes in Pearmo, just curated matches instead",
     },
   ],
   quote:
     "Every dating app here feels like it was built around hookups. I just want to know the person on the other side is real, without putting my face on the internet.",
-  quoteSource: "— what we kept hearing, r/SriLanka & our survey",
+  quoteSource: "A recurring theme on r/SriLanka and in our survey",
 } as const;
 
 export const how = {
   kicker: "How it works",
   titleLead: "Slow by",
   titleEmphasis: "design.",
-  lead: "Real screens from the Pearmo app — no mockups. The MVP already works.",
+  lead: "Real screens from the Pearmo app, not mockups. The MVP already works.",
   /** Every step screenshot is a 720×1600 phone capture. */
   shotWidth: 720,
   shotHeight: 1600,
@@ -133,7 +133,7 @@ export const how = {
     {
       num: "STEP 01",
       title: "Answer honestly. It can't be gamed.",
-      body: "A psychology-based questionnaire built on the Big Five, reverse-scored, so playing it cool doesn't work. Your trait scores stay private, always.",
+      body: "A psychology-based questionnaire built on the Big Five and reverse-scored, so playing it cool doesn't work. Your trait scores always stay private.",
       image: "/assets/app-personality-radar.webp",
       alt: "Pearmo personality radar screen showing six trait scores",
     },
@@ -147,14 +147,14 @@ export const how = {
     {
       num: "STEP 03",
       title: "Break the ice before the chat.",
-      body: "Chat doesn't just open. Both people consent, then you unlock it by playing icebreaker games together — shared music taste included.",
+      body: "Chat doesn't just open. Both people consent, then you unlock it by playing icebreaker games together, including a shared music taste match.",
       image: "/assets/app-music-match.webp",
       alt: "Pearmo music match screen comparing shared music taste",
     },
     {
       num: "STEP 04",
       title: "Say what you're actually here for.",
-      body: "Something serious? Say it up front. Pearmo profiles lead with intent: values, ambition and emotional depth — not gym selfies.",
+      body: "Something serious? Say it up front. Pearmo profiles lead with values, ambition and emotional depth, not gym selfies.",
       image: "/assets/app-about-looking-for.webp",
       alt: "Pearmo about screen showing what a user is looking for",
     },
@@ -176,9 +176,9 @@ export const personality = {
   kicker: "The science bit",
   titleLead: "Matched on",
   titleEmphasis: "who you are.",
-  lead: "Six research-backed dimensions, drawn from the Big Five and attachment theory. We measure them properly — reverse-scored items, validated scales — then match people whose traits actually work together.",
+  lead: "Six research-backed dimensions, drawn from the Big Five and attachment theory. We measure them properly, using reverse-scored items and validated scales, then match people whose traits actually work together.",
   privacyNote:
-    "Only you can see this. Your matches never see your trait scores — compatibility is computed, not exposed.",
+    "Only you can see this. Your matches never see your trait scores. Compatibility is computed, not exposed.",
   radarLabel:
     "Radar chart of an example Pearmo personality profile across six dimensions",
   /** Scores are 0–5. `short` is the radar axis label, kept tight to fit. */
@@ -249,7 +249,7 @@ export const safety = {
     {
       icon: "lock" as const,
       title: "Consent gates everything",
-      body: "Chat, photo reveals, contact details — nothing moves forward unless both people opt in. Slowing down is the feature.",
+      body: "Chat, photo reveals and contact details all stay locked until both people opt in. Slowing down is the feature.",
     },
   ],
 } as const;
@@ -268,7 +268,7 @@ export const showcase = {
       height: 1200,
       alt: "Pearmo profile screen showing an animal avatar above an about tab with intent, age range and values",
       title: "Profiles that lead with substance",
-      body: "Your avatar up top, then who you actually are: what you're looking for, the ages you're open to, and what you value in a partner — before anyone gets to your photos.",
+      body: "Your avatar comes first, followed by what you're looking for, the ages you're open to and what you value in a partner. Your photos come last.",
     },
     {
       featured: false,
@@ -277,7 +277,7 @@ export const showcase = {
       height: 1920,
       alt: "Pearmo music match, connection and personality radar screens shown side by side",
       title: "Matches, music and traits in one place",
-      body: "Shared genres, your private personality radar, and the connections you've made — all a tab away.",
+      body: "Shared genres, your private personality radar and the connections you've made are all a tab away.",
     },
     {
       featured: false,
@@ -286,7 +286,7 @@ export const showcase = {
       height: 1125,
       alt: "Pearmo shared unlocks screen listing chat, photos, calls, location and gift delivery, each requiring mutual consent",
       title: "Consent, unlocked one step at a time",
-      body: "Chat, photos, calls, location, even a gift address — each stays locked until you both agree. Plus a date safety check-in with an emergency contact for when you meet up.",
+      body: "Chat, photos, calls, location and even a gift address all stay locked until you both agree. There's also a date safety check-in with an emergency contact for when you meet up.",
     },
   ],
 } as const;
@@ -312,11 +312,11 @@ export const faq = {
     },
     {
       q: "Do I have to upload my photo?",
-      a: "No. Pearmo has no public photo grid. You appear to other users as your chosen animal avatar, and your real photos stay private until you decide to share them with a specific match — who has to consent to the reveal too.",
+      a: "No. Pearmo has no public photo grid. You appear to other users as your chosen animal avatar, and your real photos stay private until you decide to share them with a specific match. That match also has to consent to the reveal.",
     },
     {
       q: "How does Pearmo make sure people are real?",
-      a: "Every account goes through a selfie liveness check and national ID verification before it can match. That confirms both that the person is real and that they're over 18. Your ID is used for verification only — it is never shown on your profile.",
+      a: "Every account goes through a selfie liveness check and national ID verification before it can match. That confirms both that the person is real and that they're over 18. Your ID is used for verification only and is never shown on your profile.",
     },
     {
       q: "How does personality matching work?",
@@ -328,7 +328,7 @@ export const faq = {
     },
     {
       q: "Why can't I message someone straight away?",
-      a: "Chat is deliberately gated. Both people have to consent to connect, and then you unlock messaging by playing icebreaker games together — including comparing music taste. It means the first message lands with someone you already know you click with.",
+      a: "Chat is deliberately gated. Both people have to consent to connect, and then you unlock messaging by playing icebreaker games together, including comparing music taste. That means the first message lands with someone you already know you click with.",
     },
     {
       q: "Is Pearmo free?",
@@ -336,7 +336,7 @@ export const faq = {
     },
     {
       q: "Is Pearmo only for serious relationships?",
-      a: "Pearmo is built for people looking for something real, and profiles lead with intent so you can state what you're actually after. It isn't designed for hookups — the slower, consent-gated flow is the whole point.",
+      a: "Pearmo is built for people looking for something real, and profiles lead with intent so you can state what you're actually after. It isn't designed for hookups. The slower, consent-gated flow is the whole point.",
     },
     {
       q: "Where is Pearmo available?",
@@ -353,7 +353,7 @@ export const cta = {
   emailLabel: "Email address",
   emailPlaceholder: "you@example.com",
   submitLabel: "Get early access",
-  successMessage: "🦊 You're on the list — see you at launch.",
+  successMessage: "🦊 You're on the list. See you at launch.",
   errorMessage: "That doesn't look like a valid email. Mind checking it?",
   privacyNote:
     "One email at launch. No spam, no sharing your address with anyone.",

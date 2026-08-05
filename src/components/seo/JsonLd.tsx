@@ -81,7 +81,7 @@ export function WebSiteSchema() {
         "@type": "WebSite",
         "@id": SITE_ID,
         name: site.name,
-        alternateName: `${site.name} — ${site.tagline}`,
+        alternateName: `${site.name} · ${site.tagline}`,
         url: site.url,
         description: site.metaDescription,
         inLanguage: site.lang,

@@ -69,7 +69,7 @@ export type LegalSection = {
 
 /** Shown at the top of /privacy and /terms. Deliberately impossible to miss. */
 export const DRAFT_NOTICE =
-  "Pearmo has not publicly launched. These terms describe the closed beta and the service we are building. They have not been reviewed by a lawyer, and Pearmo is not yet a registered company — it is a project run by two people in Colombo. If anything here matters to a decision you're making, email us and ask.";
+  "Pearmo has not publicly launched. These terms describe the closed beta and the service we are building. They have not been reviewed by a lawyer, and Pearmo is not yet a registered company. It is a project run by two people in Colombo. If anything here matters to a decision you're making, email us and ask.";
 
 /** Shown at the top of /beta-terms. */
 export const BETA_NOTICE =
@@ -91,7 +91,7 @@ export const privacyPolicy: readonly LegalSection[] = [
       {
         type: "list",
         items: [
-          "You appear to other people as an animal character, not a photo. There is no public photo grid and no public profile — nothing about you is visible outside the app.",
+          "You appear to other people as an animal character, not a photo. There is no public photo grid and no public profile, so nothing about you is visible outside the app.",
           "Your personality trait scores are visible only to you. Matches never see them. Compatibility is calculated on our side and only the result affects who you are shown.",
           "Who you are open to dating is used for matching and is never shown to anyone, ever.",
           "Chat and photo sharing each stay locked until both people agree.",
@@ -139,8 +139,8 @@ export const privacyPolicy: readonly LegalSection[] = [
           "There are no profile photos. You have an animal character and nothing else. There is no photo upload anywhere in the beta build.",
           "There is no audio introduction recording.",
           "There are no payments. Nothing in the beta costs money, and we hold no payment or card details of any kind.",
-          "Beta signups are collected through a Google Form. Your first name, phone number, email address and answers are stored in Google's systems under Google's terms until we delete the responses, and only the two of us can open that sheet. The form also has email collection switched on, so it separately records the Google account address you are signed in with — which may not be the address you typed.",
-          "When the closed beta ends, we delete the beta test data outright — accounts, profiles, messages, connections, matches and any verification images. Nothing is carried over into a public launch; you would sign up again from scratch. We will tell you before we do it.",
+          "Beta signups are collected through a Google Form. Your first name, phone number, email address and answers are stored in Google's systems under Google's terms until we delete the responses, and only the two of us can open that sheet. The form also has email collection switched on, so it separately records the Google account address you are signed in with, which may not be the address you typed.",
+          "When the closed beta ends, we delete the beta test data outright, including accounts, profiles, messages, connections, matches and any verification images. Nothing is carried over into a public launch; you would sign up again from scratch. We will tell you before we do it.",
         ],
       },
       {
@@ -170,12 +170,12 @@ export const privacyPolicy: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "We want to be specific about this because it matters in Sri Lanka. Under the PDPA, information that reveals your sexual orientation is special-category personal data, and we treat it as the most sensitive thing on your account. Who you are open to is used for one thing only — deciding who to show you and who to show you to. It is never displayed on your profile, never shown to another user, never included in any export or report we generate, and never shared with anyone outside the two of us. It is deliberately excluded from the internal view the app uses to read other people's profiles, so it is not technically possible for one user's device to fetch it about another user.",
+        text: "We want to be specific about this because it matters in Sri Lanka. Under the PDPA, information that reveals your sexual orientation is special-category personal data, and we treat it as the most sensitive thing on your account. Who you are open to is used for one thing only: deciding who to show you and who to show you to. It is never displayed on your profile, never shown to another user, never included in any export or report we generate, and never shared with anyone outside the two of us. It is deliberately excluded from the internal view the app uses to read other people's profiles, so it is not technically possible for one user's device to fetch it about another user.",
       },
       { type: "h3", text: "Personality questionnaire answers" },
       {
         type: "p",
-        text: "You answer a short set of statements on a five-point scale. We do not store your individual answers. Your device converts them into six trait scores — openness, conscientiousness, extraversion, agreeableness, emotional stability and attachment security — and only those six numbers are saved. They are used to calculate compatibility, they are shown to you, and they are shown to nobody else. Like the field above, they are excluded from the view other users' devices can read.",
+        text: "You answer a short set of statements on a five-point scale. We do not store your individual answers. Your device converts them into six trait scores (openness, conscientiousness, extraversion, agreeableness, emotional stability and attachment security), and only those six numbers are saved. They are used to calculate compatibility, they are shown to you, and they are shown to nobody else. Like the field above, they are excluded from the view other users' devices can read.",
       },
       { type: "h3", text: "Profile content" },
       {
@@ -197,7 +197,7 @@ export const privacyPolicy: readonly LegalSection[] = [
           "The liveness check runs entirely on your own phone using on-device face detection. No video is recorded and nothing from that step is ever uploaded to us or to anyone else. All that leaves your device is a yes/no result.",
           "The selfie itself is uploaded to a private storage area that only you and we can read. It is not public and no other user can request it.",
           "One of us looks at it by hand to confirm you are a real person. There is no third-party verification vendor, no automated face matching, and no facial-recognition search against other users.",
-          "Once we have approved or rejected it, a scheduled job deletes the image. We keep the outcome — approved or rejected, and when — as our record that a review happened. We do not keep the picture.",
+          "Once we have approved or rejected it, a scheduled job deletes the image. We keep the outcome (approved or rejected, and when) as our record that a review happened. We do not keep the picture.",
           "It is never displayed on your profile. Other people see only that your account carries a verification badge, and the app states plainly what that badge does and does not mean.",
           "It is never used for advertising, and never used to train any machine-learning model.",
         ],
@@ -205,12 +205,12 @@ export const privacyPolicy: readonly LegalSection[] = [
       { type: "h3", text: "Messages and interactions" },
       {
         type: "p",
-        text: "Messages you exchange once chat unlocks, icebreaker game contents, and the record of which consent gates you and a match have opened. We keep these to run the service, to help you if something goes wrong, and to investigate reports of abuse. We do not read your messages routinely, but we can technically read them — Pearmo is not end-to-end encrypted, and we would rather you know that than assume otherwise.",
+        text: "Messages you exchange once chat unlocks, icebreaker game contents, and the record of which consent gates you and a match have opened. We keep these to run the service, to help you if something goes wrong, and to investigate reports of abuse. We do not read your messages routinely, but we can technically read them. Pearmo is not end-to-end encrypted, and we would rather you know that than assume otherwise.",
       },
       { type: "h3", text: "Reports, ratings and trust score" },
       {
         type: "p",
-        text: "If you report someone, we keep the report, who made it, and what it was about. After a connection ends you can rate it, and those ratings feed a trust score on the rated account. Ratings are anonymous to the person rated — they cannot query who rated them or how. The trust score is used internally to decide who gets shown to whom; it is not displayed on anyone's profile.",
+        text: "If you report someone, we keep the report, who made it, and what it was about. After a connection ends you can rate it, and those ratings feed a trust score on the rated account. Ratings are anonymous to the person rated. They cannot query who rated them or how. The trust score is used internally to decide who gets shown to whom; it is not displayed on anyone's profile.",
       },
       { type: "h3", text: "Safety check-in" },
       {
@@ -220,7 +220,7 @@ export const privacyPolicy: readonly LegalSection[] = [
       { type: "h3", text: "Technical data" },
       {
         type: "p",
-        text: "Our hosting provider logs the usual things a server logs — IP address, request times, device and app version — and we use those to keep the service running and to spot abuse. That is the extent of it. The app contains no analytics SDK, no advertising identifier, no crash-reporting service and no push-notification tokens; notifications in Pearmo are generated locally by your own phone, so nothing about them reaches us.",
+        text: "Our hosting provider logs the usual things a server logs, including IP address, request times, device and app version, and we use those to keep the service running and to spot abuse. That is the extent of it. The app contains no analytics SDK, no advertising identifier, no crash-reporting service and no push-notification tokens; notifications in Pearmo are generated locally by your own phone, so nothing about them reaches us.",
       },
       { type: "h3", text: "This website" },
       {
@@ -236,10 +236,10 @@ export const privacyPolicy: readonly LegalSection[] = [
       {
         type: "list",
         items: [
-          "Performance of our agreement with you — creating and running your account, matching you with other people, and delivering the features you use.",
-          "Your consent — for the selfie and liveness verification, for each photo reveal, and for waitlist emails. You can withdraw consent at any time. Withdrawing verification consent means we cannot verify your account, but you can still use Pearmo unverified.",
-          "Our legitimate interests — keeping the platform safe, preventing impersonation and abuse, fixing what is broken, and understanding in aggregate how the product is used, weighed against your privacy each time.",
-          "Legal obligations — where Sri Lankan law requires us to keep or disclose something.",
+          "Performance of our agreement with you, including creating and running your account, matching you with other people, and delivering the features you use.",
+          "Your consent, for the selfie and liveness verification, for each photo reveal, and for waitlist emails. You can withdraw consent at any time. Withdrawing verification consent means we cannot verify your account, but you can still use Pearmo unverified.",
+          "Our legitimate interests, including keeping the platform safe, preventing impersonation and abuse, fixing what is broken, and understanding in aggregate how the product is used, weighed against your privacy each time.",
+          "Legal obligations, where Sri Lankan law requires us to keep or disclose something.",
         ],
       },
     ],
@@ -255,12 +255,12 @@ export const privacyPolicy: readonly LegalSection[] = [
       {
         type: "list",
         items: [
-          "Other Pearmo users — but only the profile content described above, plus anything you specifically choose to reveal to one match.",
-          "Supabase — the database, sign-in, file storage and server functions behind the app. Supabase runs our project on Amazon Web Services infrastructure in Singapore. This is where essentially all of your data lives.",
-          `${legalFacts.smsProvider} — a Sri Lankan SMS gateway that delivers your sign-in code, and so receives your phone number. This is the one provider in this list that is inside Sri Lanka.`,
-          "Vercel — hosts this website and the private page we use to review verification selfies.",
-          "Google — during the closed beta only, because the signup form is a Google Form and its responses sit in a Google Sheet that only the two of us can open.",
-          "Law enforcement or a regulator — where we are legally required to hand something over, or where we believe in good faith it is necessary to prevent serious harm to someone.",
+          "Other Pearmo users, but only the profile content described above, plus anything you specifically choose to reveal to one match.",
+          "Supabase, the database, sign-in, file storage and server functions behind the app. Supabase runs our project on Amazon Web Services infrastructure in Singapore. This is where essentially all of your data lives.",
+          `${legalFacts.smsProvider}, a Sri Lankan SMS gateway that delivers your sign-in code and so receives your phone number. This is the one provider in this list that is inside Sri Lanka.`,
+          "Vercel, which hosts this website and the private page we use to review verification selfies.",
+          "Google, during the closed beta only, because the signup form is a Google Form and its responses sit in a Google Sheet that only the two of us can open.",
+          "Law enforcement or a regulator, where we are legally required to hand something over, or where we believe in good faith it is necessary to prevent serious harm to someone.",
         ],
       },
       {
@@ -269,7 +269,7 @@ export const privacyPolicy: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "Separately from all of that, we may use anonymised, aggregated patterns — statements like “a third of new users stopped during onboarding” — to improve the product and in material we show investors. That is counts and percentages only. Your name, number, selfie, messages, profile and trait scores are never part of it, and nothing in it can be traced back to you.",
+        text: "Separately from all of that, we may use anonymised, aggregated patterns, such as “a third of new users stopped during onboarding”, to improve the product and in material we show investors. That is counts and percentages only. Your name, number, selfie, messages, profile and trait scores are never part of it, and nothing in it can be traced back to you.",
       },
     ],
   },
@@ -283,7 +283,7 @@ export const privacyPolicy: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "We rely on these providers' own contractual and technical safeguards to keep that data protected to the standard this policy describes, and we chose a regional host rather than a distant one deliberately. If you are not comfortable with your data being stored outside Sri Lanka, please do not create an account — this is the one thing we cannot offer an alternative to.",
+        text: "We rely on these providers' own contractual and technical safeguards to keep that data protected to the standard this policy describes, and we chose a regional host rather than a distant one deliberately. If you are not comfortable with your data being stored outside Sri Lanka, please do not create an account. This is the one thing we cannot offer an alternative to.",
       },
     ],
   },
@@ -294,12 +294,12 @@ export const privacyPolicy: readonly LegalSection[] = [
       {
         type: "list",
         items: [
-          "Account and profile data — for as long as your account exists.",
-          "Verification selfies — until a review decision is made, then deleted by a scheduled job. We keep only the decision and its date.",
-          "Messages — for the life of the connection they belong to. Deleting your account does not delete them from the other person's side; see below.",
-          "Reports, ratings and trust score — kept after account deletion, because a moderation record that vanishes when the reported person deletes their account is not a moderation record.",
-          "Beta signup form responses — deleted when the closed beta ends, or sooner if you ask.",
-          "Waitlist emails — until launch, or until you ask us to remove you.",
+          "We keep account and profile data for as long as your account exists.",
+          "We keep verification selfies until a review decision is made, then a scheduled job deletes them. We keep only the decision and its date.",
+          "We keep messages for the life of the connection they belong to. Deleting your account does not delete them from the other person's side; see below.",
+          "We keep reports, ratings and trust score after account deletion, because a moderation record that vanishes when the reported person deletes their account is not a moderation record.",
+          "We delete beta signup form responses when the closed beta ends, or sooner if you ask.",
+          "We keep waitlist emails until launch, or until you ask us to remove you.",
         ],
       },
     ],
@@ -315,7 +315,7 @@ export const privacyPolicy: readonly LegalSection[] = [
       {
         type: "list",
         items: [
-          "Deleted immediately: every file you uploaded — any verification selfie, any photo, any audio — is removed from storage, not just unlinked. Your display name, your text about yourself, your character, and your region are wiped, your profile is switched off, and your verification badge resets to unverified.",
+          "Deleted immediately: every file you uploaded, including any verification selfie, any photo or any audio, is removed from storage, not just unlinked. Your display name, your text about yourself, your character, and your region are wiped, your profile is switched off, and your verification badge resets to unverified.",
           "Kept: your reports, the ratings others gave you, your trust score and your report count. This is deliberate. If deleting your account erased that, anyone could clear a record of harassment by deleting and signing up again with the same number.",
           "Kept: the messages you sent. Deleting your side of a conversation would also delete the other person's side of it, and we do not think one person should be able to erase someone else's history. Your old messages stay visible to whoever you were talking to, attached to a deleted account. This is how mainstream dating apps handle it too.",
           "You can sign up again with the same phone number afterwards and build a new profile. It will be a genuinely fresh profile, but it remains the same underlying account, so the moderation history above stays attached to it.",
@@ -323,7 +323,7 @@ export const privacyPolicy: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: `If you would rather we deleted everything by hand, including the messages, email ${legalFacts.contactEmail} and ask. We will do it — we simply cannot do it silently from your side, because it affects someone else's conversation too.`,
+        text: `If you would rather we deleted everything by hand, including the messages, email ${legalFacts.contactEmail} and ask. We will do it, but we cannot do it silently from your side, because it affects someone else's conversation too.`,
       },
       {
         type: "p",
@@ -376,7 +376,7 @@ export const privacyPolicy: readonly LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "Pearmo is strictly for people aged 18 and over. During the closed beta, age is what you tell us — national ID checking is switched off, so we are relying on your word and on the selfie review to catch anything obviously wrong. We do not knowingly hold data about anyone under 18, and if we find an underage account we delete it and its data.",
+        text: "Pearmo is strictly for people aged 18 and over. During the closed beta, age is what you tell us, since national ID checking is switched off, so we are relying on your word and on the selfie review to catch anything obviously wrong. We do not knowingly hold data about anyone under 18, and if we find an underage account we delete it and its data.",
       },
     ],
   },
@@ -478,7 +478,7 @@ export const termsOfService: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "If you see any of this, report it in the app. We read every report. Reporting someone also removes them from your matches permanently, so it is currently the strongest way to make sure you never see an account again — if someone is simply not for you, ending the connection is enough, and that is also permanent.",
+        text: "If you see any of this, report it in the app. We read every report. Reporting someone also removes them from your matches permanently, so it is currently the strongest way to make sure you never see an account again. If someone is simply not for you, ending the connection is enough, and that is also permanent.",
       },
     ],
   },
@@ -492,7 +492,7 @@ export const termsOfService: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "Anything another person reveals to you — a photo, a phone number, an address, their real name — was shared with you and you alone. Passing it on, publishing it, or reposting it elsewhere is a serious breach of these terms and may also break the law.",
+        text: "Anything another person reveals to you, including a photo, a phone number, an address or their real name, was shared with you and you alone. Passing it on, publishing it, or reposting it elsewhere is a serious breach of these terms and may also break the law.",
       },
     ],
   },
@@ -502,7 +502,7 @@ export const termsOfService: readonly LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "You keep ownership of what you upload. You grant us a licence to host, store and display it as needed to run the service — showing your profile to a match, or delivering a photo you chose to share. That licence ends when you delete the content or your account, apart from copies we must keep for safety or legal reasons.",
+        text: "You keep ownership of what you upload. You grant us a licence to host, store and display it as needed to run the service, such as showing your profile to a match or delivering a photo you chose to share. That licence ends when you delete the content or your account, apart from copies we must keep for safety or legal reasons.",
       },
       {
         type: "p",
@@ -516,7 +516,7 @@ export const termsOfService: readonly LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "Verification confirms that an account is operated by a real, live person whose face matches the selfie we reviewed. That is all it confirms. It is not a criminal background check — we do not run any, on anyone — and it is not a judgement of character. We cannot vouch for how anybody will behave.",
+        text: "Verification confirms that an account is operated by a real, live person whose face matches the selfie we reviewed. That is all it confirms. It is not a criminal background check (we do not run any, on anyone), and it is not a judgement of character. We cannot vouch for how anybody will behave.",
       },
       {
         type: "p",
@@ -544,7 +544,7 @@ export const termsOfService: readonly LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "Pearmo runs on other companies' infrastructure — hosting, database, file storage and SMS delivery. Their outages or errors can break Pearmo, and their own terms may apply to those parts of the service. They are named in the privacy policy.",
+        text: "Pearmo runs on other companies' infrastructure, including hosting, database, file storage and SMS delivery. Their outages or errors can break Pearmo, and their own terms may apply to those parts of the service. They are named in the privacy policy.",
       },
     ],
   },
@@ -568,7 +568,7 @@ export const termsOfService: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "To the extent the law allows, we are not liable for the conduct of other users, for anything that happens when you meet someone, or for indirect or consequential loss. Nothing here limits liability that cannot be limited under Sri Lankan law — including for death or personal injury caused by our negligence, or for fraud.",
+        text: "To the extent the law allows, we are not liable for the conduct of other users, for anything that happens when you meet someone, or for indirect or consequential loss. Nothing here limits liability that cannot be limited under Sri Lankan law, including for death or personal injury caused by our negligence, or for fraud.",
       },
     ],
   },
@@ -615,7 +615,7 @@ export const betaTerms: readonly LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: `Pearmo is a dating app being built in Sri Lanka. It is not finished. We are inviting a small group of people to test an early build and tell us what breaks and what feels wrong. It is free, and there is no company behind it — just ${legalFacts.operators}, two people in ${legalFacts.location}.`,
+        text: `Pearmo is a dating app being built in Sri Lanka. It is not finished. We are inviting a small group of people to test an early build and tell us what breaks and what feels wrong. It is free, and there is no company behind it, just ${legalFacts.operators}, two people in ${legalFacts.location}.`,
       },
       {
         type: "p",
@@ -623,11 +623,11 @@ export const betaTerms: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "Read it properly before you tick anything. If something here is not acceptable to you, don't join — that is a completely fine outcome and we would rather know now than after you have installed it.",
+        text: "Read it properly before you tick anything. If something here is not acceptable to you, don't join. That is a completely fine outcome, and we would rather know now than after you have installed it.",
       },
       {
         type: "p",
-        text: `Anything at all — a bug, a question, a request to be removed: ${legalFacts.contactEmail}. It reaches both of us and nobody else.`,
+        text: `Anything at all, including a bug, a question or a request to be removed: ${legalFacts.contactEmail}. It reaches both of us and nobody else.`,
       },
     ],
   },
@@ -642,7 +642,7 @@ export const betaTerms: readonly LegalSection[] = [
       {
         type: "list",
         items: [
-          "You are 18 or older. This is a hard requirement with no exceptions, and it is the one thing on this list we cannot check — ID verification is switched off for this test, so we are trusting you.",
+          "You are 18 or older. This is a hard requirement with no exceptions, and it is the one thing on this list we cannot check. ID verification is switched off for this test, so we are trusting you.",
           "You are in Sri Lanka for the duration of the beta.",
           "You have an Android phone running Android 7.0 or newer. There is no iPhone build yet.",
           "You have a Sri Lankan mobile number that can receive an SMS, because that is how you sign in.",
@@ -662,14 +662,14 @@ export const betaTerms: readonly LegalSection[] = [
       {
         type: "list",
         items: [
-          "Sign in with your phone number. You get an SMS code — there is no password.",
+          "Sign in with your phone number. You get an SMS code, not a password.",
           "Onboarding: you answer a personality questionnaire, set who and what you are looking for, and pick an animal character.",
           "Daily matches: each day you get a small set of suggested people, scored against your questionnaire answers. There are no photos to look at.",
           "Connections: you send or receive a connection request. Nobody can message you unless you both agree.",
-          "Icebreaker games — would-you-rather, 20 questions, draw together — which you can play at any point in a connection. Early chat is capped at a small number of messages.",
+          "Icebreaker games such as would-you-rather, 20 questions and draw together, which you can play at any point in a connection. Early chat is capped at a small number of messages.",
           "Verification: optional, and in this test it is a selfie and a liveness check only. Verified accounts get a badge.",
           "Reporting and rating: you can report someone, and rate a connection after it ends. Ratings feed an internal trust score.",
-          "A check-in you can set around a date. Read the limitations section before you rely on it — it does not do what the name suggests.",
+          "A check-in you can set around a date. Read the limitations section before you rely on it. It does not do what the name suggests.",
         ],
       },
       {
@@ -686,14 +686,14 @@ export const betaTerms: readonly LegalSection[] = [
         type: "list",
         items: [
           "National identity document verification. We do not ask for your NIC, and we could not store it if you tried. ID verification comes after the beta.",
-          "Profile photos. Your profile is an animal character, and there are no photos in this test at all — not on profiles, not in chat.",
+          "Profile photos. Your profile is an animal character, and there are no photos in this test at all, not on profiles and not in chat.",
           "Voice intro recordings.",
           "Payments of any kind.",
         ],
       },
       {
         type: "p",
-        text: "So the only verification in this test is the selfie and liveness check. The liveness step — centre your face, blink, turn your head — runs entirely on your own phone, no video is recorded, and nothing from it is ever uploaded. The selfie is looked at by one of us, by hand, to confirm you are a real person, and is then deleted. We keep the decision, not the picture. There is no verification company involved and no automatic face matching anywhere.",
+        text: "So the only verification in this test is the selfie and liveness check. The liveness step, where you centre your face, blink and turn your head, runs entirely on your own phone. No video is recorded, and nothing from it is ever uploaded. The selfie is looked at by one of us, by hand, to confirm you are a real person, and is then deleted. We keep the decision, not the picture. There is no verification company involved and no automatic face matching anywhere.",
       },
     ],
   },
@@ -709,13 +709,13 @@ export const betaTerms: readonly LegalSection[] = [
       {
         type: "list",
         items: [
-          "Mobile number — this is your account, and how you sign in.",
-          "Date of birth — age matching and the 18+ rule. Other people see your age, never the date.",
-          "Gender, the genders you are open to, and your age range — matching only.",
-          "Personality questionnaire answers — your individual answers are not stored. Your phone turns them into six trait scores and only those are saved.",
-          "A short free-text piece about yourself — shown to your matches.",
-          "The province or area you pick from a list — so you are matched with people you could actually meet. Pearmo does not use GPS. The app requests no location permission and we never see your position.",
-          "Your animal character — shown to your matches.",
+          "Mobile number, which is your account and how you sign in.",
+          "Date of birth, used for age matching and the 18+ rule. Other people see your age, never the date.",
+          "Gender, the genders you are open to, and your age range, used for matching only.",
+          "Personality questionnaire answers. Your individual answers are not stored. Your phone turns them into six trait scores, and only those are saved.",
+          "A short free-text piece about yourself, shown to your matches.",
+          "The province or area you pick from a list, so you are matched with people you could actually meet. Pearmo does not use GPS. The app requests no location permission and we never see your position.",
+          "Your animal character, shown to your matches.",
         ],
       },
       { type: "h3", text: "Optional" },
@@ -730,9 +730,9 @@ export const betaTerms: readonly LegalSection[] = [
       {
         type: "list",
         items: [
-          "Messages you send — to deliver them, stored on our server.",
-          "Icebreaker game answers — to run the game.",
-          "Reports you file and ratings you give — moderation and trust scoring.",
+          "Messages you send, stored on our server so we can deliver them.",
+          "Icebreaker game answers, used to run the game.",
+          "Reports you file and ratings you give, used for moderation and trust scoring.",
           "Basic account activity, such as when you were last active and how many matches you have had.",
         ],
       },
@@ -752,7 +752,7 @@ export const betaTerms: readonly LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: `Everything is stored in our Supabase project — a hosted Postgres database with file storage. The servers are in ${legalFacts.hostingRegion}, on Amazon Web Services infrastructure, so your data leaves Sri Lanka.`,
+        text: `Everything is stored in our Supabase project, a hosted Postgres database with file storage. The servers are in ${legalFacts.hostingRegion}, on Amazon Web Services infrastructure, so your data leaves Sri Lanka.`,
       },
       {
         type: "list",
@@ -761,7 +761,7 @@ export const betaTerms: readonly LegalSection[] = [
           "Verification selfies sit in private storage and are reached only through short-lived signed links.",
           "Messages are stored in our database in plain text. Pearmo is not end-to-end encrypted. Assume we can technically read them, because we can.",
           "The two of us can access the whole database, including chat contents. We open it to debug something, to look at a report, or to review a verification. We will not browse your data out of curiosity and we will not show it to anyone outside the two of us.",
-          "Verification selfies are reviewed by a person — one of us — not by any automated system.",
+          "Verification selfies are reviewed by a person, one of us, not by any automated system.",
           "We may use anonymised, aggregated patterns from the test, such as “x% of testers stopped during onboarding”, to improve the product and in material we show investors. Your name, number, selfie, messages and profile are never part of that.",
           "We may email you during the beta about new builds, bugs and feedback. Nothing else, and never marketing from anyone but us.",
         ],
@@ -778,7 +778,7 @@ export const betaTerms: readonly LegalSection[] = [
   },
   {
     id: "limitations",
-    heading: "Known limitations — please read this part",
+    heading: "Known limitations: please read this part",
     blocks: [
       {
         type: "p",
@@ -788,11 +788,11 @@ export const betaTerms: readonly LegalSection[] = [
         type: "list",
         items: [
           "The app is installed outside the Play Store. You will have to allow installation from an unknown source, it will not update itself, and it has not been through Google's review. We will email you each new build.",
-          "There is no automated harassment filtering in chat. The report button is the safety mechanism, and reports are read by a person when we see them — not instantly, and not around the clock.",
+          "There is no automated harassment filtering in chat. The report button is the safety mechanism, and reports are read by a person when we see them, not instantly and not around the clock.",
           "There is no screenshot detection or blocking. Anything you send can be screenshotted or copied by the person you send it to. Treat everything as potentially permanent and send accordingly.",
-          "There is no block button. Reporting someone removes them from your matches permanently, and ending a connection is also permanent — those are your two options today. A proper block feature is not built yet.",
+          "There is no block button. Reporting someone removes them from your matches permanently, and ending a connection is also permanent. Those are your two options today. A proper block feature is not built yet.",
           "The check-in does not contact anyone. You can set a time and type in a number, but nothing calls, texts or alerts that person, and the alarm only sounds on your own phone. Do not rely on it as a safety net. Tell a real person where you are going, as you would anyway.",
-          "Verification is not a background check. The badge means one of us looked at a selfie and believed a real person took it. It does not mean they are who they say they are — ID checking is off in this test — and it does not mean they are safe, single or honest. We do not check criminal records on anyone.",
+          "Verification is not a background check. The badge means one of us looked at a selfie and believed a real person took it. It does not mean they are who they say they are (ID checking is off in this test), and it does not mean they are safe, single or honest. We do not check criminal records on anyone.",
           "Matching is experimental. The questionnaire and the algorithm are unproven. Bad matches are expected and are not a claim about you or anyone else.",
           "Expect bugs, crashes, failed uploads, missing notifications and lost messages. Some flows are half-built.",
           "We may reset the database during the test. Your profile, matches and chat history could be wiped without warning while we fix things. Do not keep anything in Pearmo that you would hate to lose.",
@@ -807,7 +807,7 @@ export const betaTerms: readonly LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "This is not a demo with fake profiles. You will have a real profile, you will be matched with other real testers, and you can genuinely end up talking to someone. Harassment, impersonation, unsolicited sexual content, scams, and sharing other people's details outside the app will get you removed — and in a group this small, we will notice.",
+        text: "This is not a demo with fake profiles. You will have a real profile, you will be matched with other real testers, and you can genuinely end up talking to someone. Harassment, impersonation, unsolicited sexual content, scams, and sharing other people's details outside the app will get you removed, and in a group this small, we will notice.",
       },
       {
         type: "p",
@@ -840,7 +840,7 @@ export const betaTerms: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "If you are ever in immediate danger, call the Sri Lanka Police on 119. Not us — we are two people with a laptop and we cannot help you in an emergency.",
+        text: "If you are ever in immediate danger, call the Sri Lanka Police on 119. Not us. We are two people with a laptop, and we cannot help you in an emergency.",
       },
     ],
   },
@@ -876,7 +876,7 @@ export const betaTerms: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "What you must not do is share anything about another tester — their character, their messages, their identity, screenshots of a conversation, or anything they told you inside the app. In a group this small, one screenshot can identify someone. Please also hold off on posting screenshots of unreleased screens publicly, since they will be out of date and misleading by launch.",
+        text: "What you must not do is share anything about another tester, including their character, their messages, their identity, screenshots of a conversation, or anything they told you inside the app. In a group this small, one screenshot can identify someone. Please also hold off on posting screenshots of unreleased screens publicly, since they will be out of date and misleading by launch.",
       },
     ],
   },
@@ -896,7 +896,7 @@ export const betaTerms: readonly LegalSection[] = [
       { type: "h3", text: "Delete" },
       {
         type: "p",
-        text: "Settings, then Delete account. Be clear about what that does: your selfie and every file you uploaded are permanently deleted from storage, and your character, your about text and your profile are wiped. What is kept is your chat history, any reports about you, your ratings and your trust score. We do that on purpose — a full delete would let someone with a bad record erase it and sign up again clean. Messages you already sent also stay visible to the person you sent them to, because deleting them would delete their side of the conversation too. If you are not comfortable with that, please don't sign up.",
+        text: "Settings, then Delete account. Be clear about what that does: your selfie and every file you uploaded are permanently deleted from storage, and your character, your about text and your profile are wiped. What is kept is your chat history, any reports about you, your ratings and your trust score. We do that on purpose. A full delete would let someone with a bad record erase it and sign up again clean. Messages you already sent also stay visible to the person you sent them to, because deleting them would delete their side of the conversation too. If you are not comfortable with that, please don't sign up.",
       },
       { type: "h3", text: "Ask us anything" },
       {
@@ -911,11 +911,11 @@ export const betaTerms: readonly LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "When the closed beta finishes, we delete the beta data. Accounts, profiles, messages, connections, matches and any verification images created during the test are removed — not archived, not carried over. If Pearmo launches publicly you would sign up again from scratch, and we will tell you before we delete anything so nothing disappears as a surprise.",
+        text: "When the closed beta finishes, we delete the beta data. Accounts, profiles, messages, connections, matches and any verification images created during the test are removed, not archived and not carried over. If Pearmo launches publicly you would sign up again from scratch, and we will tell you before we delete anything so nothing disappears as a surprise.",
       },
       {
         type: "p",
-        text: "We can also end the beta, or remove any account from it, at any time and without notice — most likely because a build has a serious problem, or because someone breached these terms.",
+        text: "We can also end the beta, or remove any account from it, at any time and without notice, most likely because a build has a serious problem or because someone breached these terms.",
       },
       {
         type: "p",
@@ -981,7 +981,7 @@ export const dataDeletion: readonly LegalSection[] = [
       {
         type: "list",
         items: [
-          "Every file you uploaded — any verification selfie, any photo, any audio recording — removed from storage, not just unlinked from your profile.",
+          "Every file you uploaded, including any verification selfie, any photo or any audio recording, removed from storage, not just unlinked from your profile.",
           "Your display name, the text about yourself, your character and your region.",
           "Your profile is switched off, so it disappears from matching and from anyone's cards immediately.",
           "Your verification badge resets to unverified.",
@@ -999,7 +999,7 @@ export const dataDeletion: readonly LegalSection[] = [
         items: [
           "Messages you sent stay visible to the person you sent them to. Deleting your side would delete their side of the same conversation, and we do not think one person should be able to erase someone else's history.",
           "Reports about you, ratings others gave you, your trust score and report count. If deleting your account erased these, anyone could clear a record of harassment by deleting and signing up again.",
-          "The outcome of any verification review — approved or rejected, and when. The image itself is deleted; only the decision remains.",
+          "The outcome of any verification review, including whether it was approved or rejected, and when. The image itself is deleted; only the decision remains.",
           "Anything we are legally required to keep.",
         ],
       },
@@ -1029,7 +1029,7 @@ export const dataDeletion: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "The same address handles every other request under Sri Lanka's Personal Data Protection Act No. 9 of 2022 — a copy of your data, a correction, or a withdrawal of consent.",
+        text: "The same address handles every other request under Sri Lanka's Personal Data Protection Act No. 9 of 2022, including a copy of your data, a correction or a withdrawal of consent.",
       },
     ],
   },
@@ -1039,7 +1039,7 @@ export const dataDeletion: readonly LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: `If you filled in the closed beta signup form, your answers are in a private Google Sheet. Email ${legalFacts.contactEmail} and we will remove that row as well — deleting your app account does not touch it, because it is a separate system.`,
+        text: `If you filled in the closed beta signup form, your answers are in a private Google Sheet. Email ${legalFacts.contactEmail} and we will remove that row as well. Deleting your app account does not touch it, because it is a separate system.`,
       },
       {
         type: "p",
@@ -1047,7 +1047,7 @@ export const dataDeletion: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "If you joined the website waitlist, email us and we will delete your address. We use it for one message — telling you Pearmo has launched.",
+        text: "If you joined the website waitlist, email us and we will delete your address. We use it for one message: telling you Pearmo has launched.",
       },
     ],
   },
