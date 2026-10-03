@@ -59,7 +59,7 @@ export const hero = {
   titleMid: "not the",
   /** Gets the hand-drawn strike-through. */
   titleStruck: "picture",
-  lead: "Pearmo is an anonymous, psychology-matched dating app. There's no swiping and no public photos, just a few real, verified matches a day, and conversations that open only when you both say yes.",
+  lead: "Pearmo is an anonymous, psychology-matched dating app. There's no swiping and no public photos, just a few real matches a day, and conversations that open only when you both say yes.",
   primaryCta: { href: "#waitlist", label: "Join the waitlist" },
   secondaryCta: { href: "#how", label: "See how it works" },
   note: "Your face stays yours. Show up as your avatar.",
@@ -147,7 +147,7 @@ export const how = {
     {
       num: "STEP 03",
       title: "Break the ice before the chat.",
-      body: "Chat doesn't just open. Both people consent, then you unlock it by playing icebreaker games together, including a shared music taste match.",
+      body: "Chat doesn't just open: it unlocks only when you both agree. Icebreaker games, including a shared music taste match, give you something real to talk about first.",
       image: "/assets/app-music-match.webp",
       alt: "Pearmo music match screen comparing shared music taste",
     },
@@ -238,18 +238,18 @@ export const safety = {
   cards: [
     {
       icon: "shield" as const,
-      title: "Liveness + ID verification",
-      body: "A selfie liveness check and national ID verification, so the person and the age are both real. Verified badges you can actually believe.",
+      title: "Real-person verification",
+      body: "An optional selfie check, reviewed by a real person, confirms someone real is behind the account. Every profile shows how far it's verified, and the app spells out what a badge does and doesn't mean.",
     },
     {
       icon: "eye-off" as const,
       title: "Your photos stay private",
-      body: "No public photo grid. You show up as your avatar, and your real photos are shared only when you choose, with who you choose.",
+      body: "No public photo grid. You show up as your avatar, and a real photo appears only if you add one and choose to show it.",
     },
     {
       icon: "lock" as const,
       title: "Consent gates everything",
-      body: "Chat, photo reveals and contact details all stay locked until both people opt in. Slowing down is the feature.",
+      body: "Chat and photo sharing stay locked until both people opt in, and either of you can lock them again at any time. Slowing down is the feature.",
     },
   ],
 } as const;
@@ -284,9 +284,13 @@ export const showcase = {
       image: "/assets/app-shared-unlocks.webp",
       width: 1500,
       height: 1125,
-      alt: "Pearmo shared unlocks screen listing chat, photos, calls, location and gift delivery, each requiring mutual consent",
+      // TODO: this screenshot predates 11 Jul 2026 and still shows the
+      // calls/location/gift unlocks that were removed. Replace it with a
+      // current Shared Unlocks screen (chat + photos & videos only). The
+      // alt text is kept neutral until then so it doesn't restate them.
+      alt: "Pearmo shared unlocks screen, where each unlock needs both people's consent",
       title: "Consent, unlocked one step at a time",
-      body: "Chat, photos, calls, location and even a gift address all stay locked until you both agree. There's also a date safety check-in with an emergency contact for when you meet up.",
+      body: "Chat and photo sharing each stay locked until you both agree, and either of you can switch them off again whenever you like.",
     },
   ],
 } as const;
@@ -312,11 +316,11 @@ export const faq = {
     },
     {
       q: "Do I have to upload my photo?",
-      a: "No. Pearmo has no public photo grid. You appear to other users as your chosen animal avatar, and your real photos stay private until you decide to share them with a specific match. That match also has to consent to the reveal.",
+      a: "No. Pearmo has no public photo grid. You appear to other users as your chosen animal avatar. Once you've verified, you can add a real profile photo, and it stays hidden unless you choose to show it. Sending photos inside a chat needs both of you to agree first.",
     },
     {
       q: "How does Pearmo make sure people are real?",
-      a: "Every account goes through a selfie liveness check and national ID verification before it can match. That confirms both that the person is real and that they're over 18. Your ID is used for verification only and is never shown on your profile.",
+      a: "Verification is optional, and every profile shows its level. A selfie check, reviewed by a real person, confirms there's someone real behind the account. Unverified accounts are matched mainly with each other, and sharing photos in a chat needs both people verified. A national ID check that also confirms age is planned but not switched on yet. Verification isn't a background check, and it doesn't vouch for how anyone will behave.",
     },
     {
       q: "How does personality matching work?",
@@ -328,7 +332,7 @@ export const faq = {
     },
     {
       q: "Why can't I message someone straight away?",
-      a: "Chat is deliberately gated. Both people have to consent to connect, and then you unlock messaging by playing icebreaker games together, including comparing music taste. That means the first message lands with someone you already know you click with.",
+      a: "Chat is deliberately gated. Both people have to accept the connection and agree to open chat, and either of you can lock it again later. Icebreaker games, including comparing music taste, give you something real to start from, so the first message isn't a cold \"hey\".",
     },
     {
       q: "Is Pearmo free?",

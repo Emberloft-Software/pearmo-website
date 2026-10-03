@@ -47,10 +47,13 @@ export const site = {
   shortTitle: "Pearmo",
   tagline: "Meet the person, not the picture",
   description:
-    "Pearmo is an anonymous, psychology-matched dating app. There's no swiping and no public photos, just a few real, verified matches a day and chat that opens only when you both say yes. Launching first in Sri Lanka.",
-  /** Kept under ~155 chars for SERP display without truncation. */
+    "Pearmo is an anonymous, psychology-matched dating app. There's no swiping and no public photos, just a few real matches a day and chat that opens only when you both say yes. Launching first in Sri Lanka.",
+  /**
+   * Kept under ~155 chars for SERP display without truncation. Don't say
+   * "verified people only": verification is optional in the app.
+   */
   metaDescription:
-    "Anonymous, psychology-matched dating. No swiping, no public photos, verified people only. Launching first in Sri Lanka. Join the Pearmo waitlist.",
+    "Anonymous, psychology-matched dating. No swiping, no public photos, chat only when you both say yes. Launching first in Sri Lanka. Join the waitlist.",
   locale: "en_LK",
   /** BCP-47 tag for <html lang> and hreflang. */
   lang: "en-LK",

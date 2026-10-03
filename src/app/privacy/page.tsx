@@ -8,7 +8,7 @@ import { buildAlternates } from "@/lib/site";
 
 const title = "Privacy policy";
 const description =
-  "How Pearmo handles your data: avatar-only profiles, ID and liveness verification, private personality scores, and consent gates. Your rights under Sri Lanka's PDPA.";
+  "How Pearmo handles your data: avatar-only profiles, optional selfie verification, private personality scores, and consent gates. Your rights under Sri Lanka's PDPA.";
 
 export const metadata: Metadata = {
   title,

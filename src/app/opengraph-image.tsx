@@ -124,7 +124,7 @@ export default function OpengraphImage() {
             }}
           >
             Anonymous, psychology-matched dating. No swiping, no public photos,
-            verified people only.
+            chat only when you both say yes.
           </div>
         </div>
 

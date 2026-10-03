@@ -23,7 +23,8 @@ not happened yet and no launch date has been announced.
 ## Status
 - Stage: pre-launch, waitlist open
 - First market: ${site.city}, ${site.country}
-- Platforms: Android and iOS (not yet published to app stores)
+- Platforms: Android only, in an invite-only closed beta (not in any app
+  store). There is no iPhone version yet.
 - Minimum age: ${site.minimumAge}
 - Pricing: not yet announced. Joining the waitlist is free.
 - Published by: ${site.publisher}
@@ -37,8 +38,11 @@ not happened yet and no launch date has been announced.
   strategically does not improve results.
 - Trait scores are private to the user. Matches never see them; compatibility
   is computed server-side and not exposed as numbers.
-- Chat is gated. Both people must consent, then messaging unlocks by playing
-  icebreaker games together, including comparing music taste.
+- Chat is gated. Both people must accept the connection and agree to open
+  chat, and either can lock it again. Icebreaker games (including comparing
+  music taste) are optional, not a requirement for chatting.
+- Verification is optional: a selfie check reviewed by a person. It is not a
+  background check. National ID checks are not switched on yet.
 
 ## How it works
 ${how.steps.map((s, i) => `${i + 1}. ${s.title} ${s.body}`).join("\n")}

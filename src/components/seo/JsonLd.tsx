@@ -109,7 +109,9 @@ export function MobileApplicationSchema() {
         name: site.name,
         applicationCategory: "SocialNetworkingApplication",
         applicationSubCategory: "Dating",
-        operatingSystem: "Android, iOS",
+        // Android only for now (invite-only beta APK). Add iOS when the
+        // iPhone web app at app.pearmo.com launches.
+        operatingSystem: "Android",
         description: site.description,
         url: site.url,
         inLanguage: site.lang,
@@ -124,11 +126,10 @@ export function MobileApplicationSchema() {
           "Anonymous animal avatars instead of public photos",
           "Big Five personality matching with reverse-scored items",
           "A few curated matches a day, no swiping",
-          "Selfie liveness and national ID verification",
-          "Mutual-consent gates for chat, photos, calls and location",
-          "Icebreaker games that unlock messaging",
+          "Optional selfie verification, reviewed by a person",
+          "Mutual-consent gates for chat and photo sharing",
+          "Icebreaker games to play together",
           "Shared music-taste matching",
-          "Date safety check-in with an emergency contact",
         ],
       }}
     />

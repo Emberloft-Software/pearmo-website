@@ -52,9 +52,9 @@ export const legalFacts = {
   smsProvider: "Text.lk",
 } as const;
 
-export const LEGAL_LAST_UPDATED = "2026-08-04";
+export const LEGAL_LAST_UPDATED = "2026-10-03";
 
-export const LEGAL_LAST_UPDATED_LABEL = "4 August 2026";
+export const LEGAL_LAST_UPDATED_LABEL = "3 October 2026";
 
 export type LegalBlock =
   | { type: "p"; text: string }
@@ -220,7 +220,12 @@ export const privacyPolicy: readonly LegalSection[] = [
       { type: "h3", text: "Technical data" },
       {
         type: "p",
-        text: "Our hosting provider logs the usual things a server logs, including IP address, request times, device and app version, and we use those to keep the service running and to spot abuse. That is the extent of it. The app contains no analytics SDK, no advertising identifier, no crash-reporting service and no push-notification tokens; notifications in Pearmo are generated locally by your own phone, so nothing about them reaches us.",
+        text: "Our hosting provider logs the usual things a server logs, including IP address, request times, device and app version, and we use those to keep the service running and to spot abuse. That is the extent of it. The app contains no analytics SDK, no advertising identifier and no crash-reporting service.",
+      },
+      { type: "h3", text: "Notifications" },
+      {
+        type: "p",
+        text: "To notify you about new messages, connection requests, game invites and changes to a shared unlock, the app registers a push token for your phone with Google's Firebase Cloud Messaging, and we store that token against your account. Our server sends each notification through Firebase, so Google handles its text, and for a new message that text includes the message itself. If you turn off notifications for Pearmo in your phone's settings, they stop arriving, but the token stays registered.",
       },
       { type: "h3", text: "This website" },
       {
@@ -259,6 +264,7 @@ export const privacyPolicy: readonly LegalSection[] = [
           "Supabase, the database, sign-in, file storage and server functions behind the app. Supabase runs our project on Amazon Web Services infrastructure in Singapore. This is where essentially all of your data lives.",
           `${legalFacts.smsProvider}, a Sri Lankan SMS gateway that delivers your sign-in code and so receives your phone number. This is the one provider in this list that is inside Sri Lanka.`,
           "Vercel, which hosts this website and the private page we use to review verification selfies.",
+          "Google, through Firebase Cloud Messaging, which delivers the app's notifications to your phone. It receives your phone's push token and the text of each notification, which for a new message includes the message itself.",
           "Google, during the closed beta only, because the signup form is a Google Form and its responses sit in a Google Sheet that only the two of us can open.",
           "Law enforcement or a regulator, where we are legally required to hand something over, or where we believe in good faith it is necessary to prevent serious harm to someone.",
         ],
@@ -279,7 +285,7 @@ export const privacyPolicy: readonly LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: `Your data does not stay in Sri Lanka. Our Supabase project is hosted in ${legalFacts.hostingRegion}, on Amazon Web Services infrastructure, and that is where your profile, messages, trait scores and any verification image are stored and processed. Our website and the internal review page are served by Vercel from its global network.`,
+        text: `Your data does not stay in Sri Lanka. Our Supabase project is hosted in ${legalFacts.hostingRegion}, on Amazon Web Services infrastructure, and that is where your profile, messages, trait scores and any verification image are stored and processed. Our website and the internal review page are served by Vercel from its global network, and notifications pass through Google's Firebase Cloud Messaging, which also runs worldwide.`,
       },
       {
         type: "p",
@@ -666,7 +672,7 @@ export const betaTerms: readonly LegalSection[] = [
           "Onboarding: you answer a personality questionnaire, set who and what you are looking for, and pick an animal character.",
           "Daily matches: each day you get a small set of suggested people, scored against your questionnaire answers. There are no photos to look at.",
           "Connections: you send or receive a connection request. Nobody can message you unless you both agree.",
-          "Icebreaker games such as would-you-rather, 20 questions and draw together, which you can play at any point in a connection. Early chat is capped at a small number of messages.",
+          "Icebreaker games such as would-you-rather, 20 questions and draw together, which you can play at any point in a connection.",
           "Verification: optional, and in this test it is a selfie and a liveness check only. Verified accounts get a badge.",
           "Reporting and rating: you can report someone, and rate a connection after it ends. Ratings feed an internal trust score.",
           "A check-in you can set around a date. Read the limitations section before you rely on it. It does not do what the name suggests.",
@@ -734,6 +740,7 @@ export const betaTerms: readonly LegalSection[] = [
           "Icebreaker game answers, used to run the game.",
           "Reports you file and ratings you give, used for moderation and trust scoring.",
           "Basic account activity, such as when you were last active and how many matches you have had.",
+          "A push token for your phone, so we can send you notifications.",
         ],
       },
       {
@@ -760,6 +767,7 @@ export const betaTerms: readonly LegalSection[] = [
           `Your sign-in code is sent by ${legalFacts.smsProvider}, a Sri Lankan SMS gateway, which sees your phone number. It is the only part of this chain physically inside Sri Lanka.`,
           "Verification selfies sit in private storage and are reached only through short-lived signed links.",
           "Messages are stored in our database in plain text. Pearmo is not end-to-end encrypted. Assume we can technically read them, because we can.",
+          "Notifications are sent through Google's Firebase Cloud Messaging, so Google handles the text of each one, and for a new message that includes the message itself.",
           "The two of us can access the whole database, including chat contents. We open it to debug something, to look at a report, or to review a verification. We will not browse your data out of curiosity and we will not show it to anyone outside the two of us.",
           "Verification selfies are reviewed by a person, one of us, not by any automated system.",
           "We may use anonymised, aggregated patterns from the test, such as “x% of testers stopped during onboarding”, to improve the product and in material we show investors. Your name, number, selfie, messages and profile are never part of that.",
@@ -768,7 +776,7 @@ export const betaTerms: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "Other testers see your age, your character, your about text, the traits your questionnaire produced, and your general area. They never see your phone number, your exact date of birth, your individual questionnaire answers, who you are open to, or your selfie.",
+        text: "Other testers see your age, your character, your about text, and your general area. They never see your phone number, your exact date of birth, your questionnaire answers or the trait scores they produce, who you are open to, or your selfie.",
       },
       {
         type: "p",
