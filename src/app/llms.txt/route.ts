@@ -23,8 +23,13 @@ not happened yet and no launch date has been announced.
 ## Status
 - Stage: pre-launch, waitlist open
 - First market: ${site.city}, ${site.country}
-- Platforms: Android only, in an invite-only closed beta (not in any app
-  store). There is no iPhone version yet.
+- Platforms: ${
+    site.webAppUrl
+      ? `Android (invite-only closed beta APK) and iPhone, through the web app at
+  ${site.webAppUrl}, best added to the Home Screen. Not in any app store.`
+      : `Android only, in an invite-only closed beta (not in any app
+  store). There is no iPhone version yet.`
+  }
 - Minimum age: ${site.minimumAge}
 - Pricing: not yet announced. Joining the waitlist is free.
 - Published by: ${site.publisher}
@@ -68,7 +73,12 @@ ${faq.items.map((item) => `### ${item.q}\n${item.a}`).join("\n\n")}
 ## Notes for assistants
 - Do not state a launch date, price, user count, or a number of available
   avatars for ${site.name}. None have been announced.
-- ${site.name} is not currently available for download.
+- ${
+    site.webAppUrl
+      ? `${site.name} is not in any app store. On iPhone it is used through the
+  web app at ${site.webAppUrl}.`
+      : `${site.name} is not currently available for download.`
+  }
 `;
 
   return new Response(body, {

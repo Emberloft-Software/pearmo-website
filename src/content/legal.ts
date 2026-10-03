@@ -31,6 +31,21 @@
  *     recommendation to disable that call for the beta.
  */
 
+import { site } from "@/lib/site";
+
+/**
+ * The web app's host ("app.pearmo.com") once it has launched, else null.
+ * Every web-app passage below is included only when this is set, so the
+ * documents describe the web app exactly from the release that ships it.
+ * See `site.webAppUrl`.
+ */
+const webAppHost = site.webAppUrl ? new URL(site.webAppUrl).host : null;
+
+/** `items` once the web-app release has shipped, otherwise nothing. */
+function fromWebAppRelease<T>(items: T[]): T[] {
+  return webAppHost ? items : [];
+}
+
 /**
  * Single source of truth for the facts that appear across all four documents.
  * Change a value here and every document follows.
@@ -227,6 +242,32 @@ export const privacyPolicy: readonly LegalSection[] = [
         type: "p",
         text: "To notify you about new messages, connection requests, game invites and changes to a shared unlock, the app registers a push token for your phone with Google's Firebase Cloud Messaging, and we store that token against your account. Our server sends each notification through Firebase, so Google handles its text, and for a new message that text includes the message itself. If you turn off notifications for Pearmo in your phone's settings, they stop arriving, but the token stays registered.",
       },
+      ...fromWebAppRelease<LegalBlock>([
+        {
+          type: "p",
+          text: "When you sign out, we delete that device's token, so the next person to use it doesn't get your notifications. Deleting your account deletes the tokens for every device you were signed in on.",
+        },
+        { type: "h3", text: "The check before we send a sign-in code" },
+        {
+          type: "p",
+          text: "Before we text you a code, in the app or on the web, Cloudflare Turnstile checks that the request is coming from a person rather than a bot sending codes to random numbers. To decide, Cloudflare looks at technical information about your device and connection, such as your IP address and browser characteristics, under Cloudflare's own privacy policy. It usually finishes by itself; now and then it asks you to tap a box.",
+        },
+        { type: "h3", text: "Using Pearmo in a web browser" },
+        {
+          type: "p",
+          text: `Pearmo also runs as a web app at ${webAppHost}, which is how it works on iPhone. It behaves like the Android app, with these differences:`,
+        },
+        {
+          type: "list",
+          items: [
+            "Your sign-in is kept in your browser's own storage on that device, the way any website keeps you signed in, and signing out removes it. On iPhone, the Home Screen version keeps its sign-in separately from Safari.",
+            "The web app is hosted by Cloudflare, which logs IP addresses and request details like any web host.",
+            "A browser can't run the on-device liveness check, so the web app shows you a random pose to copy in your selfie instead. We store which pose you were shown alongside the selfie so the reviewer can check it. The selfie is deleted after review, the same as one taken in the app.",
+            "Notifications use the same Firebase Cloud Messaging as the app, and start only if you turn them on. On iPhone they work only once Pearmo is added to your Home Screen.",
+            "The check-in alarm isn't available in a browser.",
+          ],
+        },
+      ]),
       { type: "h3", text: "This website" },
       {
         type: "p",
@@ -265,6 +306,9 @@ export const privacyPolicy: readonly LegalSection[] = [
           `${legalFacts.smsProvider}, a Sri Lankan SMS gateway that delivers your sign-in code and so receives your phone number. This is the one provider in this list that is inside Sri Lanka.`,
           "Vercel, which hosts this website and the private page we use to review verification selfies.",
           "Google, through Firebase Cloud Messaging, which delivers the app's notifications to your phone. It receives your phone's push token and the text of each notification, which for a new message includes the message itself.",
+          ...fromWebAppRelease([
+            `Cloudflare, which hosts the web app at ${webAppHost} and runs the Turnstile check before a sign-in code is sent.`,
+          ]),
           "Google, during the closed beta only, because the signup form is a Google Form and its responses sit in a Google Sheet that only the two of us can open.",
           "Law enforcement or a regulator, where we are legally required to hand something over, or where we believe in good faith it is necessary to prevent serious harm to someone.",
         ],
@@ -285,7 +329,7 @@ export const privacyPolicy: readonly LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: `Your data does not stay in Sri Lanka. Our Supabase project is hosted in ${legalFacts.hostingRegion}, on Amazon Web Services infrastructure, and that is where your profile, messages, trait scores and any verification image are stored and processed. Our website and the internal review page are served by Vercel from its global network, and notifications pass through Google's Firebase Cloud Messaging, which also runs worldwide.`,
+        text: `Your data does not stay in Sri Lanka. Our Supabase project is hosted in ${legalFacts.hostingRegion}, on Amazon Web Services infrastructure, and that is where your profile, messages, trait scores and any verification image are stored and processed. Our website and the internal review page are served by Vercel from its global network, and notifications pass through Google's Firebase Cloud Messaging, which also runs worldwide.${webAppHost ? ` The web app and the sign-in check run on Cloudflare's global network.` : ""}`,
       },
       {
         type: "p",
@@ -625,7 +669,9 @@ export const betaTerms: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "This page is where you find out what you are signing up for. If you consent on the signup form, we email you an Android APK file to install by hand.",
+        text: webAppHost
+          ? `This page is where you find out what you are signing up for. If you consent on the signup form, we email you an Android APK file to install by hand or, on iPhone, a link to the web app at ${webAppHost}.`
+          : "This page is where you find out what you are signing up for. If you consent on the signup form, we email you an Android APK file to install by hand.",
       },
       {
         type: "p",
@@ -650,7 +696,9 @@ export const betaTerms: readonly LegalSection[] = [
         items: [
           "You are 18 or older. This is a hard requirement with no exceptions, and it is the one thing on this list we cannot check. ID verification is switched off for this test, so we are trusting you.",
           "You are in Sri Lanka for the duration of the beta.",
-          "You have an Android phone running Android 7.0 or newer. There is no iPhone build yet.",
+          webAppHost
+            ? `You have an Android phone running Android 7.0 or newer, or an iPhone, which uses the web app at ${webAppHost} instead of the APK. On iPhone, add it to your Home Screen to get notifications.`
+            : "You have an Android phone running Android 7.0 or newer. There is no iPhone build yet.",
           "You have a Sri Lankan mobile number that can receive an SMS, because that is how you sign in.",
           "You are joining as yourself, with real information about yourself, and one account only.",
         ],
@@ -699,7 +747,7 @@ export const betaTerms: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "So the only verification in this test is the selfie and liveness check. The liveness step, where you centre your face, blink and turn your head, runs entirely on your own phone. No video is recorded, and nothing from it is ever uploaded. The selfie is looked at by one of us, by hand, to confirm you are a real person, and is then deleted. We keep the decision, not the picture. There is no verification company involved and no automatic face matching anywhere.",
+        text: `So the only verification in this test is the selfie and liveness check. The liveness step, where you centre your face, blink and turn your head, runs entirely on your own phone. No video is recorded, and nothing from it is ever uploaded. The selfie is looked at by one of us, by hand, to confirm you are a real person, and is then deleted. We keep the decision, not the picture. There is no verification company involved and no automatic face matching anywhere.${webAppHost ? " In the web app, which can't run the liveness step, you are shown a random pose to copy in the selfie instead, and the reviewer checks you did." : ""}`,
       },
     ],
   },
@@ -728,7 +776,9 @@ export const betaTerms: readonly LegalSection[] = [
       {
         type: "list",
         items: [
-          "A selfie, for verification, plus the yes/no result of the on-device liveness check.",
+          webAppHost
+            ? "A selfie, for verification, plus the yes/no result of the on-device liveness check or, in the web app, which pose you were asked to copy."
+            : "A selfie, for verification, plus the yes/no result of the on-device liveness check.",
           "A profile photo, if you add one.",
           "Photos and videos you send in a chat.",
           "A short voice intro, if you record one.",
@@ -771,6 +821,9 @@ export const betaTerms: readonly LegalSection[] = [
           "Verification selfies sit in private storage and are reached only through short-lived signed links.",
           "Messages are stored in our database in plain text. Pearmo is not end-to-end encrypted. Assume we can technically read them, because we can.",
           "Notifications are sent through Google's Firebase Cloud Messaging, so Google handles the text of each one, and for a new message that includes the message itself.",
+          ...fromWebAppRelease([
+            `Before a sign-in code is sent, Cloudflare Turnstile checks you are a person and not a bot, using technical details of your device and connection such as your IP address. Cloudflare also hosts the web app at ${webAppHost}.`,
+          ]),
           "The two of us can access the whole database, including chat contents. We open it to debug something, to look at a report, or to review a verification. We will not browse your data out of curiosity and we will not show it to anyone outside the two of us.",
           "Verification selfies are reviewed by a person, one of us, not by any automated system.",
           "We may use anonymised, aggregated patterns from the test, such as “x% of testers stopped during onboarding”, to improve the product and in material we show investors. Your name, number, selfie, messages and profile are never part of that.",

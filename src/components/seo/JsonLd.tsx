@@ -109,9 +109,10 @@ export function MobileApplicationSchema() {
         name: site.name,
         applicationCategory: "SocialNetworkingApplication",
         applicationSubCategory: "Dating",
-        // Android only for now (invite-only beta APK). Add iOS when the
-        // iPhone web app at app.pearmo.com launches.
-        operatingSystem: "Android",
+        // iPhone is served by the web app, so iOS appears only once
+        // `site.webAppUrl` is set (see its comment in lib/site.ts).
+        operatingSystem: site.webAppUrl ? "Android, iOS" : "Android",
+        ...(site.webAppUrl ? { installUrl: site.webAppUrl } : {}),
         description: site.description,
         url: site.url,
         inLanguage: site.lang,

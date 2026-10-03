@@ -74,6 +74,20 @@ export const site = {
   backgroundColor: "#f6f4fb",
   /** Minimum age — a dating service, so this is a hard gate, not a rating. */
   minimumAge: 18,
+  /**
+   * The launch switch for the web app (the PWA at app.pearmo.com, which is
+   * how iPhone users get Pearmo without an App Store build). null until that
+   * release ships, alongside the Android build that adds the Turnstile
+   * sign-in check and removes push tokens on sign-out.
+   *
+   * While null, every page says there's no iPhone version and no "Open
+   * Pearmo" button appears. Setting it changes all of these together, so
+   * they can't drift apart: the iPhone-only "Open Pearmo" button, the
+   * platforms in JSON-LD and llms.txt, the beta terms' eligibility line, and
+   * the web-app, Cloudflare/Turnstile and sign-out parts of the privacy
+   * policy and beta terms.
+   */
+  webAppUrl: null as string | null,
 } as const;
 
 /**

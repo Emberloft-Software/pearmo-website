@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { OpenAppButton } from "@/components/OpenAppButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { hero } from "@/content/site-content";
 
@@ -60,6 +61,8 @@ export function Hero() {
           </Reveal>
 
           <Reveal eager delay={0.24} className="flex flex-wrap items-center gap-3.5">
+            {/* iPhone visitors only, once the web app launches. */}
+            <OpenAppButton className="brand-gradient inline-flex items-center rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5" />
             <a
               href={hero.primaryCta.href}
               className="brand-gradient inline-flex items-center rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5"
