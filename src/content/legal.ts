@@ -674,6 +674,8 @@ export const betaTerms: readonly LegalSection[] = [
           "Connections: you send or receive a connection request. Nobody can message you unless you both agree.",
           "Icebreaker games such as would-you-rather, 20 questions and draw together, which you can play at any point in a connection.",
           "Verification: optional, and in this test it is a selfie and a liveness check only. Verified accounts get a badge.",
+          "Photos, once your selfie is verified: you can add a profile photo, which stays hidden unless you switch it on, and send photos or videos in a chat when you are both verified and have both agreed to it.",
+          "An optional short voice intro, recorded during onboarding, which people viewing your profile can play.",
           "Reporting and rating: you can report someone, and rate a connection after it ends. Ratings feed an internal trust score.",
           "A check-in you can set around a date. Read the limitations section before you rely on it. It does not do what the name suggests.",
         ],
@@ -692,8 +694,6 @@ export const betaTerms: readonly LegalSection[] = [
         type: "list",
         items: [
           "National identity document verification. We do not ask for your NIC, and we could not store it if you tried. ID verification comes after the beta.",
-          "Profile photos. Your profile is an animal character, and there are no photos in this test at all, not on profiles and not in chat.",
-          "Voice intro recordings.",
           "Payments of any kind.",
         ],
       },
@@ -729,6 +729,9 @@ export const betaTerms: readonly LegalSection[] = [
         type: "list",
         items: [
           "A selfie, for verification, plus the yes/no result of the on-device liveness check.",
+          "A profile photo, if you add one.",
+          "Photos and videos you send in a chat.",
+          "A short voice intro, if you record one.",
           "Check-in times, and any contact number you type into the check-in note.",
         ],
       },
@@ -776,7 +779,7 @@ export const betaTerms: readonly LegalSection[] = [
       },
       {
         type: "p",
-        text: "Other testers see your age, your character, your about text, and your general area. They never see your phone number, your exact date of birth, your questionnaire answers or the trait scores they produce, who you are open to, or your selfie.",
+        text: "Other testers see your age, your character, your about text and your general area, plus your voice intro if you recorded one and your profile photo if you added one and switched it on. They never see your phone number, your exact date of birth, your questionnaire answers or the trait scores they produce, who you are open to, or your selfie.",
       },
       {
         type: "p",
