@@ -30,8 +30,9 @@ not happened yet and no launch date has been announced.
 - Published by: ${site.publisher}
 
 ## What makes it different
-- No public photo grid. Users appear as an animal avatar of their choosing; real
-  photos are shared only with a specific match, and only when both people agree.
+- No public photo grid. Users appear as an animal avatar of their choosing. A
+  verified user can add a real profile photo, which stays hidden unless they
+  choose to show it; photos sent in a chat need both people's agreement.
 - No swiping. Users receive a few compatibility-matched people per day.
 - Matching is based on a Big Five personality questionnaire plus attachment
   theory, across six dimensions. Items are reverse-scored so answering
