@@ -29,6 +29,30 @@ export function Nav({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
 
+  // The desktop "Get Pearmo" QR panel is a native <details> (works without
+  // JS). With JS it also closes on scroll, Escape or a click elsewhere, so it
+  // never floats over the page while someone reads on.
+  useEffect(() => {
+    const closePanels = (e?: Event) => {
+      document.querySelectorAll<HTMLDetailsElement>("header details[open]").forEach((d) => {
+        if (e?.target instanceof Node && d.contains(e.target)) return;
+        d.open = false;
+      });
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closePanels();
+    };
+    const onScroll = () => closePanels();
+    document.addEventListener("click", closePanels);
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      document.removeEventListener("click", closePanels);
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
   useEffect(() => {
     if (!open) return;
     sheetRef.current?.querySelector("a")?.focus();
