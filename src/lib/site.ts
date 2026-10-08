@@ -47,13 +47,13 @@ export const site = {
   shortTitle: "Pearmo",
   tagline: "Meet the person, not the picture",
   description:
-    "Pearmo is an anonymous, psychology-matched dating app. There's no swiping and no public photos, just a few real matches a day and chat that opens only when you both say yes. Launching first in Sri Lanka.",
+    "Pearmo is an anonymous, psychology-matched dating app. There's no swiping and no public photos, just a few real matches a day and chat that opens only when you both say yes. In an invite-only closed beta in Sri Lanka.",
   /**
    * Kept under ~155 chars for SERP display without truncation. Don't say
    * "verified people only": verification is optional in the app.
    */
   metaDescription:
-    "Anonymous, psychology-matched dating. No swiping, no public photos, chat only when you both say yes. Launching first in Sri Lanka. Join the waitlist.",
+    "Anonymous, psychology-matched dating. No swiping, no public photos, chat only when you both say yes. Closed beta in Sri Lanka. Join the beta.",
   locale: "en_LK",
   /** BCP-47 tag for <html lang> and hreflang. */
   lang: "en-LK",
@@ -70,22 +70,25 @@ export const site = {
    */
   contactEmail: "pearmo.app@gmail.com",
   privacyEmail: "pearmo.app@gmail.com",
-  themeColor: "#6c5ce7",
-  backgroundColor: "#f6f4fb",
+  themeColor: "#6c4cf1",
+  backgroundColor: "#faf8ff",
   /** Minimum age — a dating service, so this is a hard gate, not a rating. */
   minimumAge: 18,
   /**
-   * The launch switch for the web app (the PWA at app.pearmo.com, which is
-   * how iPhone users get Pearmo without an App Store build). null until that
-   * release ships, alongside the Android build that adds the Turnstile
-   * sign-in check and removes push tokens on sign-out.
+   * The beta sign-up form. Every "Join the beta" button links here. Invites
+   * go out to the WhatsApp number and email address people give on it.
+   */
+  betaFormUrl:
+    "https://docs.google.com/forms/d/e/1FAIpQLSfnxg145QbDhb91PiIa70qEewfnhWrYTLVyHsUwBcJBJ_pe8A/viewform",
+  /**
+   * The launch switch for the web app (the PWA at app.pearmo.com, for
+   * Android, iPhone and computers alike). null until that release ships.
    *
-   * While null, every page says there's no iPhone version and no "Open
-   * Pearmo" button appears. Setting it changes all of these together, so
-   * they can't drift apart: the iPhone-only "Open Pearmo" button, the
-   * platforms in JSON-LD and llms.txt, the beta terms' eligibility line, and
-   * the web-app, Cloudflare/Turnstile and sign-out parts of the privacy
-   * policy and beta terms.
+   * While null: no QR codes, no "Open Pearmo" buttons, no "Get Pearmo"
+   * section, the beta form leads everywhere, and /get sends people to the
+   * beta section. Setting it switches all of these on together, plus the
+   * platforms in JSON-LD and llms.txt and the web-app parts of the privacy
+   * policy and beta terms, so they can't drift apart.
    */
   webAppUrl: null as string | null,
 } as const;
@@ -115,6 +118,17 @@ export const socialProfiles: readonly string[] = [
   // "https://www.linkedin.com/company/pearmo",
   // "https://x.com/pearmoapp",
 ];
+
+/**
+ * The one address every QR code and printed link uses. It never points at
+ * app.pearmo.com directly: /get answers with a temporary (307) redirect, so
+ * where it leads can change without reprinting anything. Always the www
+ * production host, even on preview deployments, because a printed code
+ * outlives any preview.
+ */
+export const getUrl = `${PRODUCTION_ORIGIN}/get`;
+/** The same address as people read it under a QR code. */
+export const getUrlLabel = "pearmo.com/get";
 
 export function absoluteUrl(path = "/"): string {
   return new URL(path, `${siteUrl}/`).toString();

@@ -134,10 +134,10 @@ export const metadata: Metadata = {
 
   formatDetection: { telephone: false, address: false, email: false },
 
+  // No `capable: true` here: that made Share → Add to Home Screen on this
+  // marketing site open full-screen like the app. The app is app.pearmo.com.
   appleWebApp: {
-    capable: true,
     title: site.name,
-    statusBarStyle: "default",
   },
 
   other: {

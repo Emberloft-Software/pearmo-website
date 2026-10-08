@@ -8,7 +8,10 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: site.name,
     description: site.metaDescription,
     start_url: "/",
-    display: "standalone",
+    // "browser", not "standalone": this is the marketing site, and Add to Home
+    // Screen must not produce something that looks and launches like the app.
+    // The installable app is app.pearmo.com, with its own manifest.
+    display: "browser",
     background_color: site.backgroundColor,
     theme_color: site.themeColor,
     lang: site.lang,
@@ -21,7 +24,7 @@ export default function manifest(): MetadataRoute.Manifest {
         sizes: "any",
       },
       {
-        src: "/apple-icon",
+        src: "/apple-icon.png",
         type: "image/png",
         sizes: "180x180",
       },
