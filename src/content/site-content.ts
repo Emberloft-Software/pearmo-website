@@ -5,8 +5,9 @@
  * translating this one file and moving pages into an `app/[locale]/` segment,
  * rather than hunting strings through JSX.
  *
- * `emphasis` fields render in the italic Fraunces serif with the brand
- * gradient — that's the design's accent treatment, not arbitrary markup.
+ * Every factual claim here must match what the app does today. The beta
+ * section and the "Get Pearmo" steps are taken from the beta terms in
+ * `legal.ts`; if those change, change these with them.
  */
 
 export type Avatar = {
@@ -36,23 +37,66 @@ export const avatars: readonly Avatar[] = [
   { slug: "hedgehog-m", name: "The Hedgehog", trait: "Guarded" },
 ];
 
+/**
+ * Words shared by every "join" and "open the app" control, so the nav, hero,
+ * beta section and footer can never say it two different ways.
+ */
+export const actions = {
+  joinBeta: "Join the beta",
+  joinBetaNote: "Free · 18+ · Opens a Google Form",
+  invited: "Already invited?",
+  openApp: "Open Pearmo",
+  getApp: "Get Pearmo",
+  noStore: "No app store needed. It opens in your browser.",
+  scan: "Scan with your phone",
+  openHere: "open it on this computer",
+  howBeta: "How the beta works",
+} as const;
+
 export const nav = {
   logoLabel: "Pearmo home",
   links: [
-    { href: "#why", label: "Why" },
     { href: "#how", label: "How it works" },
     { href: "#personality", label: "Personality" },
     { href: "#safety", label: "Safety" },
-    { href: "#showcase", label: "Inside the app" },
+    { href: "#beta", label: "The beta" },
     { href: "#faq", label: "FAQ" },
   ],
-  cta: { href: "#waitlist", label: "Join the waitlist" },
   menuOpenLabel: "Open menu",
   menuCloseLabel: "Close menu",
 } as const;
 
+/**
+ * The avatar/person scene pairs. Both images in a pair are cropped to the
+ * same frame so the faces line up, which is what makes the reveal read as
+ * the avatars becoming people rather than one picture replacing another.
+ * The portrait crops are the same pair cut to 4:5 for phones.
+ */
+export const scenes = {
+  cafe: {
+    width: 1509,
+    height: 937,
+    portraitWidth: 750,
+    avatar: "/assets/scenes/cafe-avatar",
+    person: "/assets/scenes/cafe-person",
+    avatarAlt:
+      "Illustrated fox and wolf avatars on a café date under string lights",
+    personAlt: "The same café date, with the two people shown as themselves",
+  },
+  sofa: {
+    width: 1678,
+    height: 937,
+    portraitWidth: 750,
+    avatar: "/assets/scenes/sofa-avatar",
+    person: "/assets/scenes/sofa-person",
+    avatarAlt:
+      "Illustrated fox and wolf avatars laughing over an icebreaker game on a sofa",
+    personAlt: "The same sofa scene, with the two people shown as themselves",
+  },
+} as const;
+
 export const hero = {
-  badge: "Pre-launch · Sri Lanka 🇱🇰",
+  badge: "Closed beta · Sri Lanka",
   /** Rendered as: Meet the {person}, / not the {picture}. */
   titleLead: "Meet the",
   titleEmphasis: "person",
@@ -60,61 +104,35 @@ export const hero = {
   /** Gets the hand-drawn strike-through. */
   titleStruck: "picture",
   lead: "Pearmo is an anonymous, psychology-matched dating app. There's no swiping and no public photos, just a few real matches a day, and conversations that open only when you both say yes.",
-  primaryCta: { href: "#waitlist", label: "Join the waitlist" },
-  secondaryCta: { href: "#how", label: "See how it works" },
-  note: "Your face stays yours. Show up as your avatar.",
-  /** Avatars in the small stacked row under the CTAs. */
-  noteAvatars: ["fox-f", "wolf-m", "owl-m", "cat-f"],
-  image: "/assets/hero-scene.jpg",
-  imageWidth: 1376,
-  imageHeight: 768,
-  imageAlt:
-    "Illustrated fox and wolf avatars sitting across from each other on a cafe date",
-  imageTag: "Matched on personality",
-  chipTop: {
-    avatar: "fox-f",
-    name: "Maya · The Fox",
-    meta: "Colombo",
-    match: "87%",
-  },
-  chipBottom: {
-    avatar: "wolf-m",
-    name: "Dev · The Wolf",
-    meta: "Consent given · chat unlocked",
-  },
+  revealCaption:
+    "On Pearmo you're your avatar. Your photo stays hidden unless you choose to show it.",
+  compareAvatar: "Avatar",
+  comparePerson: "Person",
+  compareLabel: "Slide to compare the avatar and the person",
 } as const;
 
-export const marquee = {
-  // No count on purpose. The site said "24", an older note said "48", and the
-  // character folder holds 20 — so any number here risks being wrong, and it
-  // would also land in the FAQ schema and llms.txt as a factual claim.
-  label: "Choose your avatar from endless animal personalities",
+export const strip = {
+  // No count on purpose. The site once said "24", an older note said "48",
+  // and the character folder holds 20, so any number here risks being wrong.
+  label: "Show up as an animal that feels like you.",
 } as const;
 
-export const problem = {
+export const why = {
   kicker: "Why Pearmo exists",
   titleLead: "Dating apps have a",
-  titleEmphasis: "trust",
+  titleMark: "trust",
   titleTrail: "problem.",
+  heardLabel: "What we heard",
+  builtLabel: "What we built",
   lead: "We surveyed 93 people before writing a line of code. Women told us the same two things again and again. They don't trust that other users are real, and they don't want their photos out there. Every app felt built around hookups, so we built the opposite.",
   stats: [
+    { value: "93", label: "people surveyed before we started building" },
     {
-      value: 93,
-      /** `false` renders the number statically instead of counting up. */
-      countUp: true,
-      label: "people surveyed before we started building",
-    },
-    {
-      value: 2,
-      countUp: true,
+      value: "2",
       label:
         "answers we heard again and again: “are they real?” and “not my photos”",
     },
-    {
-      value: 0,
-      countUp: false,
-      label: "swipes in Pearmo, just curated matches instead",
-    },
+    { value: "0", label: "swipes in Pearmo, just curated matches instead" },
   ],
   quote:
     "Every dating app here feels like it was built around hookups. I just want to know the person on the other side is real, without putting my face on the internet.",
@@ -125,51 +143,58 @@ export const how = {
   kicker: "How it works",
   titleLead: "Slow by",
   titleEmphasis: "design.",
-  lead: "Real screens from the Pearmo app, not mockups. The MVP already works.",
+  lead: "Real screens from the Pearmo app, not mockups.",
   /** Every step screenshot is a 720×1600 phone capture. */
   shotWidth: 720,
   shotHeight: 1600,
   steps: [
     {
-      num: "STEP 01",
       title: "Answer honestly. It can't be gamed.",
       body: "A psychology-based questionnaire built on the Big Five and reverse-scored, so playing it cool doesn't work. Your trait scores always stay private.",
       image: "/assets/app-personality-radar.webp",
       alt: "Pearmo personality radar screen showing six trait scores",
     },
     {
-      num: "STEP 02",
       title: "Get a few curated matches a day.",
       body: "No swiping, no endless grid. Compatibility does the heavy lifting and brings you a handful of people actually worth your time.",
       image: "/assets/app-trait-scores.webp",
       alt: "Pearmo trait scores screen breaking down personality dimensions",
     },
     {
-      num: "STEP 03",
-      title: "Break the ice before the chat.",
-      body: "Chat doesn't just open: it unlocks only when you both agree. Icebreaker games, including a shared music taste match, give you something real to talk about first.",
+      // Was "Break the ice before the chat." Games don't gate chat any more.
+      title: "Talk only when you both say yes.",
+      body: "Nobody can message you unless you both agree, and either of you can lock chat again. A shared music match gives you something real to start with.",
       image: "/assets/app-music-match.webp",
       alt: "Pearmo music match screen comparing shared music taste",
     },
     {
-      num: "STEP 04",
       title: "Say what you're actually here for.",
       body: "Something serious? Say it up front. Pearmo profiles lead with values, ambition and emotional depth, not gym selfies.",
       image: "/assets/app-about-looking-for.webp",
       alt: "Pearmo about screen showing what a user is looking for",
     },
   ],
+  showcase: {
+    kicker: "Inside the app",
+    image: "/assets/app-profile-showcase.webp",
+    width: 1600,
+    height: 1200,
+    alt: "Pearmo profile screen showing an animal avatar above an about tab with intent, age range and values",
+    title: "Profiles that lead with substance",
+    body: "Your avatar comes first, followed by what you're looking for, the ages you're open to and what you value in a partner. Your photos come last.",
+  },
 } as const;
 
-export const scene = {
-  image: "/assets/icebreaker-scene.jpg",
-  imageWidth: 1376,
-  imageHeight: 768,
-  alt: "Illustrated fox and wolf avatars playing an icebreaker game together",
-  titleLead: "Games first.",
-  titleEmphasis: "Chat second.",
-  body: "Icebreakers turn “hey” into an actual conversation. You already know you click before the first message.",
-  tag: "Pearmo · Icebreakers",
+export const icebreakers = {
+  kicker: "Icebreakers",
+  // Was "Games first. Chat second." Games are optional and don't gate chat.
+  titleLead: "Skip the",
+  titleMark: "“hey”",
+  titleTrail: ".",
+  body: "Optional icebreaker games give you something real to talk about, so the first message isn't a cold “hey”.",
+  /** As named in the beta terms, plus the music-taste match on profiles. */
+  games: ["Would you rather", "20 questions", "Draw together", "Music match"],
+  note: "Play them any time in a connection, or not at all. Chat never waits for a game.",
 } as const;
 
 export const personality = {
@@ -181,116 +206,50 @@ export const personality = {
     "Only you can see this. Your matches never see your trait scores. Compatibility is computed, not exposed.",
   radarLabel:
     "Radar chart of an example Pearmo personality profile across six dimensions",
+  exampleLabel: "Example profile",
   /** Scores are 0–5. `short` is the radar axis label, kept tight to fit. */
   traits: [
-    {
-      icon: "✨",
-      name: "Openness",
-      short: "Openness",
-      blurb: "Curious, creative, open to new ideas",
-      score: 4.0,
-    },
-    {
-      icon: "🎯",
-      name: "Conscientiousness",
-      short: "Conscient.",
-      blurb: "Organized, reliable, goal-driven",
-      score: 3.0,
-    },
-    {
-      icon: "⚡",
-      name: "Extraversion",
-      short: "Extraversion",
-      blurb: "Where you draw your social energy",
-      score: 3.5,
-    },
-    {
-      icon: "🤝",
-      name: "Agreeableness",
-      short: "Agreeable.",
-      blurb: "Warm, empathetic, cooperative",
-      score: 4.0,
-    },
-    {
-      icon: "🌊",
-      name: "Emotional stability",
-      short: "Stability",
-      blurb: "Calm and steady under stress",
-      score: 2.0,
-    },
-    {
-      icon: "🛡️",
-      name: "Attachment security",
-      short: "Security",
-      blurb: "Comfort with closeness and trust",
-      score: 4.0,
-    },
+    { name: "Openness", short: "Openness", blurb: "Curious, creative, open to new ideas", score: 4.0 },
+    { name: "Conscientiousness", short: "Conscient.", blurb: "Organized, reliable, goal-driven", score: 3.0 },
+    { name: "Extraversion", short: "Extraversion", blurb: "Where you draw your social energy", score: 3.5 },
+    { name: "Agreeableness", short: "Agreeable.", blurb: "Warm, empathetic, cooperative", score: 4.0 },
+    { name: "Emotional stability", short: "Stability", blurb: "Calm and steady under stress", score: 2.0 },
+    { name: "Attachment security", short: "Security", blurb: "Comfort with closeness and trust", score: 4.0 },
   ],
   scoreMax: 5,
 } as const;
 
 export const safety = {
   kicker: "Safety, not vibes",
-  titleLead: "Real people.",
-  titleEmphasis: "Really",
-  titleTrail: "verified.",
+  // Was "Real people. Really verified." Verification is optional.
+  titleLead: "Your face.",
+  titleMark: "Your call.",
   lead: "Anonymity for you doesn't mean anonymity for bad actors. Every layer of Pearmo assumes trust has to be earned by the platform first.",
   cards: [
     {
-      icon: "shield" as const,
-      title: "Real-person verification",
-      body: "An optional selfie check, reviewed by a real person, confirms someone real is behind the account. Every profile shows how far it's verified, and the app spells out what a badge does and doesn't mean.",
-    },
-    {
       icon: "eye-off" as const,
+      chip: "Photo hidden",
       title: "Your photos stay private",
       body: "No public photo grid. You show up as your avatar, and a real photo appears only if you add one and choose to show it.",
     },
     {
       icon: "lock" as const,
+      chip: "Chat locked · both must agree",
       title: "Consent gates everything",
       body: "Chat and photo sharing stay locked until both people opt in, and either of you can lock them again at any time. Slowing down is the feature.",
     },
-  ],
-} as const;
-
-export const showcase = {
-  kicker: "See it in action",
-  titleLead: "Every claim, a",
-  titleEmphasis: "real",
-  titleTrail: "screen.",
-  lead: "Nothing on this page is a promise on faith. Here's what profiles, matches and consent actually look like once you're in the app.",
-  cards: [
     {
-      featured: true,
-      image: "/assets/app-profile-showcase.webp",
-      width: 1600,
-      height: 1200,
-      alt: "Pearmo profile screen showing an animal avatar above an about tab with intent, age range and values",
-      title: "Profiles that lead with substance",
-      body: "Your avatar comes first, followed by what you're looking for, the ages you're open to and what you value in a partner. Your photos come last.",
+      icon: "shield" as const,
+      chip: "Selfie checked by a person",
+      title: "Real-person verification",
+      body: "An optional selfie check, reviewed by a real person, confirms someone real is behind the account. Every profile shows how far it's verified, and the app spells out what a badge does and doesn't mean.",
     },
     {
-      featured: false,
-      image: "/assets/app-showcase-overview.webp",
-      width: 2560,
-      height: 1920,
-      alt: "Pearmo music match, connection and personality radar screens shown side by side",
-      title: "Matches, music and traits in one place",
-      body: "Shared genres, your private personality radar and the connections you've made are all a tab away.",
-    },
-    {
-      featured: false,
-      image: "/assets/app-shared-unlocks.webp",
-      width: 1500,
-      height: 1125,
-      // TODO: this screenshot predates 11 Jul 2026 and still shows the
-      // calls/location/gift unlocks that were removed. Replace it with a
-      // current Shared Unlocks screen (chat + photos & videos only). The
-      // alt text is kept neutral until then so it doesn't restate them.
-      alt: "Pearmo shared unlocks screen, where each unlock needs both people's consent",
-      title: "Consent, unlocked one step at a time",
-      body: "Chat and photo sharing each stay locked until you both agree, and either of you can switch them off again whenever you like.",
+      // From the beta terms ("Reporting and rating").
+      icon: "flag" as const,
+      chip: "Report · Rate",
+      title: "Report anyone, rate every connection",
+      body: "You can report someone at any point, and rate a connection after it ends. Ratings feed an internal trust score.",
     },
   ],
 } as const;
@@ -304,7 +263,7 @@ export const faq = {
   kicker: "Questions, answered",
   titleLead: "Everything you're",
   titleEmphasis: "wondering.",
-  lead: "Still curious about something? Reach us at pearmo.app@gmail.com.",
+  lead: "Still curious about something? Email pearmo.app@gmail.com. It reaches the team directly.",
   items: [
     {
       q: "What is Pearmo?",
@@ -312,7 +271,7 @@ export const faq = {
     },
     {
       q: "When does Pearmo launch?",
-      a: "The MVP is built and we're preparing a first release in Sri Lanka, starting in Colombo. Join the waitlist and you'll be told the launch date before it's public.",
+      a: "Pearmo is in an invite-only closed beta with a small group in Sri Lanka. There's no public launch date yet. Join the beta and you'll hear about the launch before it's public.",
     },
     {
       q: "Do I have to upload my photo?",
@@ -336,7 +295,7 @@ export const faq = {
     },
     {
       q: "Is Pearmo free?",
-      a: "Joining the waitlist is free. We'll confirm what the app itself costs before launch, and waitlist members will hear first.",
+      a: "The beta is free, with no payments anywhere in it. We'll confirm what the app itself costs before launch, and beta testers will hear first.",
     },
     {
       q: "Is Pearmo only for serious relationships?",
@@ -344,36 +303,106 @@ export const faq = {
     },
     {
       q: "Where is Pearmo available?",
-      a: "Pearmo is launching in Sri Lanka first, beginning with Colombo. Other markets will follow once the first release is stable.",
+      a: "Only in Sri Lanka for now, through the invite-only closed beta. Other markets will follow once the first release is stable.",
+    },
+    {
+      q: "What happens to my data when the beta ends?",
+      a: "We delete the beta data: accounts, profiles, messages, connections, matches and any verification images. Nothing carries over to a public launch. Your sign-up form answers are deleted too, and you can ask us to delete them sooner.",
     },
   ],
 } as const;
 
-export const cta = {
-  kicker: "Launching first in Sri Lanka",
+/**
+ * The closing section. Facts from the beta terms: who can take part, that it's
+ * free, that the data is deleted at the end, and how the form is stored.
+ */
+export const beta = {
+  kicker: "Join the closed beta",
   titleLead: "Be there when the",
   titleEmphasis: "masks come off.",
-  lead: "The MVP is built and we're opening the doors soon. Join the waitlist to be among the first matches in Colombo.",
-  emailLabel: "Email address",
-  emailPlaceholder: "you@example.com",
-  submitLabel: "Get early access",
-  successMessage: "🦊 You're on the list. See you at launch.",
-  errorMessage: "That doesn't look like a valid email. Mind checking it?",
-  privacyNote:
-    "One email at launch. No spam, no sharing your address with anyone.",
-  /** Avatars floated in the corners of the CTA card. */
-  floatingAvatars: ["deer-f", "lion-m", "rabbit-f", "panther-m"],
+  lead: "Pearmo is in an early, invite-only test with a small group in Sri Lanka. Tell us a little about yourself, and we'll send your invite to your WhatsApp and email.",
+  steps: [
+    {
+      title: "Fill in the form",
+      body: "Your first name, phone number, email and a few questions about you. It's a Google Form.",
+    },
+    {
+      title: "Get your invite",
+      body: "When it's ready, we send it to your WhatsApp and email.",
+    },
+    {
+      title: "Open Pearmo",
+      body: "Follow the link in your invite, sign in with your phone number, and pick your animal.",
+    },
+  ],
+  whoTitle: "Who can join",
+  who: [
+    "You're 18 or older",
+    "You're in Sri Lanka",
+    "You have a Sri Lankan mobile number for the SMS sign-in code",
+    "You're joining as yourself, with one account",
+  ],
+  /** Inserted after the phone-number line; which one depends on `site.webAppUrl`. */
+  deviceWithWebApp: "You have an Android phone or an iPhone",
+  deviceAndroidOnly: "You have an Android phone (Android 7.0 or newer)",
+  expectTitle: "What to expect",
+  expect: [
+    { title: "It's free", body: "No payments or card details anywhere in the beta." },
+    {
+      title: "It's early",
+      body: "Some things will break. Telling us is the most useful thing you can do.",
+    },
+    {
+      title: "The people are real",
+      body: "Other testers are real people, and you can genuinely end up talking to someone.",
+    },
+    {
+      title: "It ends cleanly",
+      body: "When the beta ends we delete the beta data. Nothing carries over.",
+    },
+  ],
+  data: "Your answers go to a private Google Sheet only our team can open. We delete them when the beta ends, or sooner if you ask.",
+  termsLink: "Read the beta terms",
+  team: "Pearmo is built by a small team in Colombo. Every email reaches us directly.",
+} as const;
+
+/** Shown only once `site.webAppUrl` is set. */
+export const getApp = {
+  kicker: "Already invited?",
+  title: "Get Pearmo on your phone",
+  lead: "No app store needed. Pearmo runs in your phone's browser and sits on your Home Screen like any other app.",
+  steps: [
+    {
+      title: "Open pearmo.com/get",
+      body: "Scan the code with your phone's camera, or tap the button on your phone.",
+    },
+    {
+      title: "Sign in with your phone number",
+      body: "You'll get a code by SMS. There's no password.",
+    },
+    {
+      title: "Add it to your Home Screen",
+      body: "Pearmo shows you how. On iPhone, that's also what turns on notifications.",
+    },
+  ],
+  scanTitle: "Scan with your phone's camera",
+  noStores:
+    "Pearmo isn't in the App Store or Google Play. The web app is the same Pearmo, with nothing to download from a store.",
+  signIn: "Your sign-in stays on your device, and signing out removes it.",
+  notInvited: "Not invited yet?",
 } as const;
 
 export const footer = {
-  tagline: "Anonymous, psychology-matched dating. Launching in Sri Lanka.",
-  copyright: `© ${new Date().getFullYear()} Pearmo · Pre-launch`,
+  tagline: "Anonymous, psychology-matched dating. In closed beta in Sri Lanka.",
+  copyright: `© ${new Date().getFullYear()} Pearmo · Closed beta`,
+  contactLabel: "Contact",
+  qrLabel: "Scan to open Pearmo",
   links: [
     { href: "/privacy", label: "Privacy" },
     { href: "/terms", label: "Terms" },
+    { href: "/beta-terms", label: "Beta terms" },
     // Google Play requires a deletion URL reachable without the app, so it
     // needs a real link somewhere crawlable — the footer is that somewhere.
     { href: "/data-deletion", label: "Delete my data" },
-    { href: "mailto:pearmo.app@gmail.com", label: "Contact" },
   ],
 } as const;
