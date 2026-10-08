@@ -33,7 +33,7 @@ export function HowItWorks() {
         <p className={`${lead} mt-4.5 text-ink-2`}>{how.lead}</p>
 
         <ol
-          className="mt-9 grid gap-3.5 [contain-intrinsic-size:auto_1600px] [content-visibility:auto] md:grid-cols-2 md:[contain-intrinsic-size:auto_780px]"
+          className="mt-9 grid gap-3.5 [contain-intrinsic-size:auto_1600px] [content-visibility:auto] md:grid-cols-2 md:[contain-intrinsic-size:auto_1300px] lg:[contain-intrinsic-size:auto_780px]"
           data-stagger="0.1"
         >
           {how.steps.map((step, i) => {
@@ -42,9 +42,9 @@ export function HowItWorks() {
               <li
                 key={step.title}
                 data-parallax-scope=""
-                className={`grid gap-5 overflow-hidden rounded-4xl p-5.5 md:min-h-95 md:grid-cols-2 md:items-end ${s.card}`}
+                className={`grid gap-5 overflow-hidden rounded-4xl p-5.5 lg:min-h-95 lg:grid-cols-2 lg:items-end ${s.card}`}
               >
-                <div className="self-start md:self-auto md:pb-5">
+                <div className="self-start lg:self-auto lg:pb-5">
                   <span
                     className={`font-display mb-2.5 grid h-10 w-10 place-items-center rounded-full text-[18px] font-extrabold ${s.num}`}
                   >
@@ -65,7 +65,7 @@ export function HowItWorks() {
                       alt={step.alt}
                       width={how.shotWidth}
                       height={how.shotHeight}
-                      sizes="(min-width: 768px) 300px, 80vw"
+                      sizes="300px"
                       className="shot-crop h-auto w-full"
                     />
                   </div>
