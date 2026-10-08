@@ -43,7 +43,7 @@ export function Nav() {
           aria-label={nav.logoLabel}
           className="flex flex-1 items-center gap-2.5 text-[19px] font-extrabold tracking-[-0.02em] md:flex-none"
         >
-          <LogoMark gradientId="logo-nav" className="h-6 w-6" />
+          <LogoMark className="h-6 w-6" />
           pearmo
         </a>
 

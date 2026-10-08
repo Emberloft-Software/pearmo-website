@@ -39,7 +39,7 @@ export function LegalDocument({
             href="/"
             className="flex items-center gap-2.5 text-[19px] font-extrabold tracking-[-0.02em]"
           >
-            <LogoMark gradientId="logo-legal" className="h-6 w-6" />
+            <LogoMark className="h-6 w-6" />
             pearmo
           </Link>
           <Link

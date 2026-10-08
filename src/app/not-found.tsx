@@ -25,7 +25,7 @@ export default function NotFound() {
         href="/"
         className="mb-10 flex items-center gap-2.5 text-[19px] font-extrabold tracking-[-0.02em]"
       >
-        <LogoMark gradientId="logo-404" className="h-6 w-6" />
+        <LogoMark className="h-6 w-6" />
         pearmo
       </Link>
 

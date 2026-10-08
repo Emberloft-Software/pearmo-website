@@ -12,7 +12,7 @@ export function Footer() {
             href="#top"
             className="flex items-center gap-2.5 text-base font-extrabold tracking-[-0.02em]"
           >
-            <LogoMark gradientId="logo-footer" className="h-5 w-5" />
+            <LogoMark className="h-5 w-5" />
             pearmo
           </a>
           <p className="text-mute hidden text-[13px] sm:block">{footer.tagline}</p>
