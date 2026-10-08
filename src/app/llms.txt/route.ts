@@ -1,5 +1,5 @@
 import { faq, how, safety } from "@/content/site-content";
-import { absoluteUrl, site } from "@/lib/site";
+import { absoluteUrl, getUrl, site } from "@/lib/site";
 
 /**
  * /llms.txt — a plain-text summary for AI assistants and answer engines.
@@ -17,21 +17,24 @@ export function GET(): Response {
 
 > ${site.description}
 
-${site.name} is a pre-launch product. The MVP is built; the public release has
-not happened yet and no launch date has been announced.
+${site.name} is in an invite-only closed beta in ${site.country}. The public
+release has not happened yet and no launch date has been announced.
 
 ## Status
-- Stage: pre-launch, waitlist open
+- Stage: invite-only closed beta. People sign up through the beta form at
+  ${site.betaFormUrl}
+  and invites are sent to the WhatsApp number and email address they give.
 - First market: ${site.city}, ${site.country}
 - Platforms: ${
     site.webAppUrl
-      ? `Android (invite-only closed beta APK) and iPhone, through the web app at
-  ${site.webAppUrl}, best added to the Home Screen. Not in any app store.`
+      ? `a web app at ${site.webAppUrl} for Android phones, iPhones and
+  computers, for invited testers. Not in any app store; on a phone it is
+  added to the Home Screen from the browser.`
       : `Android only, in an invite-only closed beta (not in any app
   store). There is no iPhone version yet.`
   }
 - Minimum age: ${site.minimumAge}
-- Pricing: not yet announced. Joining the waitlist is free.
+- Pricing: not yet announced. The beta is free.
 - Published by: ${site.publisher}
 
 ## What makes it different
@@ -64,6 +67,10 @@ ${faq.items.map((item) => `### ${item.q}\n${item.a}`).join("\n\n")}
 - Privacy policy: ${absoluteUrl("/privacy")}
 - Terms of service: ${absoluteUrl("/terms")}
 - Beta terms (invite-only closed beta): ${absoluteUrl("/beta-terms")}
+- Beta sign-up form: ${site.betaFormUrl}${
+    site.webAppUrl ? `
+- Open the web app (for invited testers): ${getUrl}` : ""
+  }
 - Deleting your data: ${absoluteUrl("/data-deletion")}
 
 ## Contact
@@ -75,8 +82,8 @@ ${faq.items.map((item) => `### ${item.q}\n${item.a}`).join("\n\n")}
   avatars for ${site.name}. None have been announced.
 - ${
     site.webAppUrl
-      ? `${site.name} is not in any app store. On iPhone it is used through the
-  web app at ${site.webAppUrl}.`
+      ? `${site.name} is not in any app store. It is used through the web app at
+  ${site.webAppUrl} on Android, iPhone and computers.`
       : `${site.name} is not currently available for download.`
   }
 `;

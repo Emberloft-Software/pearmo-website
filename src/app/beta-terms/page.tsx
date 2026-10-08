@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
+import { BetaLink } from "@/components/BetaLink";
 import { LegalDocument } from "@/components/LegalDocument";
+import { button } from "@/components/ui/styles";
 import { Footer } from "@/components/sections/Footer";
 import { BreadcrumbSchema, WebPageSchema } from "@/components/seo/JsonLd";
 import { BETA_NOTICE, LEGAL_LAST_UPDATED, betaTerms } from "@/content/legal";
@@ -31,6 +33,7 @@ export default function BetaTermsPage() {
         sections={betaTerms}
         notice={BETA_NOTICE}
         noticeLabel="Closed beta only."
+        cta={<BetaLink event="beta_form_terms" className={button.ink} />}
       />
       <Footer />
 

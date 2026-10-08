@@ -109,9 +109,10 @@ export function MobileApplicationSchema() {
         name: site.name,
         applicationCategory: "SocialNetworkingApplication",
         applicationSubCategory: "Dating",
-        // iPhone is served by the web app, so iOS appears only once
-        // `site.webAppUrl` is set (see its comment in lib/site.ts).
-        operatingSystem: site.webAppUrl ? "Android, iOS" : "Android",
+        // The web app serves Android, iPhone and computers alike, so the
+        // list widens only once `site.webAppUrl` is set (see lib/site.ts).
+        // Until then the beta is an Android build for invited testers.
+        operatingSystem: site.webAppUrl ? "Android, iOS, Web" : "Android",
         ...(site.webAppUrl ? { installUrl: site.webAppUrl } : {}),
         description: site.description,
         url: site.url,

@@ -1,22 +1,61 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+
 import { ImageResponse } from "next/og";
 
+import { hero } from "@/content/site-content";
+import { LOGO_P_PATH, LOGO_PEAR_PATH, LOGO_VIEWBOX } from "@/lib/logo-paths";
 import { site } from "@/lib/site";
 
 /**
  * The og:image every WhatsApp, Instagram, Facebook and X share of pearmo.com
- * will render. Generated at build time (`force-static`) rather than per
- * request, so it costs nothing to serve.
+ * renders. Generated at build time (`force-static`), so it costs nothing to
+ * serve.
  *
- * 1200×630 is the size all four platforms crop from. Everything is drawn with
- * plain divs and inline styles — Satori (the renderer behind next/og) supports
- * only a subset of CSS, and no Tailwind.
+ * 1200×630 is the size all four platforms crop from. Text and two small
+ * avatars only, never a photo: ImageResponse writes PNG, and a photographic
+ * PNG at this size would blow past WhatsApp's ~300 KB preview limit.
+ *
+ * Satori (the renderer behind next/og) supports a subset of CSS, no Tailwind,
+ * and only TTF/OTF/WOFF fonts, so the three faces are vendored as TTF in
+ * ./_og (SIL Open Font License) and read from disk here: no network at build.
  */
 export const alt = `${site.name} · ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const dynamic = "force-static";
 
-export default function OpengraphImage() {
+const PAPER = "#faf8ff";
+const INK = "#17101f";
+const LIME = "#c6ff3d";
+
+async function asset(...parts: string[]) {
+  return readFile(join(process.cwd(), ...parts));
+}
+
+async function avatarDataUri(slug: string) {
+  const png = await asset("public", "assets", "avatars", `${slug}.png`);
+  return `data:image/png;base64,${png.toString("base64")}`;
+}
+
+export default async function OpengraphImage() {
+  const [display, sans, serif, fox, wolf] = await Promise.all([
+    asset("src", "app", "_og", "FunnelDisplay-ExtraBold.ttf"),
+    asset("src", "app", "_og", "FunnelSans-Medium.ttf"),
+    asset("src", "app", "_og", "InstrumentSerif-Italic.ttf"),
+    avatarDataUri("fox-f"),
+    avatarDataUri("wolf-m"),
+  ]);
+
+  const avatarStyle = {
+    width: 96,
+    height: 96,
+    borderRadius: 9999,
+    border: `5px solid ${PAPER}`,
+    background: "#efeafe",
+    boxShadow: "0 0 0 2px #e3dcf3",
+  } as const;
+
   return new ImageResponse(
     (
       <div
@@ -26,139 +65,101 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#17131f",
-          padding: "70px 80px",
-          position: "relative",
+          background: PAPER,
+          padding: "56px 72px",
+          fontFamily: "Funnel Sans",
+          color: INK,
         }}
       >
-        {/* Brand gradient glow, top-right. */}
-        <div
-          style={{
-            position: "absolute",
-            top: -280,
-            right: -160,
-            width: 700,
-            height: 700,
-            borderRadius: 9999,
-            background:
-              "linear-gradient(120deg, #6c5ce7 0%, #8f4fe0 45%, #c2258f 100%)",
-            opacity: 0.55,
-            filter: "blur(120px)",
-          }}
-        />
-
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          {/* Inline SVG, not an emoji — emoji would require a remote font
-              fetch at build time. */}
-          <svg width="44" height="44" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M12 4c.3-1.4 1.3-2.3 2.8-2.5"
-              stroke="#8fbf00"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-            <path
-              d="M12 4.5c-1.6-1-3.4-.8-4.6.4C6.2 6.1 6 7.9 7 9.4 4.6 10.8 3.4 13.4 4 16c.7 3.2 3.7 5.6 8 5.6s7.3-2.4 8-5.6c.6-2.6-.6-5.2-3-6.6 1-1.5.8-3.3-.4-4.5-1.2-1.2-3-1.4-4.6-.4Z"
-              fill="url(#ogPearGradient)"
-            />
-            <defs>
-              <linearGradient
-                id="ogPearGradient"
-                x1="4"
-                y1="4"
-                x2="20"
-                y2="22"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#8b7bff" />
-                <stop offset="1" stopColor="#e0359f" />
-              </linearGradient>
-            </defs>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <svg width="38" height="50" viewBox={LOGO_VIEWBOX}>
+            <path fill="#ef4c56" fillRule="evenodd" d={LOGO_PEAR_PATH} />
+            <path fill="#291450" fillRule="evenodd" d={LOGO_P_PATH} />
           </svg>
-          <div
-            style={{
-              fontSize: 34,
-              fontWeight: 800,
-              color: "#ffffff",
-              letterSpacing: "-0.02em",
-            }}
-          >
+          <div style={{ fontFamily: "Funnel Display", fontSize: 40, letterSpacing: "-0.04em" }}>
             pearmo
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              fontSize: 78,
-              fontWeight: 800,
-              color: "#ffffff",
-              letterSpacing: "-0.035em",
-              lineHeight: 1.02,
-              display: "flex",
-              flexWrap: "wrap",
-            }}
-          >
-            Meet the person,
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            fontFamily: "Funnel Display",
+            fontSize: 112,
+            lineHeight: 1,
+            letterSpacing: "-0.05em",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element -- Satori needs a plain img */}
+            <img src={fox} alt="" style={avatarStyle} />
+            <span>{hero.titleLead}</span>
+            <span
+              style={{
+                fontFamily: "Instrument Serif",
+                fontSize: 122,
+                letterSpacing: "-0.01em",
+                background: LIME,
+                borderRadius: 18,
+                padding: "0 14px 6px",
+              }}
+            >
+              {hero.titleEmphasis}
+            </span>
+            <span style={{ marginLeft: -26 }}>,</span>
           </div>
-          <div
-            style={{
-              fontSize: 78,
-              fontWeight: 800,
-              letterSpacing: "-0.035em",
-              lineHeight: 1.02,
-              color: "#c8f135",
-              display: "flex",
-            }}
-          >
-            not the picture.
-          </div>
-          <div
-            style={{
-              marginTop: 26,
-              fontSize: 29,
-              color: "#c9c2e0",
-              lineHeight: 1.4,
-              maxWidth: 900,
-              display: "flex",
-            }}
-          >
-            Anonymous, psychology-matched dating. No swiping, no public photos,
-            chat only when you both say yes.
+          <div style={{ display: "flex", alignItems: "center", gap: 22, alignSelf: "flex-end", marginTop: 10 }}>
+            <span>{hero.titleMid}</span>
+            <span style={{ display: "flex", position: "relative", color: "#5e5670" }}>
+              {hero.titleStruck}
+              <span
+                style={{
+                  position: "absolute",
+                  left: -6,
+                  right: -6,
+                  top: 58,
+                  height: 10,
+                  borderRadius: 99,
+                  background: "#6c4cf1",
+                  transform: "rotate(-3deg)",
+                }}
+              />
+            </span>
+            <span style={{ marginLeft: -18 }}>.</span>
+            {/* eslint-disable-next-line @next/next/no-img-element -- Satori needs a plain img */}
+            <img src={wolf} alt="" style={avatarStyle} />
           </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              gap: 10,
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.18)",
+              gap: 12,
+              background: LIME,
               borderRadius: 9999,
-              padding: "12px 22px",
-              fontSize: 21,
-              color: "#ffffff",
-              letterSpacing: "0.04em",
+              padding: "14px 26px",
+              fontSize: 26,
             }}
           >
-            <div
-              style={{
-                width: 10,
-                height: 10,
-                borderRadius: 9999,
-                background: "#c2258f",
-              }}
-            />
-            Pre-launch · Sri Lanka
+            <div style={{ width: 12, height: 12, borderRadius: 9999, background: "#ff3d7f" }} />
+            {hero.badge}
           </div>
-          <div style={{ fontSize: 21, color: "#8d85a8", display: "flex" }}>
-            pearmo.com
+          <div style={{ fontSize: 26, color: "#3b3350" }}>
+            Anonymous, psychology-matched dating · pearmo.com
           </div>
         </div>
       </div>
     ),
-    size,
+    {
+      ...size,
+      fonts: [
+        { name: "Funnel Display", data: display, weight: 800, style: "normal" },
+        { name: "Funnel Sans", data: sans, weight: 500, style: "normal" },
+        { name: "Instrument Serif", data: serif, weight: 400, style: "italic" },
+      ],
+    },
   );
 }

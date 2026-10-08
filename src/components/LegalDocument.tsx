@@ -1,6 +1,10 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-import { LogoMark } from "@/components/Logo";
+import { Wordmark } from "@/components/Logo";
+import { Icon } from "@/components/ui/Icon";
+import { Tag } from "@/components/ui/Tag";
+import { button } from "@/components/ui/styles";
 import {
   DRAFT_NOTICE,
   LEGAL_LAST_UPDATED_LABEL,
@@ -10,13 +14,17 @@ import {
 /**
  * Shared shell for /privacy, /terms, /beta-terms and /data-deletion.
  *
- * Includes a table of contents built from the section list — genuinely useful
- * on a long document, and it gives search engines in-page anchors to surface.
+ * Restyled only: every word comes from `legal.ts`, untouched. Includes a
+ * table of contents built from the section list, which is genuinely useful
+ * on a long document and gives search engines in-page anchors.
  *
  * `notice` defaults to the pre-launch draft banner. Pass a different string to
  * change it, or `null` to drop the banner entirely — /data-deletion is a set of
  * instructions rather than an agreement, so a "not legally reviewed" warning
  * above it would only obscure the one thing the reader came for.
+ *
+ * `cta` adds an action under the document (the beta terms end with the
+ * sign-up button, since that's where people read them from).
  */
 export function LegalDocument({
   title,
@@ -24,52 +32,45 @@ export function LegalDocument({
   sections,
   notice = DRAFT_NOTICE,
   noticeLabel = "Pre-launch draft.",
+  cta,
 }: {
   title: string;
   intro: string;
   sections: readonly LegalSection[];
   notice?: string | null;
   noticeLabel?: string;
+  cta?: ReactNode;
 }) {
   return (
     <>
-      <header className="border-line border-b bg-white/60">
-        <div className="mx-auto flex w-[min(880px,92vw)] items-center justify-between py-6">
-          <Link
-            href="/"
-            className="flex items-center gap-2.5 text-[19px] font-extrabold tracking-[-0.02em]"
-          >
-            <LogoMark className="h-6 w-6" />
-            pearmo
+      <header className="sticky top-0 z-40 border-b border-line bg-paper/94 backdrop-blur-md">
+        <div className="mx-auto flex h-16 w-[min(820px,100%-32px)] items-center justify-between">
+          <Link href="/" aria-label="Pearmo home" className="text-[23px]">
+            <Wordmark />
           </Link>
           <Link
             href="/"
-            className="text-mute hover:text-ink text-sm transition-colors"
+            className="text-[15px] font-semibold text-ink-2 underline-offset-3 hover:underline"
           >
-            ← Back to site
+            Back to pearmo.com
           </Link>
         </div>
       </header>
 
-      <main id="main" className="mx-auto w-[min(880px,92vw)] py-16">
-        <p className="kicker">Legal</p>
-        <h1 className="mt-4 text-[clamp(34px,5vw,54px)] leading-[1.05] font-extrabold tracking-[-0.03em]">
+      <main id="main" className="mx-auto w-[min(820px,100%-32px)] pt-12 pb-4 lg:pt-16">
+        <Tag>Legal</Tag>
+        <h1 className="font-display text-[clamp(38px,6vw,64px)] leading-[0.98] font-extrabold tracking-tighter text-balance">
           {title}
         </h1>
-        <p className="text-mute mt-3 font-mono text-xs tracking-[0.14em] uppercase">
+        <p className="mt-3.5 text-[14px] font-semibold text-mute">
           Last updated {LEGAL_LAST_UPDATED_LABEL}
         </p>
 
         {/* Unmissable, because it's a draft and readers deserve to know. */}
         {notice && (
-          <aside
-            role="note"
-            className="border-magenta/25 bg-magenta-wash mt-8 rounded-panel border px-6 py-5"
-          >
-            <p className="text-ink flex items-start gap-2.5 text-[14.5px] leading-[1.6]">
-              <span aria-hidden="true" className="text-base leading-none">
-                ⚠️
-              </span>
+          <aside role="note" className="mt-8 rounded-[22px] bg-pink-soft px-5.5 py-4.5">
+            <p className="flex items-start gap-3 text-[15px] leading-[1.6] text-ink">
+              <Icon name="flag" className="mt-0.5 h-5 w-5 text-magenta" />
               <span>
                 <b className="font-semibold">{noticeLabel}</b> {notice}
               </span>
@@ -77,22 +78,20 @@ export function LegalDocument({
           </aside>
         )}
 
-        <p className="text-mute mt-8 text-[17px] leading-[1.7]">{intro}</p>
+        <p className="mt-8 text-[18px] leading-[1.65] text-ink-2">{intro}</p>
 
-        <nav aria-label="On this page" className="border-line mt-10 rounded-panel border bg-card px-6 py-5">
-          <h2 className="text-mute mb-3 font-mono text-[11px] tracking-[0.16em] uppercase">
+        <nav aria-label="On this page" className="mt-10 rounded-panel bg-violet-soft p-5.5 lg:p-7">
+          <h2 className="mb-3.5 text-[12.5px] font-semibold tracking-[0.16em] text-violet-deep uppercase">
             On this page
           </h2>
-          <ol className="grid gap-1.5 sm:grid-cols-2">
+          <ol className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
             {sections.map((section, i) => (
-              <li key={section.id} className="text-[14.5px]">
+              <li key={section.id} className="text-[15px]">
                 <a
                   href={`#${section.id}`}
-                  className="text-ink-2 hover:text-violet transition-colors"
+                  className="grid grid-cols-[28px_1fr] gap-1.5 text-ink-2 transition-colors hover:text-violet-deep"
                 >
-                  <span className="text-mute mr-2 font-mono text-xs">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+                  <span className="font-semibold text-violet-deep tabular-nums">{i + 1}.</span>
                   {section.heading}
                 </a>
               </li>
@@ -103,36 +102,27 @@ export function LegalDocument({
         <div className="mt-14 flex flex-col gap-12">
           {sections.map((section, i) => (
             <section key={section.id} id={section.id} className="scroll-mt-24">
-              <h2 className="text-[clamp(22px,2.6vw,30px)] font-extrabold tracking-[-0.025em]">
-                <span className="text-gradient mr-2.5 font-mono text-base">
-                  {String(i + 1).padStart(2, "0")}
+              <h2 className="font-display flex items-start gap-3 text-[clamp(24px,3vw,32px)] leading-[1.1] font-extrabold tracking-tight">
+                <span className="mt-0.5 grid h-9 min-w-9 place-items-center rounded-full bg-lime px-2 text-[16px] tabular-nums">
+                  {i + 1}
                 </span>
-                {section.heading}
+                <span>{section.heading}</span>
               </h2>
-              <div className="mt-4 flex flex-col gap-4">
+              <div className="mt-4.5 flex flex-col gap-4">
                 {section.blocks.map((block, bi) => {
                   if (block.type === "h3") {
                     return (
-                      <h3
-                        key={bi}
-                        className="text-ink mt-2 text-[17px] font-bold tracking-[-0.01em]"
-                      >
+                      <h3 key={bi} className="mt-2 text-[18px] font-semibold text-ink">
                         {block.text}
                       </h3>
                     );
                   }
                   if (block.type === "list") {
                     return (
-                      <ul key={bi} className="flex flex-col gap-2.5 pl-1">
+                      <ul key={bi} className="flex flex-col gap-2.5">
                         {block.items.map((item) => (
-                          <li
-                            key={item}
-                            className="text-mute flex gap-3 text-[15.5px] leading-[1.65]"
-                          >
-                            <span
-                              aria-hidden="true"
-                              className="bg-violet mt-2.5 h-1.5 w-1.5 flex-none rounded-full"
-                            />
+                          <li key={item} className="flex gap-3 text-[16px] leading-[1.65] text-ink-2">
+                            <span aria-hidden="true" className="mt-2.5 h-1.5 w-1.5 flex-none rounded-full bg-violet" />
                             {item}
                           </li>
                         ))}
@@ -140,10 +130,7 @@ export function LegalDocument({
                     );
                   }
                   return (
-                    <p
-                      key={bi}
-                      className="text-mute text-[15.5px] leading-[1.7]"
-                    >
+                    <p key={bi} className="text-[16px] leading-[1.7] text-ink-2">
                       {block.text}
                     </p>
                   );
@@ -153,14 +140,14 @@ export function LegalDocument({
           ))}
         </div>
 
-        <div className="border-line mt-16 flex flex-wrap items-center justify-between gap-4 border-t pt-8">
-          <Link
-            href="/"
-            className="brand-gradient inline-flex items-center rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5"
-          >
-            ← Back to pearmo.com
-          </Link>
-          <span className="text-mute font-mono text-[11px] tracking-[0.14em] uppercase">
+        <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-8">
+          <div className="flex flex-wrap gap-3">
+            {cta}
+            <Link href="/" className={`${button.paper} border border-line`}>
+              Back to pearmo.com
+            </Link>
+          </div>
+          <span className="text-[13px] font-semibold text-mute">
             {title} · {LEGAL_LAST_UPDATED_LABEL}
           </span>
         </div>
