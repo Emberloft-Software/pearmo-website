@@ -1,13 +1,88 @@
 # Pearmo website — status, gaps and open decisions
 
-**Last updated:** 30 July 2026
-**Branch:** `design-sanuth` (7 commits ahead of `main`, 0 behind)
-**Live site:** `https://www.pearmo.com` — still serving the old static
-`legacy/index.html`. Nothing in this document is live yet.
+**Last updated:** 9 October 2026
+**Branch:** `redesign` (from `pwa-launch`). Not merged; a push to `main`
+deploys to production.
+**Live site:** `https://www.pearmo.com`. Sections 1–5 below are the July
+record, with resolved items struck through; §0 is the October redesign.
 
 This is the working record of the Next.js rebuild: what is finished, what is
 blocked, and what was never started. Read §2 before merging — there is a
 canonical-host defect that will misfire on day one if it isn't fixed.
+
+---
+
+## 0. October 2026 redesign (branch `redesign`)
+
+New design (direction C, "Duet"), new logo, the web-app buttons and QR
+codes, and the beta form. Details of the design rules are in `README.md`.
+
+### Measured, before → after
+
+Production builds served locally, Lighthouse 12 mobile, median of 3 runs.
+"Before" is `pwa-launch` (the old design) built the same way.
+
+| | Before | After |
+| --- | --- | --- |
+| Performance (simulated throttling) | 89 | **93** |
+| Accessibility | 100 | **100** |
+| Best Practices \* | 96 | **96** |
+| SEO | 100 | **100** |
+| LCP, simulated | 3.8 s | **3.3 s** |
+| LCP, applied throttling | 2.69 s | **2.44 s** |
+| FCP, applied throttling | 2.7 s | **2.2 s** |
+| CLS | 0 / 0.014 applied | **0** |
+| TBT, applied throttling | 140 ms | **80 ms** |
+| Page weight | 476–495 KB | **346 KB** |
+| Real first paint (unthrottled) | 0.45 s | **0.16 s** |
+
+\* Capped at 96 on localhost because `/_vercel/*` scripts 404 there, as before.
+
+Why simulated LCP is still above 2.5 s: Lighthouse's simulation charges
+every request that starts before the real paint to the LCP, and the ~170 KB
+of React/Next framework JS starts in `<head>`. The applied-throttling run
+(real slowed network and CPU) puts LCP at 2.44 s. What was cut to get here:
+the avatar strip became one 30 KB sprite instead of 16 images, the
+screenshots and the strip are deferred with `content-visibility`, the scene
+images are quality 60, and GSAP/Lenis load on first interaction (TBT
+460 ms → 80 ms).
+
+Checked at 360, 390, 768, 1024 and 1440px: no sideways scroll on any page.
+axe-core (WCAG 2.1 AA + best practice) on the home, legal and 404 pages at
+390 and 1440px: no violations.
+
+### Launch switch verified
+
+With `webAppUrl` set locally to `https://app.pearmo.com`: phones and tablets
+show "Open Pearmo" and no QR; a desktop with a mouse shows four QR codes and
+no app buttons; `/get` answers `307 → https://app.pearmo.com`; the hero and
+footer QR codes decode to `https://www.pearmo.com/get`. With `null`: no QR or
+app links in the HTML and `/get` answers `307 → /#beta`. Committed as `null`.
+
+### Decided 8–9 October 2026
+
+| Decision | Outcome |
+| --- | --- |
+| Design | Direction C, "Duet". A and B kept as previews at `/design/a`, `/design/b` |
+| Logo | The pear-and-p mark everywhere: nav, footer, favicon, iOS icon, share image, JSON-LD |
+| Web app | For everyone: Android, iPhone and computers |
+| Main button | "Join the beta" (invite-only); "Already invited? Open Pearmo" secondary |
+| Invites | Sent to the WhatsApp number and email given on the form; no timeframe promised |
+| Founders | Not named on the marketing pages ("a small team in Colombo") |
+| Motion | GSAP + Lenis; Lenis on mouse/trackpad only |
+| Copy | Proposed changes approved (headlines "Skip the “hey”." and "Your face. Your call.") |
+| llms.txt | Updated for the beta and the web app for everyone |
+
+### Still open
+
+| # | What | Why it matters |
+| --- | --- | --- |
+| R1 | **`legal.ts`: web app for everyone.** The beta terms' "What this is" (APK by email, iPhone gets the web link), the eligibility line ("…or an iPhone, which uses the web app…"), and the privacy policy's web-app section ("which is how it works on iPhone") all describe the web app as the iPhone route | They go out of date the moment `webAppUrl` is set |
+| R2 | **`legal.ts`: WhatsApp.** Invites go to WhatsApp and email, but the privacy policy and beta terms only mention email | WhatsApp (Meta) is a new party handling testers' numbers |
+| R3 | **`legal.ts` contradicts itself on photos.** The privacy policy's beta section says no profile photos and no voice intros; the newer beta terms say both exist | One of them is wrong |
+| R4 | **A fresh Shared Unlocks screenshot.** `app-shared-unlocks.webp` shows removed unlocks; `app-showcase-overview.webp` and `app-profile-about.webp` show an emergency-contact field | The site can't show those screens |
+| R5 | **Delete the previews** (`src/app/design/`, `src/designs/`) before merging, unless you want them public (they're noindex) | Dead weight in production |
+| R6 | **Scan the QR on a real phone** once a preview deploy has `webAppUrl` set | Decoding was verified from screenshots, not with a camera |
 
 ---
 
@@ -109,7 +184,12 @@ production build:
 | `/index.html`   | 200 live → would 404 after merge | 308 → `/`        |
 | `/favicon.ico`  | 404 before and after            | 308 → `/icon.svg` |
 
-### 2.4 The waitlist still discards every email
+### 2.4 ~~The waitlist still discards every email~~ — RESOLVED 8 October 2026
+
+The email form is gone; every "Join the beta" button links to the Google
+Form in `site.betaFormUrl`. The original note follows.
+
+#### Original note
 
 `src/components/WaitlistForm.tsx` shows "🦊 You're on the list" without storing
 anything. This mirrors what production has been doing since 25 July, which means
@@ -413,7 +493,7 @@ because it surfaced during this check.
 
 ### 4.9 Known cosmetic issues
 
-- [ ] The 🇱🇰 flag in the hero badge renders as the letters "LK" on Windows —
+- [x] ~~The 🇱🇰 flag in the hero badge renders as the letters "LK" on Windows~~ (badge is now "Closed beta · Sri Lanka") —
       Windows ships no regional-indicator flag glyphs. Was true of the original
       too. Use an SVG flag or drop it if it bothers you
 - [ ] Editor lint suggests canonical Tailwind classes (`mt-[22px]` → `mt-5.5`).

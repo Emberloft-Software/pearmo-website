@@ -1,4 +1,4 @@
-# Pearmo — pre-launch marketing site
+# Pearmo — marketing site (closed beta)
 
 Next.js 16 (App Router) + TypeScript + Tailwind v4. Deployed to Vercel at
 **pearmo.com**.
@@ -46,7 +46,7 @@ absent.
 
 | Variable                               | Purpose                                                                      |
 | -------------------------------------- | ---------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`                 | Overrides the canonical origin. Defaults to `https://pearmo.com`.            |
+| `NEXT_PUBLIC_SITE_URL`                 | Overrides the canonical origin. Defaults to `https://www.pearmo.com`.        |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console verification token → emits the `google-site-verification` meta tag. |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION`   | Bing Webmaster Tools token → emits the `msvalidate.01` meta tag.             |
 
@@ -54,31 +54,150 @@ Preview deployments detect themselves via `VERCEL_ENV` and automatically
 switch to `noindex` plus a `Disallow: /` robots.txt, so previews can never
 compete with production in search results.
 
+## Design (direction C, "Duet")
+
+Rebuilt in October 2026. Everything comes in pairs: the headline is a
+two-line exchange between the fox and the wolf avatars, the scenes are
+drag-to-compare (avatar ↔ person), and colour blocks replace cards.
+
+**Tokens** live in `@theme` in `src/app/globals.css`. The palette is the
+Flutter app's own, so a tap from the site into the web app feels like one
+product:
+
+| Token | Hex | Use |
+| ----- | --- | --- |
+| `paper` | `#faf8ff` | page |
+| `ink` / `ink-2` / `mute` | `#17101f` / `#3b3350` / `#5e5670` | text, strongest to quietest (all AA on paper) |
+| `lime` / `lime-press` | `#c6ff3d` / `#b5f01f` | big panels, highlighter, buttons on dark |
+| `violet` / `violet-soft` / `violet-deep` | `#6c4cf1` / `#efeafe` / `#4a2fd0` | blocks, focus ring; `violet-deep` for small text on soft fills |
+| `on-violet` | `#f7f5ff` | body text on violet (4.9:1) |
+| `pink` / `pink-soft` / `magenta` | `#ff3d7f` / `#ffe1ec` / `#c4176a` | dots and stickers; `magenta` is pink's text-safe version |
+| `coral` / `indigo` | `#ef4c56` / `#291450` | the logo only |
+
+**Fonts**, self-hosted with `next/font` (the CSP blocks font CDNs), all
+preloaded because all three render above the fold:
+
+- **Funnel Display 800**: headings (one static file)
+- **Funnel Sans**: body, nav, buttons (one variable file)
+- **Instrument Serif italic**: the accent word in headings and the quotes,
+  the same face the app uses for quotes
+
+Font stacks name Noto Sans Sinhala and Noto Sans Tamil as the first
+fallbacks, ready for those locales.
+
+**Logo**: the 2026 pear-and-p mark, traced into two SVG paths in
+`src/lib/logo-paths.ts` and drawn by `Logo.tsx` (`tone` swaps the "p" for
+light or ink grounds). `icon.svg`, `favicon.ico` and `apple-icon.png` use a
+version with a thickened pear line so it survives at 16px.
+
+**Motion** (`src/components/motion/Motion.tsx`): GSAP ScrollTrigger and
+SplitText plus Lenis smooth scrolling, driven by `data-` attributes
+(`data-reveal`, `data-stagger`, `data-split`, `data-parallax`,
+`data-marquee`, `data-compare-scrub`, `data-pin`, `data-radar`). Rules:
+
+- it loads on the first scroll, touch, wheel, key or mouse movement, then
+  when idle, so it never competes with first paint;
+- content is never hidden in CSS; only elements below the fold at that
+  moment animate in, so nothing visible blinks out, and with JS off the page
+  is simply static;
+- Lenis only for a mouse or trackpad; phones keep native scrolling;
+- `prefers-reduced-motion: reduce` gets no Lenis and no animations.
+
+## The web app, its buttons and the QR codes
+
+The web app is a PWA at app.pearmo.com for Android, iPhone and computers.
+`site.webAppUrl` in `src/lib/site.ts` is the single launch switch. It is
+committed as `null`.
+
+| | `webAppUrl` null (today) | `webAppUrl` set |
+| --- | --- | --- |
+| Main button everywhere | **Join the beta** → `site.betaFormUrl` (Google Form) | same |
+| Phones and tablets | nothing else | "Already invited? **Open Pearmo**" + the Get Pearmo section's button |
+| Desktop with a mouse | nothing else | QR cards in the hero, nav ("Get Pearmo" panel), Get Pearmo section and footer |
+| `/get` | 307 → `/#beta` | 307 → `webAppUrl` |
+| JSON-LD, llms.txt, legal web-app text | Android only | Android, iPhone, web |
+
+How it's decided, and why:
+
+- **Phone vs desktop is CSS**, never user-agent sniffing: the `desk:` and
+  `touch:` variants in `globals.css` are
+  `(min-width: 1024px) and (hover: hover) and (pointer: fine)` and its
+  negation. The server HTML is identical for everyone, nothing can mismatch
+  on hydration, and it works with JavaScript off.
+- **The buttons are links, not install prompts.** `beforeinstallprompt` only
+  fires for a page's own manifest, so www.pearmo.com cannot install the app;
+  it installs from app.pearmo.com itself. Labels say "Open Pearmo" and "No
+  app store needed". No App Store or Google Play badges (there are no
+  listings, and both companies forbid badges without one). The Android APK is
+  invite-only and never linked.
+- **Every QR encodes `https://www.pearmo.com/get`** (`site.getUrl`, always the
+  www production host), never app.pearmo.com, so printed codes outlive any
+  change of destination. `/get` (`src/app/get/route.ts`) answers **307, not
+  308**: browsers cache permanent redirects indefinitely, so a 308 could never
+  be repointed. It also sends `Cache-Control: no-store`.
+- **QR codes are generated on the server** as inline SVG (`QrCode.tsx`, the
+  `qrcode` package): no external service (the CSP blocks it, and it would
+  hand visitors' IPs to a third party). Dark modules on a white tile, 4-module
+  quiet zone, error correction M, 160px or more except the small footer copy,
+  and an accessible name containing the URL. `QrCode` is server-only; client
+  components receive it as a prop.
+- **The marketing site is not installable as the app**: the manifest's
+  `display` is `browser`, and `appleWebApp.capable` is explicitly `false`
+  (Next defaults it to `true` whenever `appleWebApp` is set).
+- **Analytics**: one `track()` event per placement: `beta_form_hero`,
+  `beta_form_nav`, `beta_form_menu`, `beta_form_section`, `beta_form_terms`,
+  `beta_form_404`, `open_app_hero`, `open_app_nav`, `open_app_final`,
+  `open_app_desktop_link`.
+
+To see the launched state locally, set `webAppUrl: "https://app.pearmo.com"`,
+build, and **set it back to `null` before committing**.
+
+## Design previews (temporary)
+
+`/design/a`, `/design/b` and `/design/c` show the three candidate directions
+on the real content, with a switcher bar: A "Same app, bigger screen", B
+"After Dark", C "Duet" (the live design). They're `noindex`, not in the
+sitemap, use plain links (no analytics events), and the A/B styles are scoped
+under `.design-a` / `.design-b`. **Delete `src/app/design/` and
+`src/designs/` together** once the comparison is over; nothing else imports
+them.
+
 ## Layout
 
 ```
 src/
   app/
-    layout.tsx              root layout: next/font, metadata, analytics
-    page.tsx                homepage
-    globals.css             Tailwind v4 @theme tokens + component classes
-    privacy/, terms/        legal pages
+    layout.tsx              root layout: next/font, metadata, Motion, analytics
+    page.tsx                home page (renders components/HomePage.tsx)
+    globals.css             Tailwind v4 @theme tokens, desk/touch variants, Lenis CSS
+    get/route.ts            /get → 307 to the web app (or /#beta before launch)
+    privacy/ terms/ beta-terms/ data-deletion/   legal pages (LegalDocument.tsx)
     not-found.tsx           custom 404
+    opengraph-image.tsx     1200×630 share card (twitter-image reuses it)
+    _og/                    TTF copies of the three fonts, for the share card
     sitemap.ts robots.ts    generated from src/lib/site.ts
-    manifest.ts             web app manifest
-    icon.svg apple-icon.tsx favicon + iOS home-screen icon
-    opengraph-image.tsx     generated 1200×630 social card
-    twitter-image.tsx       reuses the OG card
+    manifest.ts             manifest (display: browser)
+    icon.svg favicon.ico apple-icon.png
     llms.txt/route.ts       plain-text summary for AI assistants
+    design/a|b|c/           TEMPORARY design previews
   components/
-    sections/               one file per page section
+    HomePage.tsx            section order for the home page
+    sections/               one file per section
+    AppLinks.tsx            Open Pearmo line, QR card, nav QR panel (server-only)
+    BetaLink.tsx            Join the beta (client-safe)
+    QrCode.tsx              server-side QR SVG
+    TrackedLink.tsx         <a> that records one analytics event
+    Logo.tsx                mark + wordmark
+    motion/Motion.tsx       GSAP + Lenis
+    ui/                     Compare slider, ScenePicture, Icon, Tag, shared classes
     seo/JsonLd.tsx          structured data
-    ui/                     Reveal, CountUp
   content/
     site-content.ts         ← all marketing copy lives here
-    legal.ts                ← privacy + terms text
+    legal.ts                ← legal text (the site restyles it, never rewrites it)
+  designs/                  TEMPORARY: directions A and B
   lib/
-    site.ts                 domain, canonicals, verification tokens
+    site.ts                 domain, beta form, webAppUrl, getUrl
+    logo-paths.ts           traced logo outlines
     radar.ts                personality-chart geometry (pure, build-time)
 ```
 
@@ -86,10 +205,10 @@ src/
 also what makes a Sinhala or Tamil translation a contained job later: translate
 the content module and move pages into an `app/[locale]/` segment.
 
-## What the rebuild changed
+## What the July 2026 rebuild changed
 
-Design is a faithful port — same tokens, type scale, animations and layout.
-The substantive changes:
+(History: that rebuild ported the original design faithfully. The October
+2026 redesign above replaced the design.) The substantive changes:
 
 **SEO**
 
@@ -136,17 +255,10 @@ The substantive changes:
 
 ## Open items
 
-### 1. The waitlist form does not store anything
+### 1. ~~The waitlist form does not store anything~~ — resolved
 
-`src/components/WaitlistForm.tsx` shows a success message without persisting
-the address. This matches what production does today — the original page had
-the same behaviour — and it means **every waitlist signup since launch has been
-discarded**. The success message is not truthful and this should not stay in
-production.
-
-Validation, honeypot, pending/error states and the analytics event are all
-already in place. Wiring it up means replacing the body of `submitEmail` with a
-POST to a route handler.
+The fake email form is gone. Every "Join the beta" button links to the
+Google Form in `site.betaFormUrl`.
 
 ### 2. Legal pages are unreviewed drafts
 
@@ -165,15 +277,9 @@ Add the two verification env vars, then submit `https://pearmo.com/sitemap.xml`.
 Use a **domain** property in Search Console (DNS-verified) rather than a URL
 prefix, so it covers `www` and any subdomains.
 
-### 4. Hero video
+### 4. ~~Hero video~~ — superseded
 
-The hero uses a Ken Burns + sheen treatment over `hero-scene.jpg`. The animated
-version was never generated — the Higgsfield account was on the free plan and
-every image-to-video model was plan-gated. To finish it: animate job
-`333fd2f9-324a-4ea6-b864-b038eee2f7de` (subtle loop — steam, blinking, bokeh
-shimmer, slow push-in), save as `public/assets/hero-scene.mp4`, and swap the
-`<Image>` in `src/components/sections/Hero.tsx` for a
-`<video autoPlay muted loop playsInline>`.
+The hero is now the drag-to-compare café scene (`public/assets/scenes/`).
 
 ### 5. Sinhala / Tamil
 
@@ -184,21 +290,24 @@ module is structured so this is contained work when one is available.
 
 ## Assets
 
-- `public/assets/app-*.webp` — real screenshots from the Flutter MVP, shown
-  inside CSS phone frames. The frames crop the Android status/nav bars with
-  negative margins (see `.phone-frame` in `globals.css`).
-- `public/assets/hero-scene.jpg`, `icebreaker-scene.jpg` — AI scenes generated
-  with Higgsfield (nano banana pro) using `avatars/fox-f.png` +
-  `avatars/wolf-m.png` as character references. Job IDs:
-  - hero: `333fd2f9-324a-4ea6-b864-b038eee2f7de`
-  - icebreaker: `1dfaa890-acc4-4a71-8385-1be2dc8e3b7a`
-- `public/assets/avatars/*.png` — 16 avatars shown in the marquee, hero chips
-  and CTA corners.
+- `public/assets/scenes/{cafe,sofa}-{avatar,person}[-portrait].webp` — the
+  avatar scenes (Higgsfield) and their real-person versions, cropped to one
+  shared frame so the faces line up; that's what makes the compare slider
+  read as the avatars becoming people. `-portrait` is the same pair cut to
+  4:5 for phones (`ScenePicture.tsx` art-directs between them). The
+  real-person images are AI-generated illustrations: never caption them with
+  names, ages or match scores that suggest real members.
+- `public/assets/app-*.webp` — real screenshots from the Flutter app. The
+  status bar is cropped in CSS (`.shot-crop`). **Don't use**
+  `app-shared-unlocks.webp` (shows removed unlocks), `app-showcase-overview.webp`
+  or `app-profile-about.webp` (both show an emergency-contact field the app
+  doesn't have).
+- `public/assets/avatars/*.png` — 16 avatars (411×461 portraits, so render
+  them with `object-cover object-top`). `strip.webp` is a 16-up square sprite
+  of the same avatars, in `avatars` order, for the marquee.
 
   The full character set lives **outside this repo** at `D:\pearmo\3d-individual`
-  (40 files — 20 animals × female/male). It is deliberately not committed: it's
-  11.3 MB of source art the marketing site has no use for, and shipping all of
-  it would bloat the repo and the deploy for no benefit. Only add a file here if
-  a section actually renders it.
+  (40 files — 20 animals × female/male). Only add a file here if a section
+  actually renders it.
 
 - `public/assets/design-concept-panels.jpg` — 3-panel design concept, unused.
