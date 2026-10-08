@@ -1,66 +1,92 @@
 import Image from "next/image";
 
-import { Reveal } from "@/components/ui/Reveal";
+import { Tag } from "@/components/ui/Tag";
+import { h2, lead, wrap } from "@/components/ui/styles";
 import { how } from "@/content/site-content";
 
+/** One colourway per step, so the four read as distinct beats. */
+const STEP_STYLE = [
+  { card: "border border-line bg-white text-ink", num: "bg-lime text-ink", frame: "border-ink", body: "text-ink-2" },
+  { card: "bg-lime text-ink", num: "bg-ink text-lime", frame: "border-ink", body: "text-ink-2" },
+  { card: "bg-violet text-white", num: "bg-paper text-violet-deep", frame: "border-[#2b1c6e]", body: "text-on-violet" },
+  { card: "bg-ink text-paper", num: "bg-violet text-white", frame: "border-[#3b3350]", body: "text-[#d9d3e8]" },
+] as const;
+
+/**
+ * Four steps, each with the real app screen peeking up from the bottom of its
+ * block. The screens drift slightly on scroll (data-parallax) inside a
+ * clipped frame, so they never overlap the copy.
+ */
 export function HowItWorks() {
   return (
-    <section id="how" className="py-[100px]">
-      <div className="mx-auto w-[min(1160px,92vw)]">
-        <div className="max-w-[640px]">
-          <Reveal as="p" className="kicker">
-            {how.kicker}
-          </Reveal>
-          <Reveal
-            as="h2"
-            delay={0.08}
-            className="mt-[18px] mb-4 text-[clamp(30px,4.6vw,52px)] leading-[1.04] font-extrabold tracking-[-0.025em]"
-          >
-            {how.titleLead}{" "}
-            <span className="serif-accent">{how.titleEmphasis}</span>
-          </Reveal>
-          <Reveal
-            as="p"
-            delay={0.16}
-            className="text-mute max-w-[56ch] text-[clamp(16px,1.6vw,19px)] leading-[1.6]"
-          >
-            {how.lead}
-          </Reveal>
-        </div>
+    <section id="how" className="pb-16 lg:pb-24">
+      <div className={wrap}>
+        <Tag>{how.kicker}</Tag>
+        <h2 className={h2} data-split="">
+          {how.titleLead} <span className="serif-accent">{how.titleEmphasis}</span>
+        </h2>
+        <p className={`${lead} mt-4.5 text-ink-2`}>{how.lead}</p>
 
-        <ol className="mt-14 grid gap-[22px] md:grid-cols-2">
-          {how.steps.map((step, i) => (
-            <Reveal
-              key={step.num}
-              as="li"
-              delay={(i % 2) * 0.08}
-              className="border-line hover:shadow-glow group flex flex-col overflow-hidden rounded-card border bg-card px-[30px] pt-[34px] transition-all duration-400 hover:-translate-y-1.5"
-            >
-              <div>
-                <span className="text-magenta mb-3.5 block font-mono text-xs tracking-[0.2em]">
-                  {step.num}
-                </span>
-                <h3 className="mb-2.5 text-[clamp(20px,2vw,25px)] tracking-[-0.02em] font-bold">
-                  {step.title}
-                </h3>
-                <p className="text-mute max-w-[44ch] text-[15px] leading-[1.6]">
-                  {step.body}
-                </p>
-              </div>
-
-              <div className="phone-frame mx-auto mt-[26px] w-[min(250px,72%)] translate-y-3.5 transition-transform duration-500 ease-[cubic-bezier(0.2,0.65,0.25,1)] group-hover:translate-y-0.5">
-                <Image
-                  src={step.image}
-                  alt={step.alt}
-                  width={how.shotWidth}
-                  height={how.shotHeight}
-                  loading="lazy"
-                  sizes="250px"
-                />
-              </div>
-            </Reveal>
-          ))}
+        <ol className="mt-9 grid gap-3.5 md:grid-cols-2" data-stagger="0.1">
+          {how.steps.map((step, i) => {
+            const s = STEP_STYLE[i % STEP_STYLE.length]!;
+            return (
+              <li
+                key={step.title}
+                data-parallax-scope=""
+                className={`grid gap-5 overflow-hidden rounded-4xl p-5.5 md:min-h-95 md:grid-cols-2 md:items-end ${s.card}`}
+              >
+                <div className="self-start md:self-auto md:pb-5">
+                  <span
+                    className={`font-display mb-2.5 grid h-10 w-10 place-items-center rounded-full text-[18px] font-extrabold ${s.num}`}
+                  >
+                    {i + 1}
+                  </span>
+                  <h3 className="font-display mb-2 text-[22px] leading-[1.15] font-extrabold tracking-tight">
+                    {step.title}
+                  </h3>
+                  <p className={`text-[16px] leading-[1.55] ${s.body}`}>{step.body}</p>
+                </div>
+                {/* Peeks up from the bottom edge; the status bar is cropped. */}
+                <div
+                  className={`-mb-5.5 h-85 w-full max-w-75 justify-self-center overflow-hidden rounded-t-[22px] border-[6px] border-b-0 ${s.frame}`}
+                >
+                  <div data-parallax="-0.06">
+                    <Image
+                      src={step.image}
+                      alt={step.alt}
+                      width={how.shotWidth}
+                      height={how.shotHeight}
+                      sizes="(min-width: 768px) 300px, 80vw"
+                      className="shot-crop h-auto w-full"
+                    />
+                  </div>
+                </div>
+              </li>
+            );
+          })}
         </ol>
+
+        <div
+          className="mt-3.5 grid items-center gap-5 rounded-4xl bg-violet-soft p-5.5 lg:grid-cols-[1.4fr_1fr] lg:gap-12 lg:py-7 lg:pr-12 lg:pl-7"
+          data-reveal=""
+        >
+          <Image
+            src={how.showcase.image}
+            alt={how.showcase.alt}
+            width={how.showcase.width}
+            height={how.showcase.height}
+            sizes="(min-width: 1024px) 720px, 92vw"
+            className="h-auto w-full rounded-[22px]"
+          />
+          <div>
+            <Tag>{how.showcase.kicker}</Tag>
+            <h3 className="font-display mb-3 text-[30px] leading-[1.05] font-extrabold tracking-[-0.035em]">
+              {how.showcase.title}
+            </h3>
+            <p className={`${lead} text-ink-2`}>{how.showcase.body}</p>
+          </div>
+        </div>
       </div>
     </section>
   );

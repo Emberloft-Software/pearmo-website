@@ -1,48 +1,55 @@
 import Link from "next/link";
 
-import { LogoMark } from "@/components/Logo";
+import { Wordmark } from "@/components/Logo";
+import { QrCode } from "@/components/QrCode";
+import { wrap } from "@/components/ui/styles";
 import { footer } from "@/content/site-content";
+import { getUrlLabel, site } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="border-line border-t pt-[34px] pb-11">
-      <div className="mx-auto flex w-[min(1160px,92vw)] flex-wrap items-center justify-between gap-5">
-        <div className="flex items-center gap-4">
-          <a
-            href="#top"
-            className="flex items-center gap-2.5 text-base font-extrabold tracking-[-0.02em]"
-          >
-            <LogoMark className="h-5 w-5" />
-            pearmo
-          </a>
-          <p className="text-mute hidden text-[13px] sm:block">{footer.tagline}</p>
-        </div>
+    <footer className="mt-16 bg-ink pt-12 pb-10 text-paper">
+      <div className={wrap}>
+        <div className="grid gap-6.5 lg:grid-cols-[1.3fr_1.2fr_1fr] lg:items-start">
+          <div>
+            <Link href="/" aria-label="Pearmo home" className="text-[22px]">
+              <Wordmark tone="light" />
+            </Link>
+            <p className="mt-2 max-w-[36ch] text-[14.5px] text-[#cfc8df]">{footer.tagline}</p>
+          </div>
 
-        <nav aria-label="Footer" className="flex items-center gap-5">
-          {footer.links.map((link) =>
-            link.href.startsWith("/") ? (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-mute hover:text-ink text-[13px] transition-colors"
-              >
-                {link.label}
-              </Link>
-            ) : (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-mute hover:text-ink text-[13px] transition-colors"
-              >
-                {link.label}
+          <div className="grid gap-3.5">
+            <nav aria-label="Footer">
+              <ul className="flex flex-wrap gap-x-5.5 gap-y-2.5 text-[15px]">
+                {footer.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-[#e4dfef] transition-colors hover:text-lime">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <p className="text-[15px]">
+              {footer.contactLabel}:{" "}
+              <a href={`mailto:${site.contactEmail}`} className="font-semibold text-lime underline underline-offset-3">
+                {site.contactEmail}
               </a>
-            ),
-          )}
-        </nav>
+            </p>
+          </div>
 
-        <span className="text-mute font-mono text-[11px] tracking-[0.14em] uppercase">
-          {footer.copyright}
-        </span>
+          {/* The small QR: desktop only, and only once the web app is live. */}
+          {site.webAppUrl && (
+            <div className="desk:grid hidden grid-cols-[auto_1fr] items-center gap-3 text-[13.5px] text-[#cfc8df]">
+              <QrCode px={112} className="rounded-[10px]" />
+              <p>
+                <b className="block text-[14.5px] text-paper">{footer.qrLabel}</b>
+                {getUrlLabel}
+              </p>
+            </div>
+          )}
+        </div>
+        <p className="mt-7.5 text-[13px] text-[#cfc8df]">{footer.copyright}</p>
       </div>
     </footer>
   );

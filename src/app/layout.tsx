@@ -1,53 +1,42 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Azeret_Mono, Fraunces } from "next/font/google";
+import { Funnel_Display, Funnel_Sans, Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+import { Motion } from "@/components/motion/Motion";
 import { OrganizationSchema, WebSiteSchema } from "@/components/seo/JsonLd";
 import { isProductionSite, site, verification } from "@/lib/site";
 import "./globals.css";
 
 /**
- * Fonts are self-hosted by next/font at build time. This replaces the two
- * preconnects plus a render-blocking stylesheet the original page used, and
- * `display: swap` with automatic fallback metrics removes the layout shift
- * that came with them.
- */
-/**
- * Body font. Preloaded, since it renders the headline and every paragraph.
- * All five weights are in use (400 body, 500 nav, 600 buttons, 700 h3, 800
- * h1/h2). Italic is deliberately NOT requested — the only italic on the site
- * is `.serif-accent`, which is Fraunces, so an Archivo italic face would be
- * pure dead weight.
- */
-const archivo = Archivo({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-archivo",
-  display: "swap",
-});
-
-/**
- * Display accent for the italic words inside headings and the pull quote.
+ * Fonts are self-hosted by next/font at build time (the CSP blocks font CDNs),
+ * with `display: swap` and generated fallback metrics so the swap doesn't
+ * shift layout. All three render above the fold, so all three are preloaded.
  *
- * Preloaded, and measured: `preload: false` here saved ~0.1s of LCP but cost
- * 0.5s of First Contentful Paint and introduced CLS as the h1 accent swapped
- * in. Both this and Azeret render above the fold, so they need to arrive with
- * the first paint, not after it.
+ * - Funnel Display: headings only, and only at 800, so one static file.
+ * - Funnel Sans: body, nav and buttons. Variable, so one file covers the
+ *   400–700 range in use instead of four.
+ * - Instrument Serif italic: the accent word in headings and the quotes. The
+ *   same face the app uses for quotes.
  */
-const fraunces = Fraunces({
+const funnelDisplay = Funnel_Display({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  style: ["italic"],
-  variable: "--font-fraunces",
+  weight: ["800"],
+  variable: "--font-funnel-display",
   display: "swap",
 });
 
-/** Kickers and small uppercase labels — including the hero badge, above the fold. */
-const azeret = Azeret_Mono({
+const funnelSans = Funnel_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-azeret",
+  variable: "--font-funnel-sans",
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["italic"],
+  variable: "--font-instrument-serif",
   display: "swap",
 });
 
@@ -74,7 +63,7 @@ export const metadata: Metadata = {
     "personality matching",
     "Big Five dating app",
     "no swiping dating app",
-    "verified dating app",
+    "safe dating app Sri Lanka",
     "psychology matched dating",
     "private dating app",
   ],
@@ -163,18 +152,22 @@ export default function RootLayout({
   return (
     <html
       lang={site.lang}
-      className={`${archivo.variable} ${fraunces.variable} ${azeret.variable}`}
+      className={`${funnelDisplay.variable} ${funnelSans.variable} ${instrumentSerif.variable}`}
     >
-      <body className="bg-bg text-ink font-sans antialiased">
+      <body className="bg-paper text-ink font-sans antialiased">
         {/* Keyboard and screen-reader users get past the fixed nav in one tab. */}
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-lime"
         >
           Skip to content
         </a>
 
         {children}
+
+        {/* Smooth scrolling and scroll animations, loaded once the page is
+            idle. Renders nothing; the page is complete without it. */}
+        <Motion />
 
         {/* Site-wide entity graph. Page-specific schema lives on each page. */}
         <OrganizationSchema />

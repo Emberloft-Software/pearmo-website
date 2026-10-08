@@ -20,7 +20,7 @@
   --color-violet-soft: #efeafe;
   /* Violet-tinted text that stays AA on violet-soft and paper. */
   --color-violet-deep: #4a2fd0;
-  --color-on-violet: #eee9ff;
+  --color-on-violet: #f7f5ff; /* 4.9:1 on violet */
   --color-pink: #ff3d7f;
   --color-pink-soft: #ffe1ec;
   /* The text-safe version of pink: 5.4:1 on paper. */
@@ -157,7 +157,8 @@
   .compare-over {
     clip-path: inset(0 0 0 var(--x));
   }
-  .compare-bar {
+  .compare-bar,
+  .compare-knob {
     left: var(--x);
   }
   .compare input:focus-visible ~ .compare-knob {
