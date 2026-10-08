@@ -123,9 +123,12 @@ export const metadata: Metadata = {
 
   formatDetection: { telephone: false, address: false, email: false },
 
-  // No `capable: true` here: that made Share → Add to Home Screen on this
-  // marketing site open full-screen like the app. The app is app.pearmo.com.
+  // `capable: false`, explicitly: Next defaults it to true whenever an
+  // appleWebApp object exists, which emits mobile-web-app-capable and makes
+  // Share → Add to Home Screen open this marketing site full-screen like the
+  // app. The installable app is app.pearmo.com.
   appleWebApp: {
+    capable: false,
     title: site.name,
   },
 

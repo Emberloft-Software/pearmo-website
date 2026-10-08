@@ -8,8 +8,11 @@ import { useEffect } from "react";
  * ScrollTrigger animations, driven by data attributes in the markup.
  *
  * Rules this follows, and why:
- * - Nothing loads until the browser is idle after first paint, so GSAP and
- *   Lenis (~45 KB gzipped together) never compete with the LCP.
+ * - Nothing loads until the visitor first scrolls, touches, moves the mouse
+ *   or presses a key, and then only when the browser is idle. Scroll effects
+ *   aren't needed before anyone scrolls, and loading them during page load
+ *   cost ~300 ms of main-thread blocking on a throttled phone (measured).
+ *   GSAP and Lenis (~45 KB gzipped together) never compete with the LCP.
  * - Content is never hidden by CSS. Animations start from the final, visible
  *   state in the HTML, and an element only animates in if it is below the
  *   fold when this runs, so nothing on screen at load ever blinks out. With
@@ -54,11 +57,35 @@ function loadLibs(): Promise<Libs> {
 
 function whenIdle(fn: () => void): () => void {
   if ("requestIdleCallback" in window) {
-    const id = window.requestIdleCallback(fn, { timeout: 2000 });
+    const id = window.requestIdleCallback(fn, { timeout: 600 });
     return () => window.cancelIdleCallback(id);
   }
-  const id = setTimeout(fn, 200);
+  const id = setTimeout(fn, 100);
   return () => clearTimeout(id);
+}
+
+const ENGAGE_EVENTS = ["scroll", "wheel", "touchstart", "pointermove", "pointerdown", "keydown"] as const;
+let engaged = false;
+
+/** Runs `fn` (when idle) after the first sign of a person using the page. */
+function whenEngaged(fn: () => void): () => void {
+  if (engaged) return whenIdle(fn);
+  let cancelIdle = () => {};
+  const onEngage = () => {
+    engaged = true;
+    remove();
+    cancelIdle = whenIdle(fn);
+  };
+  const remove = () => {
+    for (const type of ENGAGE_EVENTS) window.removeEventListener(type, onEngage);
+  };
+  for (const type of ENGAGE_EVENTS) {
+    window.addEventListener(type, onEngage, { passive: true, once: true });
+  }
+  return () => {
+    remove();
+    cancelIdle();
+  };
 }
 
 const reducedMotion = () =>
@@ -203,7 +230,7 @@ export function Motion() {
     }
     let dead = false;
     let teardown = () => {};
-    const cancel = whenIdle(async () => {
+    const cancel = whenEngaged(async () => {
       const [{ gsap, ScrollTrigger }, { default: Lenis }] = await Promise.all([
         loadLibs(),
         import("lenis"),
@@ -238,7 +265,7 @@ export function Motion() {
     if (reducedMotion()) return;
     let dead = false;
     let teardown = () => {};
-    const cancel = whenIdle(async () => {
+    const cancel = whenEngaged(async () => {
       const libs = await loadLibs();
       if (dead) return;
       let undoMedia = () => {};

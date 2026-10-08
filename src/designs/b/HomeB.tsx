@@ -155,7 +155,7 @@ export function HomeB() {
 
         <div className="strip">
           <div className="wrap"><p className="strip-label">{strip.label}</p></div>
-          <div className="marquee"><div className="track">{figs(false)}{figs(true)}</div></div>
+          <div className="marquee" tabIndex={0} role="region" aria-label={strip.label}><div className="track">{figs(false)}{figs(true)}</div></div>
         </div>
         <Lights />
 

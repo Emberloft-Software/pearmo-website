@@ -168,7 +168,7 @@ export function HomeA() {
         <div className="strip">
           <div className="strip-in">
             <p className="strip-label">{strip.label}</p>
-            <div className="marquee"><div className="track">{chips(false)}{chips(true)}</div></div>
+            <div className="marquee" tabIndex={0} role="region" aria-label={strip.label}><div className="track">{chips(false)}{chips(true)}</div></div>
           </div>
         </div>
 
@@ -197,9 +197,9 @@ export function HomeA() {
             <p className="kicker">{how.kicker}</p>
             <h2>{how.titleLead} <em>{how.titleEmphasis}</em></h2>
             <p className="lead">{how.lead}</p>
-            <div className="rail" role="list">
+            <div className="rail" tabIndex={0} role="region" aria-label={`${how.kicker}, step by step`}>
               {how.steps.map((s, i) => (
-                <article role="listitem" key={s.title}>
+                <article key={s.title}>
                   <div className="phone"><Shot src={s.image} alt={s.alt} /></div>
                   <span className="num">{i + 1}</span>
                   <h3>{s.title}</h3>

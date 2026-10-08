@@ -19,10 +19,10 @@ function HeadlineAvatar({ slug, className }: { slug: string; className: string }
       width={128}
       height={128}
       sizes="(min-width: 1024px) 96px, 48px"
-      priority
+      loading="eager"
       data-parallax="-0.35"
       data-parallax-scope=""
-      className={`inline-block h-[0.62em] w-[0.62em] rounded-full border-[0.04em] border-paper bg-violet-soft align-[0.04em] shadow-[0_0_0_0.03em_var(--color-line)] ${className}`}
+      className={`inline-block h-[0.62em] w-[0.62em] rounded-full object-cover object-top border-[0.04em] border-paper bg-violet-soft align-[0.04em] shadow-[0_0_0_0.03em_var(--color-line)] ${className}`}
     />
   );
 }
@@ -93,10 +93,12 @@ export function Hero() {
             />
           }
           after={
+            // Eager but not high priority: the avatar layer underneath is the
+            // LCP element, so it gets the bandwidth first.
             <ScenePicture
               scene="cafe"
               who="person"
-              priority
+              eager
               sizes="(min-width: 1024px) 58vw, 100vw"
             />
           }

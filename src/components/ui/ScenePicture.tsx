@@ -15,19 +15,30 @@ export function ScenePicture({
   who,
   sizes,
   priority = false,
+  eager = false,
   className = "",
 }: {
   scene: keyof typeof scenes;
   who: "avatar" | "person";
   /** `sizes` for the landscape image (640px and wider). */
   sizes: string;
+  /** Preload with high priority: only the LCP layer. */
   priority?: boolean;
+  /** Load straight away without high priority (visible, but not the LCP). */
+  eager?: boolean;
   className?: string;
 }) {
   const s = scenes[scene];
   const alt = who === "avatar" ? s.avatarAlt : s.personAlt;
   const base = who === "avatar" ? s.avatar : s.person;
-  const common = { alt, priority, loading: priority ? ("eager" as const) : ("lazy" as const) };
+  // Quality 60: these are painterly scenes under a slider, where the
+  // difference from 75 is invisible but the bytes are not (LCP on phones).
+  const common = {
+    alt,
+    priority,
+    quality: 60,
+    loading: priority || eager ? ("eager" as const) : ("lazy" as const),
+  };
 
   const {
     props: { srcSet: portrait },

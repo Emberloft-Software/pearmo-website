@@ -26,7 +26,7 @@ export function Why() {
             <p className="mt-3.5 text-[14px] opacity-85">{why.quoteSource}</p>
           </figure>
           <div className="rounded-[30px] rounded-br-lg bg-violet px-6.5 py-6 text-white">
-            <p className="mb-3 text-[12.5px] font-semibold tracking-[0.14em] uppercase opacity-85">
+            <p className="mb-3 text-[12.5px] font-semibold tracking-[0.14em] text-on-violet uppercase">
               {why.builtLabel}
             </p>
             <p className="text-[clamp(18px,1.5vw,20px)] leading-normal font-medium">

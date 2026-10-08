@@ -7,6 +7,7 @@
 
 .design-a {
   min-height: 100svh;
+  img[src*="avatars"]{object-fit:cover;object-position:top}
   
   .desk-only{}
   @media not all and (min-width: 1024px) and (hover: hover) and (pointer: fine){.desk-only{display:none!important}}
@@ -208,12 +209,12 @@ h3{font:700 20px/1.25 var(--display);letter-spacing:-.02em;margin:0 0 6px}
 .beta .kicker{color:var(--lime)}
 .beta h2{color:#fff}
 .beta h2 em{color:var(--lime)}
-.beta .lead{color:#EEE9FF}
+.beta .lead{color:#F7F5FF}
 .beta-top{display:grid;gap:32px;align-items:start}
 .beta-cta{display:grid;gap:8px;max-width:420px;margin-top:28px}
 .beta-cta .btn{min-height:58px;font-size:17px;width:100%}
-.beta-cta .note{color:#E4DCFF;text-align:center}
-.team{margin-top:22px;font-size:15px;color:#EEE9FF;max-width:44ch}
+.beta-cta .note{color:#F7F5FF;text-align:center}
+.team{margin-top:22px;font-size:15px;color:#F7F5FF;max-width:44ch}
 .steps3{background:var(--card);color:var(--ink);border-radius:28px;padding:10px 22px}
 .steps3 li{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;padding:18px 0;border-bottom:1px solid var(--line)}
 .steps3 li:last-child{border-bottom:0}
@@ -229,7 +230,7 @@ h3{font:700 20px/1.25 var(--display);letter-spacing:-.02em;margin:0 0 6px}
 .ticks svg{width:22px;height:22px;padding:3px;border-radius:50%;background:var(--lime);color:var(--ink)}
 .expect{display:grid;gap:14px}
 .expect div b{display:block;color:#fff}
-.expect div span{color:#E4DCFF;font-size:15.5px}
+.expect div span{color:#F7F5FF;font-size:15.5px}
 .dataline{display:flex;gap:12px;align-items:flex-start;margin-top:14px;padding:18px 22px;border-radius:22px;background:rgb(23 16 31 / .22);color:#F4F1FF;font-size:15.5px}
 .dataline svg{flex:none;margin-top:2px;color:var(--lime)}
 .dataline a{color:#fff;font-weight:600}

@@ -59,6 +59,8 @@ const nextConfig: NextConfig = {
     // each). These widths cover every size they're rendered at.
     imageSizes: [26, 40, 64, 84, 128, 256],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    // 60 is used by the scene images (ScenePicture.tsx); 75 is the default.
+    qualities: [60, 75],
   },
 
   async redirects() {

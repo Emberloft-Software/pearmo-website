@@ -29,23 +29,20 @@ const PAPER = "#faf8ff";
 const INK = "#17101f";
 const LIME = "#c6ff3d";
 
-async function asset(...parts: string[]) {
-  return readFile(join(process.cwd(), ...parts));
-}
-
-async function avatarDataUri(slug: string) {
-  const png = await asset("public", "assets", "avatars", `${slug}.png`);
-  return `data:image/png;base64,${png.toString("base64")}`;
-}
+// Literal paths on purpose: anything built dynamically makes Next's file
+// tracer pull the whole project into this route's bundle.
+const pngDataUri = (png: Buffer) => `data:image/png;base64,${png.toString("base64")}`;
 
 export default async function OpengraphImage() {
-  const [display, sans, serif, fox, wolf] = await Promise.all([
-    asset("src", "app", "_og", "FunnelDisplay-ExtraBold.ttf"),
-    asset("src", "app", "_og", "FunnelSans-Medium.ttf"),
-    asset("src", "app", "_og", "InstrumentSerif-Italic.ttf"),
-    avatarDataUri("fox-f"),
-    avatarDataUri("wolf-m"),
+  const [display, sans, serif, foxPng, wolfPng] = await Promise.all([
+    readFile(join(process.cwd(), "src/app/_og/FunnelDisplay-ExtraBold.ttf")),
+    readFile(join(process.cwd(), "src/app/_og/FunnelSans-Medium.ttf")),
+    readFile(join(process.cwd(), "src/app/_og/InstrumentSerif-Italic.ttf")),
+    readFile(join(process.cwd(), "public/assets/avatars/fox-f.png")),
+    readFile(join(process.cwd(), "public/assets/avatars/wolf-m.png")),
   ]);
+  const fox = pngDataUri(foxPng);
+  const wolf = pngDataUri(wolfPng);
 
   const avatarStyle = {
     width: 96,

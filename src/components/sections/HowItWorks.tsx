@@ -16,6 +16,11 @@ const STEP_STYLE = [
  * Four steps, each with the real app screen peeking up from the bottom of its
  * block. The screens drift slightly on scroll (data-parallax) inside a
  * clipped frame, so they never overlap the copy.
+ *
+ * `content-visibility: auto` on the list and the showcase: on slow
+ * connections Chrome fetches "lazy" images up to 2500px ahead, so these five
+ * screenshots used to download during the first paint and push LCP back on
+ * phones. Skipped content isn't laid out, so they now wait until it's near.
  */
 export function HowItWorks() {
   return (
@@ -27,7 +32,10 @@ export function HowItWorks() {
         </h2>
         <p className={`${lead} mt-4.5 text-ink-2`}>{how.lead}</p>
 
-        <ol className="mt-9 grid gap-3.5 md:grid-cols-2" data-stagger="0.1">
+        <ol
+          className="mt-9 grid gap-3.5 [contain-intrinsic-size:auto_1600px] [content-visibility:auto] md:grid-cols-2 md:[contain-intrinsic-size:auto_780px]"
+          data-stagger="0.1"
+        >
           {how.steps.map((step, i) => {
             const s = STEP_STYLE[i % STEP_STYLE.length]!;
             return (
@@ -68,7 +76,7 @@ export function HowItWorks() {
         </ol>
 
         <div
-          className="mt-3.5 grid items-center gap-5 rounded-4xl bg-violet-soft p-5.5 lg:grid-cols-[1.4fr_1fr] lg:gap-12 lg:py-7 lg:pr-12 lg:pl-7"
+          className="mt-3.5 grid items-center gap-5 rounded-4xl bg-violet-soft p-5.5 [contain-intrinsic-size:auto_600px] [content-visibility:auto] lg:grid-cols-[1.4fr_1fr] lg:gap-12 lg:py-7 lg:pr-12 lg:pl-7"
           data-reveal=""
         >
           <Image

@@ -30,7 +30,7 @@ export default function NotFound() {
           height={128}
           priority
           sizes="112px"
-          className="mb-5 h-28 w-28 rounded-full border-4 border-paper bg-violet-soft"
+          className="mb-5 h-28 w-28 rounded-full object-cover object-top border-4 border-paper bg-violet-soft"
         />
         <p className="text-[14px] font-semibold tracking-[0.18em] text-ink-2 uppercase">
           Error 404
