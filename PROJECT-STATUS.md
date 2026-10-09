@@ -1,6 +1,6 @@
 # Pearmo website — status, gaps and open decisions
 
-**Last updated:** 9 October 2026
+**Last updated:** 10 October 2026
 **Branch:** `redesign`, fast-forwarded into `main` and **live on
 www.pearmo.com since 9 October 2026** (production deploy of `863451f`).
 **Live site:** `https://www.pearmo.com`. Sections 1–5 below are the July
@@ -75,6 +75,9 @@ switch was turned on in the branch, together with legal fixes R1.
 | llms.txt | Updated for the beta and the web app for everyone |
 | Sections (9 Oct) | How it works uses direction A's layout, Icebreakers uses direction B's, both restyled in C; FAQ gets equal-width topic tabs (Privacy & safety · Matching · The beta) |
 | Web app switch (9 Oct) | On (`https://app.pearmo.com`), with R1 applied |
+| Email (10 Oct) | `pearmo.app@gmail.com` is the only address, for everything including privacy requests. No `hello@` / `privacy@pearmo.com` mailboxes |
+| Sample pages (10 Oct) | `/design/a`, `/design/b`, `/design/c` and their footer link stay live, for discussing further design changes |
+| Security (10 Oct) | Next.js 16.4.0, React 19.3, patched dependencies; critical advisory fixed. CI and Dependabot added |
 
 ### Still open
 
@@ -85,10 +88,11 @@ switch was turned on in the branch, together with legal fixes R1.
 | R2 | ~~**`legal.ts`: WhatsApp.**~~ Resolved 9 Oct: the privacy policy says invites go by WhatsApp and email and lists WhatsApp (Meta) among who handles data during the beta | — |
 | R3 | ~~**`legal.ts` contradicts itself on photos.**~~ Resolved 9 Oct: the privacy policy's "no profile photos / no audio intro" lines are removed, matching the beta terms | — |
 | R4 | **A fresh Shared Unlocks screenshot.** `app-shared-unlocks.webp` shows removed unlocks; `app-showcase-overview.webp` and `app-profile-about.webp` show an emergency-contact field | The site can't show those screens |
-| R5 | **Delete the previews** (`src/app/design/`, `src/designs/`) before merging, unless you want them public (they're noindex) | Dead weight in production |
+| R5 | ~~**Delete the previews.**~~ Decided 10 Oct: keep them (noindex) while design changes are discussed | — |
 | R6 | **Scan the QR on a real phone** on the Vercel preview | Decoding was verified from screenshots, not with a camera |
 | R7 | ~~**Legal "last updated" date.**~~ Now 9 October 2026 | — |
-| R8 | **Design preview links are public.** The live footer links to `/design/a`, `/design/b`, `/design/c` while design changes are discussed (pages are noindex) | Remove with R5 when done |
+| R8 | **Design preview links are public**, by decision. When the design discussion ends, remove `src/app/design/`, `src/designs/` and `footer.designPreviews` together | — |
+| R9 | **`braces` advisory in the lint toolchain** (eslint-config-next → fast-glob → micromatch → braces ≤ 3.0.3). No patched release exists yet; dev-only, never shipped. Dependabot will raise the fix when it lands | Clears `npm audit` |
 
 ---
 
@@ -488,10 +492,10 @@ because it surfaced during this check.
 
 ### 4.8 Engineering hygiene
 
-- [ ] **No CI.** No GitHub Actions running `build` / `lint` / `typecheck` on PRs,
-      so nothing stops a broken commit reaching `main`
+- [x] ~~**No CI.**~~ `.github/workflows/ci.yml` runs lint, typecheck and build on
+      every push and PR (10 Oct 2026). Protect `main` in GitHub to make it a gate
 - [ ] No `.env.example` documenting the three env vars
-- [ ] No Dependabot/Renovate
+- [x] ~~No Dependabot/Renovate~~ — `.github/dependabot.yml` (10 Oct 2026)
 - [ ] No uptime monitoring
 - [ ] No Lighthouse CI budget to catch performance regressions
 - [ ] `legacy/index.html` still in the repo. Intentional for reference — delete
@@ -527,8 +531,8 @@ because it surfaced during this check.
 | # | Decision | Blocks |
 | - | -------- | ------ |
 | 1 | ~~**Legal facts**~~ — resolved 4 Aug 2026, see §2.5. One `TODO` left in `src/content/legal.ts`: the SMS provider name | Nothing structural; edit and redeploy |
-| 1b | **Domain mailboxes.** `hello@` and `privacy@pearmo.com` never existed, so every reference now points at `pearmo.app@gmail.com` — including the JSON-LD `Organization.email` and the footer. Set up real mailboxes and change `site.contactEmail` / `site.privacyEmail` / `legalFacts.contactEmail` together | Brand credibility, not function |
-| 2 | **Waitlist backend**, when you're ready to stop losing signups | §2.4 |
+| 1b | ~~**Domain mailboxes.**~~ Decided 10 Oct 2026: `pearmo.app@gmail.com` only, no domain mailboxes. `hello@` and `privacy@pearmo.com` never existed, so every reference now points at `pearmo.app@gmail.com` — including the JSON-LD `Organization.email` and the footer. Set up real mailboxes and change `site.contactEmail` / `site.privacyEmail` / `legalFacts.contactEmail` together | Brand credibility, not function |
+| 2 | ~~**Waitlist backend**~~ — replaced by the beta Google Form (8 Oct 2026) | — |
 | 3 | **Launch date and pricing** — when decided, the FAQ and `llms.txt` must be updated together | §4.5 |
 | 4 | **Social handles**, once accounts exist → `socialProfiles` in `src/lib/site.ts` | §4.4 |
 | 5 | **Real avatar count**, if you ever want the number back in the copy | §4.5 |

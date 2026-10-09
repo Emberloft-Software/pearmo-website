@@ -1,15 +1,14 @@
 # Pearmo — marketing site (closed beta)
 
 Next.js 16 (App Router) + TypeScript + Tailwind v4. Deployed to Vercel at
-**pearmo.com**.
+**www.pearmo.com** (`pearmo.com` redirects there).
 
 Rebuilt from a single-file static `index.html`, which is archived at
 [`legacy/index.html`](legacy/index.html) for reference. Nothing imports it.
 
-> **See [`PROJECT-STATUS.md`](PROJECT-STATUS.md)** for the full picture: measured
-> Lighthouse scores, everything that's done, every known gap (SEO, Search
-> Console, analytics, ASO, off-page), and the six decisions still needed.
-> **It also documents a canonical-host defect that must be fixed at merge.**
+> **See [`PROJECT-STATUS.md`](PROJECT-STATUS.md)** for the full picture:
+> measured Lighthouse scores, what's done, and every known gap (Search
+> Console, analytics, off-page SEO, translations).
 
 ## Run it
 
@@ -22,22 +21,19 @@ npm run lint         # eslint
 npm run typecheck    # tsc --noEmit
 ```
 
-## ⚠️ Before merging to `main` — Vercel needs a settings change
+## Deploying
 
-The repo used to be a static folder with no build step. It is now a Next.js
-app, so the Vercel project settings must be updated **at the same time as the
-merge**, or the deploy will serve nothing:
-
-| Setting          | Old               | New                       |
-| ---------------- | ----------------- | ------------------------- |
-| Framework Preset | Other / None      | **Next.js**               |
-| Build Command    | _(empty)_         | `npm run build` (default) |
-| Output Directory | `.` / root        | _(leave empty)_           |
-| Install Command  | _(empty)_         | `npm install` (default)   |
-| Node version     | —                 | 22.x or later             |
-
-Merging to `main` without this is the only real deployment risk in the rebuild.
-Check the branch's preview deployment first — it exercises the same settings.
+- **`main` is production.** Every push to `main` deploys www.pearmo.com.
+- **Any other branch gets a Vercel preview** (behind Vercel sign-in) and is
+  never indexed. Work on a branch, check the preview, then fast-forward
+  `main`.
+- **CI** (`.github/workflows/ci.yml`) runs lint, typecheck and build on every
+  push and pull request. It doesn't stop Vercel deploying; to make it a hard
+  gate, protect `main` in GitHub and require the `build` check.
+- **Dependabot** (`.github/dependabot.yml`) opens weekly PRs for dependency
+  updates and security fixes.
+- **Rollback**: Vercel → Deployments → the previous production deployment →
+  Instant Rollback.
 
 ## Environment variables
 
@@ -271,18 +267,17 @@ Google Form in `site.betaFormUrl`.
 
 ### 2. Legal pages are unreviewed drafts
 
-`/privacy` and `/terms` carry a visible draft banner. `src/content/legal.ts`
-lists the specific gaps a lawyer or the team must close — the registered entity
-name, the ID-verification vendor, biometric retention periods, and whether data
-leaves Sri Lanka. Both are written against Sri Lanka's PDPA (Act No. 9 of 2022),
-which treats the liveness biometric and national ID data as sensitive personal
-data.
+`/privacy` and `/terms` carry a visible draft banner until a lawyer has read
+them. The factual gaps (entity, verification vendor, retention, cross-border
+transfer) were closed in August 2026; see `PROJECT-STATUS.md` §2.5. Both are
+written against Sri Lanka's PDPA (Act No. 9 of 2022), which treats the
+liveness biometric and national ID data as sensitive personal data.
 
 A live privacy policy URL is also required by Google Play and the App Store.
 
 ### 3. Search Console and Bing are not set up
 
-Add the two verification env vars, then submit `https://pearmo.com/sitemap.xml`.
+Add the two verification env vars, then submit `https://www.pearmo.com/sitemap.xml`.
 Use a **domain** property in Search Console (DNS-verified) rather than a URL
 prefix, so it covers `www` and any subdomains.
 

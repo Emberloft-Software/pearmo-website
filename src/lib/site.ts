@@ -61,12 +61,10 @@ export const site = {
   country: "Sri Lanka",
   city: "Colombo",
   /**
-   * The one address that actually receives mail (confirmed 4 Aug 2026).
-   * hello@ and privacy@pearmo.com were aspirational and do not exist — a
-   * privacy policy that routes data-subject requests into a black hole is a
-   * real PDPA problem, so both point here until the domain mailboxes are set
-   * up. When they are, change these two lines and `legalFacts.contactEmail`
-   * in `src/content/legal.ts` together.
+   * Pearmo's only email address, for everything including privacy and data
+   * requests (decided 10 Oct 2026: no hello@ or privacy@pearmo.com
+   * mailboxes). If that ever changes, change these two lines and
+   * `legalFacts.contactEmail` in `src/content/legal.ts` together.
    */
   contactEmail: "pearmo.app@gmail.com",
   privacyEmail: "pearmo.app@gmail.com",
