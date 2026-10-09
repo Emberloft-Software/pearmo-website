@@ -57,8 +57,13 @@ compete with production in search results.
 ## Design (direction C, "Duet")
 
 Rebuilt in October 2026. Everything comes in pairs: the headline is a
-two-line exchange between the fox and the wolf avatars, the scenes are
-drag-to-compare (avatar ↔ person), and colour blocks replace cards.
+two-line exchange between the fox and the wolf avatars, the hero scene is
+drag-to-compare (avatar ↔ person), and colour blocks replace cards. Two
+sections use layouts borrowed from the other candidate directions, restyled
+in C: **How it works** (direction A: a sticky phone on desktop, a swipe row
+on phones) and **Icebreakers** (direction B: a full-bleed scene where a
+spotlight turns the avatars into people as you scroll). The **FAQ** has
+equal-width topic tabs over equal-width rows.
 
 **Tokens** live in `@theme` in `src/app/globals.css`. The palette is the
 Flutter app's own, so a tap from the site into the web app feels like one
@@ -93,23 +98,26 @@ version with a thickened pear line so it survives at 16px.
 **Motion** (`src/components/motion/Motion.tsx`): GSAP ScrollTrigger and
 SplitText plus Lenis smooth scrolling, driven by `data-` attributes
 (`data-reveal`, `data-stagger`, `data-split`, `data-parallax`,
-`data-marquee`, `data-compare-scrub`, `data-pin`, `data-radar`). Rules:
+`data-marquee`, `data-spotlight`, `data-pin`, `data-radar`). Rules:
 
 - it loads on the first scroll, touch, wheel, key or mouse movement, then
   when idle, so it never competes with first paint;
 - content is never hidden in CSS; only elements below the fold at that
   moment animate in, so nothing visible blinks out, and with JS off the page
   is simply static;
+- reveals use opacity, never `visibility` (GSAP's `autoAlpha`): hidden
+  elements can't take focus, so keyboard users would skip whole sections;
 - Lenis only for a mouse or trackpad; phones keep native scrolling;
 - `prefers-reduced-motion: reduce` gets no Lenis and no animations.
 
 ## The web app, its buttons and the QR codes
 
 The web app is a PWA at app.pearmo.com for Android, iPhone and computers.
-`site.webAppUrl` in `src/lib/site.ts` is the single launch switch. It is
-committed as `null`.
+`site.webAppUrl` in `src/lib/site.ts` is the single launch switch. It was
+switched on (`https://app.pearmo.com`) on 9 October 2026; set it back to
+`null` to hide every app link and QR code at once.
 
-| | `webAppUrl` null (today) | `webAppUrl` set |
+| | `webAppUrl` null | `webAppUrl` set (today) |
 | --- | --- | --- |
 | Main button everywhere | **Join the beta** → `site.betaFormUrl` (Google Form) | same |
 | Phones and tablets | nothing else | "Already invited? **Open Pearmo**" + the Get Pearmo section's button |
@@ -149,8 +157,8 @@ How it's decided, and why:
   `beta_form_404`, `open_app_hero`, `open_app_nav`, `open_app_final`,
   `open_app_desktop_link`.
 
-To see the launched state locally, set `webAppUrl: "https://app.pearmo.com"`,
-build, and **set it back to `null` before committing**.
+To see the not-launched state locally, set `webAppUrl: null`, and set it
+back before committing.
 
 ## Design previews (temporary)
 
@@ -189,7 +197,7 @@ src/
     TrackedLink.tsx         <a> that records one analytics event
     Logo.tsx                mark + wordmark
     motion/Motion.tsx       GSAP + Lenis
-    ui/                     Compare slider, ScenePicture, Icon, Tag, shared classes
+    ui/                     Compare slider, ScenePicture, StickySteps, FaqTabs, Icon, Tag, shared classes
     seo/JsonLd.tsx          structured data
   content/
     site-content.ts         ← all marketing copy lives here

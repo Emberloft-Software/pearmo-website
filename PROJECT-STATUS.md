@@ -51,13 +51,14 @@ Checked at 360, 390, 768, 1024 and 1440px: no sideways scroll on any page.
 axe-core (WCAG 2.1 AA + best practice) on the home, legal and 404 pages at
 390 and 1440px: no violations.
 
-### Launch switch verified
+### Launch switch verified, then switched on (9 October 2026)
 
-With `webAppUrl` set locally to `https://app.pearmo.com`: phones and tablets
-show "Open Pearmo" and no QR; a desktop with a mouse shows four QR codes and
-no app buttons; `/get` answers `307 → https://app.pearmo.com`; the hero and
+With `webAppUrl` set to `https://app.pearmo.com`: phones and tablets show
+"Open Pearmo" and no QR; a desktop with a mouse shows four QR codes and no
+app buttons; `/get` answers `307 → https://app.pearmo.com`; the hero and
 footer QR codes decode to `https://www.pearmo.com/get`. With `null`: no QR or
-app links in the HTML and `/get` answers `307 → /#beta`. Committed as `null`.
+app links in the HTML and `/get` answers `307 → /#beta`. On 9 October the
+switch was turned on in the branch, together with legal fixes R1.
 
 ### Decided 8–9 October 2026
 
@@ -72,17 +73,21 @@ app links in the HTML and `/get` answers `307 → /#beta`. Committed as `null`.
 | Motion | GSAP + Lenis; Lenis on mouse/trackpad only |
 | Copy | Proposed changes approved (headlines "Skip the “hey”." and "Your face. Your call.") |
 | llms.txt | Updated for the beta and the web app for everyone |
+| Sections (9 Oct) | How it works uses direction A's layout, Icebreakers uses direction B's, both restyled in C; FAQ gets equal-width topic tabs (Privacy & safety · Matching · The beta) |
+| Web app switch (9 Oct) | On (`https://app.pearmo.com`), with R1 applied |
 
 ### Still open
 
 | # | What | Why it matters |
 | --- | --- | --- |
-| R1 | **`legal.ts`: web app for everyone.** The beta terms' "What this is" (APK by email, iPhone gets the web link), the eligibility line ("…or an iPhone, which uses the web app…"), and the privacy policy's web-app section ("which is how it works on iPhone") all describe the web app as the iPhone route | They go out of date the moment `webAppUrl` is set |
-| R2 | **`legal.ts`: WhatsApp.** Invites go to WhatsApp and email, but the privacy policy and beta terms only mention email | WhatsApp (Meta) is a new party handling testers' numbers |
+| R1 | ~~**`legal.ts`: web app for everyone.**~~ Fixed 9 Oct with the approved wording: privacy policy web-app section, beta terms "What this is" and eligibility | — |
+| R1b | **`legal.ts`: the APK lines.** With the web app on, the beta terms still say "The app is installed outside the Play Store… We will email you each new build" and "Please do not forward the APK". If Android testers no longer get an APK, these contradict "we send you a link to the web app" | Testers read both on the same page |
+| R2 | **`legal.ts`: WhatsApp in the privacy policy.** The beta terms now say invites go by WhatsApp and email; the privacy policy still doesn't mention WhatsApp (drafts 4 and 5 are waiting for approval) | WhatsApp (Meta) is a new party handling testers' numbers |
 | R3 | **`legal.ts` contradicts itself on photos.** The privacy policy's beta section says no profile photos and no voice intros; the newer beta terms say both exist | One of them is wrong |
 | R4 | **A fresh Shared Unlocks screenshot.** `app-shared-unlocks.webp` shows removed unlocks; `app-showcase-overview.webp` and `app-profile-about.webp` show an emergency-contact field | The site can't show those screens |
 | R5 | **Delete the previews** (`src/app/design/`, `src/designs/`) before merging, unless you want them public (they're noindex) | Dead weight in production |
-| R6 | **Scan the QR on a real phone** once a preview deploy has `webAppUrl` set | Decoding was verified from screenshots, not with a camera |
+| R6 | **Scan the QR on a real phone** on the Vercel preview | Decoding was verified from screenshots, not with a camera |
+| R7 | **Legal "last updated" date.** `LEGAL_LAST_UPDATED` still says 3 October 2026 although the beta terms and privacy policy changed on 9 October | Readers should see when the terms changed |
 
 ---
 
