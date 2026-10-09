@@ -67,9 +67,9 @@ export const legalFacts = {
   smsProvider: "Text.lk",
 } as const;
 
-export const LEGAL_LAST_UPDATED = "2026-10-03";
+export const LEGAL_LAST_UPDATED = "2026-10-09";
 
-export const LEGAL_LAST_UPDATED_LABEL = "3 October 2026";
+export const LEGAL_LAST_UPDATED_LABEL = "9 October 2026";
 
 export type LegalBlock =
   | { type: "p"; text: string }
@@ -151,10 +151,9 @@ export const privacyPolicy: readonly LegalSection[] = [
         type: "list",
         items: [
           "National identity document verification is disabled. We do not ask for, receive or store your NIC or any other government ID during the beta.",
-          "There are no profile photos. You have an animal character and nothing else. There is no photo upload anywhere in the beta build.",
-          "There is no audio introduction recording.",
           "There are no payments. Nothing in the beta costs money, and we hold no payment or card details of any kind.",
           "Beta signups are collected through a Google Form. Your first name, phone number, email address and answers are stored in Google's systems under Google's terms until we delete the responses, and only the two of us can open that sheet. The form also has email collection switched on, so it separately records the Google account address you are signed in with, which may not be the address you typed.",
+          "If we invite you, we send the invite to the WhatsApp number and email address you gave on the form. WhatsApp is run by Meta, which handles those messages under its own terms.",
           "When the closed beta ends, we delete the beta test data outright, including accounts, profiles, messages, connections, matches and any verification images. Nothing is carried over into a public launch; you would sign up again from scratch. We will tell you before we do it.",
         ],
       },
@@ -310,6 +309,7 @@ export const privacyPolicy: readonly LegalSection[] = [
             `Cloudflare, which hosts the web app at ${webAppHost} and runs the Turnstile check before a sign-in code is sent.`,
           ]),
           "Google, during the closed beta only, because the signup form is a Google Form and its responses sit in a Google Sheet that only the two of us can open.",
+          "WhatsApp (Meta), during the closed beta only, to send your invite to the number you gave on the signup form.",
           "Law enforcement or a regulator, where we are legally required to hand something over, or where we believe in good faith it is necessary to prevent serious harm to someone.",
         ],
       },
@@ -670,8 +670,8 @@ export const betaTerms: readonly LegalSection[] = [
       {
         type: "p",
         text: webAppHost
-          ? `This page is where you find out what you are signing up for. If you consent on the signup form, we send you a link to the web app at ${webAppHost} by WhatsApp and email. It works on Android phones and iPhones.`
-          : "This page is where you find out what you are signing up for. If you consent on the signup form, we email you an Android APK file to install by hand.",
+          ? `This page is where you find out what you are signing up for. If you consent on the signup form, we send you an invite by WhatsApp and email: a link to the web app at ${webAppHost}, which works on Android phones and iPhones, or, for some Android testers, an Android APK file to install by hand.`
+          : "This page is where you find out what you are signing up for. If you consent on the signup form, we send you an invite by WhatsApp and email with an Android APK file to install by hand.",
       },
       {
         type: "p",
@@ -697,7 +697,7 @@ export const betaTerms: readonly LegalSection[] = [
           "You are 18 or older. This is a hard requirement with no exceptions, and it is the one thing on this list we cannot check. ID verification is switched off for this test, so we are trusting you.",
           "You are in Sri Lanka for the duration of the beta.",
           webAppHost
-            ? `You have an Android phone or an iPhone, for the web app at ${webAppHost}. On iPhone, add it to your Home Screen to get notifications.`
+            ? `You have an Android phone or an iPhone. On Android you can use the web app at ${webAppHost} or, if we send you one, the APK (Android 7.0 or newer). On iPhone, use the web app and add it to your Home Screen to get notifications.`
             : "You have an Android phone running Android 7.0 or newer. There is no iPhone build yet.",
           "You have a Sri Lankan mobile number that can receive an SMS, because that is how you sign in.",
           "You are joining as yourself, with real information about yourself, and one account only.",
