@@ -264,49 +264,70 @@ export const faq = {
   titleLead: "Everything you're",
   titleEmphasis: "wondering.",
   lead: "Still curious about something? Email pearmo.app@gmail.com. It reaches the team directly.",
+  /**
+   * The topic tabs, in order; the first is open by default. Every answer is
+   * in the HTML whichever tab is showing, and without JavaScript the groups
+   * simply stack, so the FAQPage markup always matches what's on the page.
+   */
+  groups: [
+    { id: "safety", label: "Privacy & safety" },
+    { id: "matching", label: "Matching" },
+    { id: "beta", label: "The beta" },
+  ],
   items: [
     {
       q: "What is Pearmo?",
+      group: "matching",
       a: "Pearmo is an anonymous, psychology-matched dating app launching first in Sri Lanka. Instead of swiping through photos, you complete a Big Five personality questionnaire, choose an animal avatar to appear as, and receive a few curated, compatibility-matched people each day. Chat unlocks only when both people consent.",
     },
     {
       q: "When does Pearmo launch?",
+      group: "beta",
       a: "Pearmo is in an invite-only closed beta with a small group in Sri Lanka. There's no public launch date yet. Join the beta and you'll hear about the launch before it's public.",
     },
     {
       q: "Do I have to upload my photo?",
+      group: "safety",
       a: "No. Pearmo has no public photo grid. You appear to other users as your chosen animal avatar. Once you've verified, you can add a real profile photo, and it stays hidden unless you choose to show it. Sending photos inside a chat needs both of you to agree first.",
     },
     {
       q: "How does Pearmo make sure people are real?",
+      group: "safety",
       a: "Verification is optional, and every profile shows its level. A selfie check, reviewed by a real person, confirms there's someone real behind the account. Unverified accounts are matched mainly with each other, and sharing photos in a chat needs both people verified. A national ID check that also confirms age is planned but not switched on yet. Verification isn't a background check, and it doesn't vouch for how anyone will behave.",
     },
     {
       q: "How does personality matching work?",
+      group: "matching",
       a: "You answer a questionnaire built on the Big Five personality traits plus attachment theory, covering six dimensions: openness, conscientiousness, extraversion, agreeableness, emotional stability and attachment security. Items are reverse-scored, so answering strategically doesn't improve your results. Pearmo then matches people whose trait profiles are genuinely compatible.",
     },
     {
       q: "Can my matches see my personality scores?",
+      group: "safety",
       a: "No. Your trait scores are visible only to you. Compatibility is computed on our side and never exposed as raw numbers to anyone you match with.",
     },
     {
       q: "Why can't I message someone straight away?",
+      group: "safety",
       a: "Chat is deliberately gated. Both people have to accept the connection and agree to open chat, and either of you can lock it again later. Icebreaker games, including comparing music taste, give you something real to start from, so the first message isn't a cold \"hey\".",
     },
     {
       q: "Is Pearmo free?",
+      group: "beta",
       a: "The beta is free, with no payments anywhere in it. We'll confirm what the app itself costs before launch, and beta testers will hear first.",
     },
     {
       q: "Is Pearmo only for serious relationships?",
+      group: "matching",
       a: "Pearmo is built for people looking for something real, and profiles lead with intent so you can state what you're actually after. It isn't designed for hookups. The slower, consent-gated flow is the whole point.",
     },
     {
       q: "Where is Pearmo available?",
+      group: "beta",
       a: "Only in Sri Lanka for now, through the invite-only closed beta. Other markets will follow once the first release is stable.",
     },
     {
       q: "What happens to my data when the beta ends?",
+      group: "beta",
       a: "We delete the beta data: accounts, profiles, messages, connections, matches and any verification images. Nothing carries over to a public launch. Your sign-up form answers are deleted too, and you can ask us to delete them sooner.",
     },
   ],

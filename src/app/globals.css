@@ -172,6 +172,41 @@
   .shot-crop {
     margin-top: -16.67%;
   }
+
+  /* Spotlight reveal (Icebreakers): the person layer shows through a soft
+     circle between the two faces. --r is the radius; Motion.tsx scrubs it
+     from 0 with scroll. The default is fully open, so without JavaScript or
+     with reduced motion the people simply show. */
+  .spotlight-over {
+    --r: 160%;
+    -webkit-mask-image: radial-gradient(
+      circle at 50% 30%,
+      #000 calc(var(--r) - 9%),
+      transparent var(--r)
+    );
+    mask-image: radial-gradient(
+      circle at 50% 30%,
+      #000 calc(var(--r) - 9%),
+      transparent var(--r)
+    );
+  }
+}
+
+/* FAQ topic tabs (FaqTabs.tsx). With JavaScript, one panel shows at a time;
+   without it, the tab bar goes and the groups stack under their titles. */
+@media (scripting: enabled) {
+  .faq-panel[data-active="false"],
+  .faq-group-title {
+    display: none;
+  }
+}
+@media (scripting: none) {
+  .faq-tablist {
+    display: none;
+  }
+  .faq-panel + .faq-panel {
+    margin-top: 1.75rem;
+  }
 }
 
 /* ==========================================================================

@@ -13,9 +13,7 @@ import { Icon } from "@/components/ui/Icon";
  * touch, where `touch-action: pan-y` keeps vertical page scrolling free. With
  * JavaScript off it renders at the halfway split.
  *
- * `scrub` hands the split to the scroll animation in Motion.tsx until the
- * person touches the slider; `nudge` plays one small hint movement so people
- * see it moves.
+ * `nudge` plays one small hint movement so people see it moves.
  */
 export function Compare({
   before,
@@ -25,7 +23,6 @@ export function Compare({
   label,
   caption,
   nudge = false,
-  scrub = false,
   className = "",
 }: {
   before: ReactNode;
@@ -35,7 +32,6 @@ export function Compare({
   label: string;
   caption?: string;
   nudge?: boolean;
-  scrub?: boolean;
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -65,11 +61,7 @@ export function Compare({
   }, [nudge]);
 
   return (
-    <div
-      ref={ref}
-      className={`compare ${className}`}
-      data-compare-scrub={scrub ? "" : undefined}
-    >
+    <div ref={ref} className={`compare ${className}`}>
       {before}
       <div className="compare-over absolute inset-0">{after}</div>
 

@@ -13,6 +13,10 @@ import { useEffect } from "react";
  *   aren't needed before anyone scrolls, and loading them during page load
  *   cost ~300 ms of main-thread blocking on a throttled phone (measured).
  *   GSAP and Lenis (~45 KB gzipped together) never compete with the LCP.
+ * - Reveals fade with opacity only, never visibility (GSAP's autoAlpha):
+ *   hidden elements can't take focus, so keyboard users would skip whole
+ *   sections that hadn't been scrolled to yet. Focusing something scrolls it
+ *   into view, which triggers its reveal.
  * - Content is never hidden by CSS. Animations start from the final, visible
  *   state in the HTML, and an element only animates in if it is below the
  *   fold when this runs, so nothing on screen at load ever blinks out. With
@@ -29,8 +33,9 @@ import { useEffect } from "react";
  *                            nearest [data-parallax-scope], else the element
  *   data-marquee             the moving track of a marquee; speeds up with
  *                            scroll velocity
- *   data-compare-scrub       a Compare slider whose split follows scroll; the
- *                            nearest [data-pin] is pinned on desktop meanwhile
+ *   data-spotlight           a scene whose .spotlight-over layer opens with
+ *                            scroll (avatars -> people); the nearest
+ *                            [data-pin] is pinned on desktop meanwhile
  *   data-radar="cx cy"       an SVG group that grows from that point
  */
 
@@ -101,7 +106,7 @@ function setup({ gsap, ScrollTrigger, SplitText }: Libs) {
     if (!belowFold(el)) continue;
     gsap.from(el, {
       y: 40,
-      autoAlpha: 0,
+      opacity: 0,
       duration: 0.9,
       ease: "power3.out",
       delay: Number(el.dataset.delay ?? 0),
@@ -113,7 +118,7 @@ function setup({ gsap, ScrollTrigger, SplitText }: Libs) {
     if (!belowFold(group)) continue;
     gsap.from(group.children, {
       y: 44,
-      autoAlpha: 0,
+      opacity: 0,
       duration: 0.8,
       ease: "power3.out",
       stagger: Number(group.dataset.stagger || 0.09),
@@ -128,7 +133,7 @@ function setup({ gsap, ScrollTrigger, SplitText }: Libs) {
     const split = SplitText.create(heading, { type: "words", aria: "auto" });
     gsap.from(split.words, {
       yPercent: 70,
-      autoAlpha: 0,
+      opacity: 0,
       duration: 0.9,
       ease: "power4.out",
       stagger: 0.045,
@@ -174,7 +179,7 @@ function setup({ gsap, ScrollTrigger, SplitText }: Libs) {
     if (!svg || !belowFold(svg)) continue;
     gsap.from(svgGroup, {
       scale: 0.15,
-      autoAlpha: 0,
+      opacity: 0,
       // The chart centre in SVG units, from data-radar="cx cy".
       svgOrigin: svgGroup.dataset.radar || undefined,
       duration: 1.2,
@@ -184,35 +189,33 @@ function setup({ gsap, ScrollTrigger, SplitText }: Libs) {
   }
 
   const mm = gsap.matchMedia();
-  for (const cmp of all("[data-compare-scrub]")) {
-    const input = cmp.querySelector("input");
-    const state = { x: 88 };
-    const apply = () => {
-      if (cmp.dataset.touched) return;
-      cmp.style.setProperty("--x", `${state.x}%`);
-      if (input) input.value = String(Math.round(state.x));
-    };
+  for (const scene of all("[data-spotlight]")) {
+    const over = scene.querySelector<HTMLElement>(".spotlight-over");
+    // Already on screen: leave it open rather than snapping it shut.
+    if (!over || !belowFold(scene)) continue;
+    const state = { r: 0 };
+    const apply = () => over.style.setProperty("--r", `${state.r}%`);
     apply();
-    const pinTarget = cmp.closest<HTMLElement>("[data-pin]");
+    const pinTarget = scene.closest<HTMLElement>("[data-pin]");
 
-    // Desktop: hold the section in place while the avatars turn into people.
+    // Desktop: hold the section in place while the avatars become people.
     mm.add(DESK, () => {
       gsap.to(state, {
-        x: 12,
+        r: 160,
         ease: "none",
         onUpdate: apply,
         scrollTrigger: pinTarget
           ? { trigger: pinTarget, start: "top top", end: "+=90%", pin: true, scrub: 0.6 }
-          : { trigger: cmp, start: "top 75%", end: "bottom 25%", scrub: 0.6 },
+          : { trigger: scene, start: "top 70%", end: "bottom 30%", scrub: 0.6 },
       });
     });
-    // Touch: no pinning; the split follows the section through the screen.
+    // Touch: no pinning; the spotlight follows the scene through the screen.
     mm.add(`not all and ${DESK}`, () => {
       gsap.to(state, {
-        x: 12,
+        r: 160,
         ease: "none",
         onUpdate: apply,
-        scrollTrigger: { trigger: cmp, start: "top 80%", end: "bottom 35%", scrub: 0.6 },
+        scrollTrigger: { trigger: scene, start: "top 75%", end: "bottom 40%", scrub: 0.6 },
       });
     });
   }
