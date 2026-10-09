@@ -82,7 +82,8 @@ export const site = {
     "https://docs.google.com/forms/d/e/1FAIpQLSfnxg145QbDhb91PiIa70qEewfnhWrYTLVyHsUwBcJBJ_pe8A/viewform",
   /**
    * The launch switch for the web app (the PWA at app.pearmo.com, for
-   * Android, iPhone and computers alike). null until that release ships.
+   * Android, iPhone and computers alike). Switched on 9 October 2026; set it
+   * back to null to hide every app link and QR code at once.
    *
    * While null: no QR codes, no "Open Pearmo" buttons, no "Get Pearmo"
    * section, the beta form leads everywhere, and /get sends people to the
@@ -90,7 +91,7 @@ export const site = {
    * platforms in JSON-LD and llms.txt and the web-app parts of the privacy
    * policy and beta terms, so they can't drift apart.
    */
-  webAppUrl: null as string | null,
+  webAppUrl: "https://app.pearmo.com" as string | null,
 } as const;
 
 /**

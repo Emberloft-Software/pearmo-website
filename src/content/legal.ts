@@ -255,7 +255,7 @@ export const privacyPolicy: readonly LegalSection[] = [
         { type: "h3", text: "Using Pearmo in a web browser" },
         {
           type: "p",
-          text: `Pearmo also runs as a web app at ${webAppHost}, which is how it works on iPhone. It behaves like the Android app, with these differences:`,
+          text: `Pearmo also runs as a web app at ${webAppHost}, on Android phones, iPhones and computers. It behaves like the Android app, with these differences:`,
         },
         {
           type: "list",
@@ -670,7 +670,7 @@ export const betaTerms: readonly LegalSection[] = [
       {
         type: "p",
         text: webAppHost
-          ? `This page is where you find out what you are signing up for. If you consent on the signup form, we email you an Android APK file to install by hand or, on iPhone, a link to the web app at ${webAppHost}.`
+          ? `This page is where you find out what you are signing up for. If you consent on the signup form, we send you a link to the web app at ${webAppHost} by WhatsApp and email. It works on Android phones and iPhones.`
           : "This page is where you find out what you are signing up for. If you consent on the signup form, we email you an Android APK file to install by hand.",
       },
       {
@@ -697,7 +697,7 @@ export const betaTerms: readonly LegalSection[] = [
           "You are 18 or older. This is a hard requirement with no exceptions, and it is the one thing on this list we cannot check. ID verification is switched off for this test, so we are trusting you.",
           "You are in Sri Lanka for the duration of the beta.",
           webAppHost
-            ? `You have an Android phone running Android 7.0 or newer, or an iPhone, which uses the web app at ${webAppHost} instead of the APK. On iPhone, add it to your Home Screen to get notifications.`
+            ? `You have an Android phone or an iPhone, for the web app at ${webAppHost}. On iPhone, add it to your Home Screen to get notifications.`
             : "You have an Android phone running Android 7.0 or newer. There is no iPhone build yet.",
           "You have a Sri Lankan mobile number that can receive an SMS, because that is how you sign in.",
           "You are joining as yourself, with real information about yourself, and one account only.",
