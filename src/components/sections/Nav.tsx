@@ -76,7 +76,7 @@ export function Nav({
   return (
     <header className="sticky top-0 z-50 bg-paper/94 backdrop-blur-md">
       <nav aria-label="Main" className={`${wrap} flex h-17 items-center gap-3.5`}>
-        <a href="#top" aria-label={nav.logoLabel} className="mr-auto text-[25px]">
+        <a href="#top" aria-label={nav.logoLabel} className="mr-auto text-[22px] min-[400px]:text-[25px]">
           <Wordmark />
         </a>
 
@@ -92,7 +92,10 @@ export function Nav({
 
         {getApp}
 
-        <BetaLink event="beta_form_nav" className={`${button.ink} ${buttonSmall}`} />
+        <BetaLink
+          event="beta_form_nav"
+          className={`${button.ink} ${buttonSmall} whitespace-nowrap max-[399px]:px-4 max-[399px]:text-[14px]`}
+        />
 
         <button
           ref={buttonRef}

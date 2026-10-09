@@ -21,7 +21,9 @@ export function GetPearmo() {
   return (
     <section id="get" className={`${wrap} pt-16 lg:pt-24`}>
       <div className={`${block} grid items-center gap-7 bg-violet text-white lg:grid-cols-[340px_1fr] lg:gap-16`}>
-        <div className="rounded-panel bg-paper p-6 text-center text-ink" data-reveal="">
+        {/* Phones and tablets read the heading and steps first, then act; on
+            desktop the QR sits on the left. */}
+        <div className="order-last rounded-panel bg-paper p-6 text-center text-ink lg:order-none" data-reveal="">
           <div className="desk:grid hidden justify-items-center gap-2.5">
             <QrCode px={228} />
             <b className="font-display text-[20px] leading-[1.2] font-extrabold">{getApp.scanTitle}</b>

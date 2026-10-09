@@ -55,7 +55,7 @@ export function Hero() {
 
       <section
         aria-label="Get started"
-        className={`${wrap} grid gap-3.5 pb-5 lg:grid-cols-[5fr_7fr] lg:gap-4.5`}
+        className={`${wrap} grid gap-3.5 pb-5 lg:grid-cols-2 lg:gap-4.5 xl:grid-cols-[5fr_7fr]`}
       >
         <div className={`${block} flex flex-col gap-4 bg-lime text-ink`}>
           <p className={lead}>{hero.lead}</p>
@@ -89,7 +89,7 @@ export function Hero() {
               scene="cafe"
               who="avatar"
               priority
-              sizes="(min-width: 1024px) 58vw, 100vw"
+              sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 50vw, 100vw"
             />
           }
           after={
@@ -99,7 +99,7 @@ export function Hero() {
               scene="cafe"
               who="person"
               eager
-              sizes="(min-width: 1024px) 58vw, 100vw"
+              sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 50vw, 100vw"
             />
           }
         />

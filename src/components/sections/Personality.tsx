@@ -103,7 +103,7 @@ export function Personality() {
           <Radar />
           {/* The numbers are already in the radar's <desc>; this list is the
               readable version of the same thing for sighted readers. */}
-          <ul className="mt-1.5 grid gap-2 lg:grid-cols-2" data-stagger="0.05">
+          <ul className="mt-1.5 grid gap-2 xl:grid-cols-2" data-stagger="0.05">
             {personality.traits.map((trait) => (
               <li
                 key={trait.name}
