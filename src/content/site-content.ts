@@ -418,6 +418,19 @@ export const footer = {
   copyright: `© ${new Date().getFullYear()} Pearmo · Closed beta`,
   contactLabel: "Contact",
   qrLabel: "Scan to open Pearmo",
+  /**
+   * Temporary: the three design directions, linked so the team can compare
+   * them while design changes are discussed. The pages are noindex. Remove
+   * this together with src/app/design and src/designs.
+   */
+  designPreviews: {
+    label: "Design previews",
+    links: [
+      { href: "/design/a", label: "A" },
+      { href: "/design/b", label: "B" },
+      { href: "/design/c", label: "C (live)" },
+    ],
+  },
   links: [
     { href: "/privacy", label: "Privacy" },
     { href: "/terms", label: "Terms" },

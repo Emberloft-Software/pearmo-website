@@ -49,7 +49,26 @@ export function Footer() {
             </div>
           )}
         </div>
-        <p className="mt-7.5 text-[13px] text-[#cfc8df]">{footer.copyright}</p>
+        <div className="mt-7.5 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-[13px] text-[#cfc8df]">
+          <p>{footer.copyright}</p>
+          {/* Temporary, for comparing design directions; see site-content. */}
+          <p>
+            {footer.designPreviews.label}:{" "}
+            {footer.designPreviews.links.map((link, i) => (
+              <span key={link.href}>
+                {i > 0 && " · "}
+                <Link
+                  href={link.href}
+                  prefetch={false}
+                  rel="nofollow"
+                  className="text-[#e4dfef] underline underline-offset-3 hover:text-lime"
+                >
+                  {link.label}
+                </Link>
+              </span>
+            ))}
+          </p>
+        </div>
       </div>
     </footer>
   );
