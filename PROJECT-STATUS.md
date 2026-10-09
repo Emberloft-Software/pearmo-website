@@ -1,8 +1,8 @@
 # Pearmo website — status, gaps and open decisions
 
 **Last updated:** 9 October 2026
-**Branch:** `redesign` (from `pwa-launch`). Not merged; a push to `main`
-deploys to production.
+**Branch:** `redesign`, fast-forwarded into `main` and **live on
+www.pearmo.com since 9 October 2026** (production deploy of `863451f`).
 **Live site:** `https://www.pearmo.com`. Sections 1–5 below are the July
 record, with resolved items struck through; §0 is the October redesign.
 
