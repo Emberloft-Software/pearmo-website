@@ -1,0 +1,33 @@
+# Lint, typecheck and build on every push and pull request.
+#
+# Vercel deploys `main` regardless, so this doesn't block a deploy on its own.
+# It shows a red cross on any commit or PR that would break the site, so you
+# see it before merging. To make it a hard gate, protect `main` in GitHub
+# (Settings -> Branches) and require the "build" check.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
