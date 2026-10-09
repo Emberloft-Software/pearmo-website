@@ -81,13 +81,14 @@ switch was turned on in the branch, together with legal fixes R1.
 | # | What | Why it matters |
 | --- | --- | --- |
 | R1 | ~~**`legal.ts`: web app for everyone.**~~ Fixed 9 Oct with the approved wording: privacy policy web-app section, beta terms "What this is" and eligibility | — |
-| R1b | **`legal.ts`: the APK lines.** With the web app on, the beta terms still say "The app is installed outside the Play Store… We will email you each new build" and "Please do not forward the APK". If Android testers no longer get an APK, these contradict "we send you a link to the web app" | Testers read both on the same page |
-| R2 | **`legal.ts`: WhatsApp in the privacy policy.** The beta terms now say invites go by WhatsApp and email; the privacy policy still doesn't mention WhatsApp (drafts 4 and 5 are waiting for approval) | WhatsApp (Meta) is a new party handling testers' numbers |
-| R3 | **`legal.ts` contradicts itself on photos.** The privacy policy's beta section says no profile photos and no voice intros; the newer beta terms say both exist | One of them is wrong |
+| R1b | ~~**`legal.ts`: the APK lines.**~~ Resolved 9 Oct: both routes stay (web app, and an APK for some Android testers), and the beta terms now describe both | — |
+| R2 | ~~**`legal.ts`: WhatsApp.**~~ Resolved 9 Oct: the privacy policy says invites go by WhatsApp and email and lists WhatsApp (Meta) among who handles data during the beta | — |
+| R3 | ~~**`legal.ts` contradicts itself on photos.**~~ Resolved 9 Oct: the privacy policy's "no profile photos / no audio intro" lines are removed, matching the beta terms | — |
 | R4 | **A fresh Shared Unlocks screenshot.** `app-shared-unlocks.webp` shows removed unlocks; `app-showcase-overview.webp` and `app-profile-about.webp` show an emergency-contact field | The site can't show those screens |
 | R5 | **Delete the previews** (`src/app/design/`, `src/designs/`) before merging, unless you want them public (they're noindex) | Dead weight in production |
 | R6 | **Scan the QR on a real phone** on the Vercel preview | Decoding was verified from screenshots, not with a camera |
-| R7 | **Legal "last updated" date.** `LEGAL_LAST_UPDATED` still says 3 October 2026 although the beta terms and privacy policy changed on 9 October | Readers should see when the terms changed |
+| R7 | ~~**Legal "last updated" date.**~~ Now 9 October 2026 | — |
+| R8 | **Design preview links are public.** The live footer links to `/design/a`, `/design/b`, `/design/c` while design changes are discussed (pages are noindex) | Remove with R5 when done |
 
 ---
 

@@ -164,11 +164,12 @@ back before committing.
 
 `/design/a`, `/design/b` and `/design/c` show the three candidate directions
 on the real content, with a switcher bar: A "Same app, bigger screen", B
-"After Dark", C "Duet" (the live design). They're `noindex`, not in the
-sitemap, use plain links (no analytics events), and the A/B styles are scoped
-under `.design-a` / `.design-b`. **Delete `src/app/design/` and
-`src/designs/` together** once the comparison is over; nothing else imports
-them.
+"After Dark", C "Duet" (the live design). The footer links to them
+("Design previews: A · B · C") so the team can compare while design changes
+are discussed. They're `noindex`, not in the sitemap, use plain links (no
+analytics events), and the A/B styles are scoped under `.design-a` /
+`.design-b`. **When the comparison is over, delete `src/app/design/`,
+`src/designs/` and `footer.designPreviews`** (the footer line) together.
 
 ## Layout
 
