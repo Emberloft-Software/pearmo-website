@@ -40,6 +40,25 @@ function modulesPath(): { d: string; size: number } {
 // The URL never changes at runtime, so the grid is computed once per build.
 const { d, size } = modulesPath();
 
+const SYMBOL_ID = "pearmo-get-qr";
+
+/**
+ * The QR's modules, defined once per page as an SVG <symbol>. Every QrCode
+ * on the page draws it with <use>, so the 2 KB path appears once in the HTML
+ * (and once in Next's hydration data) instead of once per QR. Rendered by
+ * the root layout whenever the web app is switched on.
+ */
+export function QrDefs() {
+  return (
+    <svg aria-hidden="true" focusable="false" width="0" height="0" className="absolute">
+      <symbol id={SYMBOL_ID} viewBox={`0 0 ${size} ${size}`}>
+        <rect width={size} height={size} fill="#ffffff" />
+        <path d={d} fill="#17101f" shapeRendering="crispEdges" />
+      </symbol>
+    </svg>
+  );
+}
+
 export function QrCode({
   px,
   className = "",
@@ -55,11 +74,9 @@ export function QrCode({
       height={px}
       role="img"
       aria-label={`QR code. Scan it to open ${getUrl.replace("https://", "")} on your phone.`}
-      shapeRendering="crispEdges"
       className={`block rounded-[14px] ${className}`}
     >
-      <rect width={size} height={size} fill="#ffffff" />
-      <path d={d} fill="#17101f" />
+      <use href={`#${SYMBOL_ID}`} />
     </svg>
   );
 }

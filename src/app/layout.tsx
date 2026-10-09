@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { Motion } from "@/components/motion/Motion";
+import { QrDefs } from "@/components/QrCode";
 import { OrganizationSchema, WebSiteSchema } from "@/components/seo/JsonLd";
 import { isProductionSite, site, verification } from "@/lib/site";
 import "./globals.css";
@@ -165,6 +166,9 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+
+        {/* The QR code's shape, defined once for every QR on the page. */}
+        {site.webAppUrl && <QrDefs />}
 
         {children}
 

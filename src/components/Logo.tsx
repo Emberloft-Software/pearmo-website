@@ -1,4 +1,4 @@
-import { LOGO_P_PATH, LOGO_PEAR_PATH, LOGO_VIEWBOX } from "@/lib/logo-paths";
+import Image from "next/image";
 
 /**
  * The Pearmo mark: a coral pear outline wrapped around an indigo "p".
@@ -6,30 +6,35 @@ import { LOGO_P_PATH, LOGO_PEAR_PATH, LOGO_VIEWBOX } from "@/lib/logo-paths";
  * `tone` swaps only the "p": indigo on light grounds, paper on dark ones, ink
  * where indigo would read as a second brand colour. The coral pear never
  * changes. Decorative by default; the surrounding link carries the name.
+ *
+ * Served as static SVG files (public/assets/brand/, generated from
+ * src/lib/logo-paths.ts) rather than inline paths: the outlines are ~3 KB,
+ * and inline they were repeated in the HTML and again in Next's hydration
+ * data for every logo on the page. As files they're fetched once and cached.
+ * The share-image renderer still draws from logo-paths.ts.
  */
-const P_FILL = {
-  brand: "#291450",
-  light: "#faf8ff",
-  ink: "#17101f",
+const SRC = {
+  brand: "/assets/brand/pearmo-mark.svg",
+  light: "/assets/brand/pearmo-mark-light.svg",
+  ink: "/assets/brand/pearmo-mark-ink.svg",
 } as const;
 
 export function LogoMark({
   tone = "brand",
   className = "",
 }: {
-  tone?: keyof typeof P_FILL;
+  tone?: keyof typeof SRC;
   className?: string;
 }) {
   return (
-    <svg
-      viewBox={LOGO_VIEWBOX}
+    <Image
+      src={SRC[tone]}
+      alt=""
+      width={24}
+      height={32}
+      unoptimized
       className={className}
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path fill="#ef4c56" fillRule="evenodd" d={LOGO_PEAR_PATH} />
-      <path fill={P_FILL[tone]} fillRule="evenodd" d={LOGO_P_PATH} />
-    </svg>
+    />
   );
 }
 
@@ -38,7 +43,7 @@ export function Wordmark({
   tone = "brand",
   className = "",
 }: {
-  tone?: keyof typeof P_FILL;
+  tone?: keyof typeof SRC;
   className?: string;
 }) {
   return (
